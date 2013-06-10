@@ -23,5 +23,6 @@ RSpec.configure do |c|
     # XXX would be better if puppet_module_install parsed this out of the
     # Modulefile
     shell "puppet module install cprice404/inifile"
+    shell "puppet module install puppetlabs/stdlib"
   end
 end
