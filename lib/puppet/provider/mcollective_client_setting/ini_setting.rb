@@ -1,4 +1,4 @@
-Puppet::Type.type(:mcollective_server_setting).provide(
+Puppet::Type.type(:mcollective_client_setting).provide(
   :ini_setting,
   :parent => Puppet::Type.type(:ini_setting).provider(:ruby)
 ) do
@@ -9,6 +9,6 @@ Puppet::Type.type(:mcollective_server_setting).provide(
   end
 
   def self.file_path
-    '/etc/mcollective/server.cfg'
+    '/etc/mcollective/client.cfg'
   end
 end
