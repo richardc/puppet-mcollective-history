@@ -20,5 +20,8 @@ RSpec.configure do |c|
 
     # Replace mymodule with your module name
     puppet_module_install(:source => proj_root, :module_name => 'mcollective')
+    # XXX would be better if puppet_module_install parsed this out of the
+    # Modulefile
+    shell "puppet module install cprice404/inifile"
   end
 end
