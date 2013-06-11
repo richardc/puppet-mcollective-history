@@ -1,7 +1,9 @@
 class mcollective(
-  $connector      = 'activemq',
+  $connector = 'activemq',
+  $server_activemq_user = 'mcollective',
+  $server_activemq_password = 'marionette',
   $activemq_hosts = [],
   $securityprovider = 'psk',
-  $psk            = 'changeme',
+  $psk = 'changeme',
 ) {
 }
