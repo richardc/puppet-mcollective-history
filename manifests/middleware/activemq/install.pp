@@ -1,4 +1,4 @@
-class mcollective::activemq::install {
+class mcollective::middleware::activemq::install {
   package { 'activemq':
     ensure => 'installed',
   }

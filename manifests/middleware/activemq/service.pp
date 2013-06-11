@@ -1,4 +1,4 @@
-class mcollective::activemq::service {
+class mcollective::middleware::activemq::service {
   service { 'activemq':
     ensure => 'running',
     enable => true,

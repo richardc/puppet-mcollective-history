@@ -5,7 +5,7 @@ describe 'single node setup:' do
     class { 'mcollective':
       activemq_hosts => [ $::fqdn ],
     }
-    class { 'mcollective::activemq': } ->
+    class { 'mcollective::middleware::activemq': } ->
     class { 'mcollective::server': }
     class { 'mcollective::client': }
   EOS
