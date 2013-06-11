@@ -11,7 +11,7 @@ describe 'single node setup:' do
   EOS
 
   context puppet_apply(pp) do
-    its(:exit_code) { should be_zero }
+    its(:exit_code) { should_not eq(1) }
   end
 
   context shell('mco ping') do
