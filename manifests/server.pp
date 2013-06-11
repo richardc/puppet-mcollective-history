@@ -4,6 +4,7 @@ class mcollective::server {
 
   anchor { 'mcollective::server::begin': } ->
   class { 'mcollective::server::install': } ->
+  class { 'mcollective::server::config': } ->
   class { "mcollective::server::connector::${mcollective::connector}": } ->
   class { "mcollective::server::securityprovider::${mcollective::securityprovider}": } ->
   class { 'mcollective::server::service': } ->
