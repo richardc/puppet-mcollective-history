@@ -8,6 +8,10 @@ Puppet::Type.type(:mcollective_server_setting).provide(
     ''
   end
 
+  def separator
+    ' = '
+  end
+
   def self.file_path
     '/etc/mcollective/server.cfg'
   end
