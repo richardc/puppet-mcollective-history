@@ -12,6 +12,10 @@ Puppet::Type.type(:mcollective_server_setting).provide(
     ' = '
   end
 
+  def self.namevar(section_name, setting)
+    setting
+  end
+
   def self.file_path
     '/etc/mcollective/server.cfg'
   end
