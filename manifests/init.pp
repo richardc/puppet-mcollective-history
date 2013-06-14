@@ -6,5 +6,6 @@ class mcollective (
   $securityprovider = 'psk',
   $psk = 'changeme',
   $libdir = $mcollective::defaults::libdir,
+  $server_daemonize = 1,
 ) inherits mcollective::defaults {
 }
