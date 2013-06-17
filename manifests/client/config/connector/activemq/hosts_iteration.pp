@@ -1,6 +1,6 @@
-# Define - mcollective::client::connector::activemq::iteration
+# Define - mcollective::client::config::connector::activemq::iteration
 # $name will be an index into the $mcollective::activemq_hosts array + 1
-define mcollective::client::connector::activemq::hosts_iteration {
+define mcollective::client::config::connector::activemq::hosts_iteration {
   mcollective::client::setting { "plugin.activemq.pool.${name}.host":
     value => $mcollective::activemq_hosts[$name - 1], # puppet array 0-based
   }

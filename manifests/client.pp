@@ -6,7 +6,5 @@ class mcollective::client {
   anchor { 'mcollective::client::begin': } ->
   class { 'mcollective::client::install': } ->
   class { 'mcollective::client::config': } ->
-  class { "mcollective::client::connector::${mcollective::connector}": } ->
-  class { "mcollective::client::securityprovider::${mcollective::securityprovider}": } ->
   anchor { 'mcollective::client::end': }
 }

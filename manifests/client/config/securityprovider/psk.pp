@@ -1,5 +1,5 @@
-# Class mcollectiver::client::securityprovider::psk
-class mcollective::client::securityprovider::psk {
+# Class mcollective::client::config::securityprovider::psk
+class mcollective::client::config::securityprovider::psk {
   mcollective::client::setting { 'securityprovider':
     value => 'psk',
   }

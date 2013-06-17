@@ -1,5 +1,5 @@
-# Class mcollectiver::server::securityprovider::psk
-class mcollective::server::securityprovider::psk {
+# Class mcollectiver::server::config::securityprovider::psk
+class mcollective::server::config::securityprovider::psk {
   mcollective::server::setting { 'securityprovider':
     value => 'psk',
   }

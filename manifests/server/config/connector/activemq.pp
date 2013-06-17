@@ -1,5 +1,5 @@
-# Class - mcollective::server::connector::activemq
-class mcollective::server::connector::activemq {
+# Class - mcollective::server::config::connector::activemq
+class mcollective::server::config::connector::activemq {
   mcollective::server::setting { 'connector':
     value => 'activemq',
   }
@@ -15,5 +15,5 @@ class mcollective::server::connector::activemq {
   # Oh puppet!  Fake iteration of the indexes (+1 as plugin.activemq.pool is
   # 1-based)
   $indexes = range('1', size($mcollective::activemq_hosts))
-  mcollective::server::connector::activemq::hosts_iteration { $indexes: }
+  mcollective::server::config::connector::activemq::hosts_iteration { $indexes: }
 }
