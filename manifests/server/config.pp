@@ -11,5 +11,6 @@ class mcollective::server::config {
   anchor { 'mcollective::server::config::begin': } ->
   class { "mcollective::server::config::connector::${mcollective::connector}": } ->
   class { "mcollective::server::config::securityprovider::${mcollective::securityprovider}": } ->
+  class { "mcollective::server::config::factsource::${mcollective::factsource}": } ->
   anchor { 'mcollective::server::config::end': }
 }
