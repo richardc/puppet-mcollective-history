@@ -56,7 +56,7 @@
           -->
           <simpleAuthenticationPlugin>
             <users>
-              <authenticationUser username="mcollective" password="marionette" groups="mcollective,everyone"/>
+              <authenticationUser username="<%= scope["mcollective::server_activemq_user"] %>" password="<%= scope["mcollective::server_activemq_password"] %>" groups="mcollective,everyone"/>
               <authenticationUser username="admin" password="secret" groups="mcollective,admins,everyone"/>
             </users>
           </simpleAuthenticationPlugin>

@@ -4,6 +4,7 @@ describe 'single node setup:' do
   pp = <<-EOS
     class { 'mcollective':
       activemq_hosts => [ $::fqdn ],
+      server_activemq_password => "ilikepie",
     }
     class { 'mcollective::middleware::activemq': } ->
     class { 'mcollective::server': }
