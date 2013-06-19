@@ -12,5 +12,6 @@ class mcollective::server::config {
   class { "mcollective::server::config::connector::${mcollective::connector}": } ->
   class { "mcollective::server::config::securityprovider::${mcollective::securityprovider}": } ->
   class { "mcollective::server::config::factsource::${mcollective::factsource}": } ->
+  class { "mcollective::server::config::rpcauthprovider::${mcollective::rpcauthprovider}": } ->
   anchor { 'mcollective::server::config::end': }
 }

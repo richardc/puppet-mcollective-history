@@ -6,6 +6,7 @@ class mcollective (
   $activemq_hosts = [],
   $factsource = 'yaml',
   $securityprovider = 'psk',
+  $rpcauthprovider = 'action_policy',
   $psk = 'changeme',
   $libdir = $mcollective::defaults::libdir,
   $server_daemonize = 1,
