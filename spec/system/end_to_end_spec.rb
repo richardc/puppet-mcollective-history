@@ -16,6 +16,10 @@ describe 'single node setup:' do
     context shell('mco rpc rpcutil inventory -j </dev/null') do
       its(:stdout) { should =~ /discovery/ }
     end
+
+    context shell('nagios mco rpc nrpe runcommand command=hello_world -j </dev/null') do
+      its(:stdout) { should =~ /Hello World!/ }
+    end
   end
 
   describe "nagios user can do limited things" do
