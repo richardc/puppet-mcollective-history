@@ -1,5 +1,5 @@
 Gemfile.lock
-spec/fixtures/manifests/
+spec/fixtures/manifests/site.pp
 .ruby-version
 .ruby-gemset
 .rspec_system

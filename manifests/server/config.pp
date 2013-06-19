@@ -8,6 +8,10 @@ class mcollective::server::config {
     value => $mcollective::server_daemonize,
   }
 
+  file { '/etc/mcollective/policies':
+    ensure => 'directory',
+  }
+
   anchor { 'mcollective::server::config::begin': } ->
   class { "mcollective::server::config::connector::${mcollective::connector}": } ->
   class { "mcollective::server::config::securityprovider::${mcollective::securityprovider}": } ->
