@@ -7,6 +7,7 @@ class mcollective (
   $factsource = 'yaml',
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',
+  $rpcauditprovider = 'logfile',
   $psk = 'changeme',
   $libdir = $mcollective::defaults::libdir,
   $server_public_pem = "${settings::ssldir}/public_keys/${::fqdn}.pem",
