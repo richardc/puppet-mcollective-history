@@ -17,7 +17,7 @@ describe 'single node setup:' do
       its(:stdout) { should =~ /discovery/ }
     end
 
-    context shell('nagios mco rpc nrpe runcommand command=hello_world -j </dev/null') do
+    context shell('mco rpc nrpe runcommand command=hello_world -j </dev/null') do
       its(:stdout) { should =~ /Hello World!/ }
     end
   end
