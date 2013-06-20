@@ -20,7 +20,7 @@ define mcollective::user(
     mode   => '0400',
   }
 
-  file { "${homedir}/.mcollective.conf":
+  file { "${homedir}/.mcollective":
     ensure  => 'file',
     content => template('mcollective/user.cfg.erb'),
   }
