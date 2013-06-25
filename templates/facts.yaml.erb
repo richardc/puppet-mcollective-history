@@ -6,7 +6,7 @@
     out = "---\n"
     arr.each do |element|
       entry = {element[0] => element[1]}
-      out += entry.to_yaml.to_a[1..-1].join + "\n"
+      out += entry.to_yaml.split(/\n/)[1..-1].join("\n") + "\n"
     end
 
     out
