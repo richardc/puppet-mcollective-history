@@ -13,5 +13,17 @@ class mcollective (
   $server_public_pem = "${settings::ssldir}/public_keys/${::fqdn}.pem",
   $server_private_pem = "${settings::ssldir}/private_keys/${::fqdn}.pem",
   $server_daemonize = 1,
+  $server = false,
+  $client = false,
+  $middleware = false,
 ) inherits mcollective::defaults {
+  if $client {
+    class { 'mcollective::client': }
+  }
+  if $server {
+    class { 'mcollective::server': }
+  }
+  if $middleware {
+    class { "mcollective::middleware::${connector}": }
+  }
 }

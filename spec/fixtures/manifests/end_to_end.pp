@@ -1,11 +1,11 @@
 class { 'mcollective':
   activemq_hosts           => [ $::fqdn ],
+  securityprovider         => 'psk',
   server_activemq_password => 'ilikepie',
+  server                   => true,
+  client                   => true,
+  middleware               => true,
 }
-
-class { 'mcollective::middleware::activemq': } ->
-class { 'mcollective::server': }
-class { 'mcollective::client': }
 
 mcollective::agent { 'nrpe':
   policy => 'policy default deny
