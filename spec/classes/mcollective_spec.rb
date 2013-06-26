@@ -27,6 +27,12 @@ describe 'mcollective' do
           should contain_file('/etc/mcollective/facts.yaml').with_content(/^  number_of_cores:.*?^  osfamily:/m)
         end
       end
+
+      describe "facter factsource" do
+        let(:params) { { :server => true, :factsource => 'facter' } }
+        it { should contain_mcollective_server_setting('factsource').with_value('facter') }
+        it { should contain_package('mcollective-facter-facts') }
+      end
     end
   end
 end
