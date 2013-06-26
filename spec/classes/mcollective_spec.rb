@@ -34,4 +34,20 @@ describe 'mcollective' do
       end
     end
   end
+
+  describe "activemq connector" do
+    let(:params) { { :server => true } }
+    it "should be the default" do
+      should contain_mcollective_server_setting('connector').with_value('activemq')
+    end
+
+    describe "setting connectors" do
+      let(:params) { { :server => true, :activemq_hosts => %w{ foo bar } } }
+      it { should contain_mcollective_server_setting('plugin.activemq.pool.size').with_value(2) }
+      it { should contain_mcollective_server_setting('plugin.activemq.pool.1.host').with_value('foo') }
+      it { should contain_mcollective_server_setting('plugin.activemq.pool.1.port').with_value(61614) }
+      it { should contain_mcollective_server_setting('plugin.activemq.pool.2.host').with_value('bar') }
+      it { should contain_mcollective_server_setting('plugin.activemq.pool.2.port').with_value(61614) }
+    end
+  end
 end
