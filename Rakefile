@@ -10,3 +10,5 @@ require 'rspec-system/rake_task'
 task :default do
   sh %{rake -T}
 end
+
+PuppetLint.configuration.send('disable_80chars')
