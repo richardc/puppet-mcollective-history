@@ -1,4 +1,4 @@
-# Class - mcollective::server::config::factsource::yaml
+# private class
 class mcollective::server::config::factsource::yaml {
   # The facts.yaml file resource is generated in its own dedicated class
   # By doing this, the file produced isn't polluted with unwanted in scope

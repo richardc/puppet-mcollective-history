@@ -1,4 +1,4 @@
-# Class - mcollective::client::config
+# private class
 class mcollective::client::config {
   mcollective::client::setting { 'libdir':
     value => $mcollective::libdir,

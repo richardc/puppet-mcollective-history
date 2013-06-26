@@ -1,3 +1,4 @@
+# private class
 # Installs the client and sets up /etc/mcollective/client.cfg (global/common
 # configuration)
 class mcollective::client {

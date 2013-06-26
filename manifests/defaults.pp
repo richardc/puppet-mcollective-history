@@ -1,4 +1,4 @@
-# Class - mcollective::defaults
+# private class
 # This class is for setting the few platform defaults that need branching; all
 # other configuration should be defaulted using the class paramaters to the
 # mcollective class.

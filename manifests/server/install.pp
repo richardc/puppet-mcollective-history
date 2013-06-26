@@ -1,4 +1,4 @@
-# Class - mcolllective::server::install
+# private class
 class mcollective::server::install {
   package { 'mcollective':
     ensure => 'installed',

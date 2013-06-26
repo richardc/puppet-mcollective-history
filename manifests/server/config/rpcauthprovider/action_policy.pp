@@ -1,4 +1,4 @@
-# Class mcollective::server::config::rpcauthprovider::action_policy
+# private class
 class mcollective::server::config::rpcauthprovider::action_policy {
   # XXX feels hacky to distribute the actionpolicy.rb with the module, but it's
   # not a package yet

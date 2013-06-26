@@ -1,4 +1,4 @@
-# Class - mcollective::server::config::rpcauditprovider::logfile
+# private class
 class mcollective::server::config::rpcauditprovider::logfile {
   mcollective::server::setting { 'rpcauditprovider':
     value => 'logfile',

@@ -1,3 +1,4 @@
+# private class
 class mcollective::middleware::activemq {
   anchor { 'mcollective::middleware::activemq::begin': } ->
   class { 'mcollective::middleware::activemq::install': } ->

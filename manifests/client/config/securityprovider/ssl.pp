@@ -1,4 +1,4 @@
-# Class mcollective::client::config::securityprovider::ssl
+# private class
 class mcollective::client::config::securityprovider::ssl {
   mcollective::client::setting { 'securityprovider':
     value => 'ssl',

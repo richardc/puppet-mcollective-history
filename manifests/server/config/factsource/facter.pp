@@ -1,4 +1,4 @@
-# Class - mcollective::server::config::factsource::facter
+# private class
 class mcollective::server::config::factsource::facter {
   package { 'mcollective-facter-facts':
     ensure => installed,

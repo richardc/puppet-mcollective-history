@@ -1,4 +1,4 @@
-# Define - mcollective::client::config::connector::activemq::iteration
+# private define
 # $name will be an index into the $mcollective::activemq_hosts array + 1
 define mcollective::client::config::connector::activemq::hosts_iteration {
   mcollective::client::setting { "plugin.activemq.pool.${name}.host":

@@ -1,4 +1,4 @@
-# Class - mcollective::server::config::connector::activemq
+# private class
 class mcollective::server::config::connector::activemq {
   mcollective::server::setting { 'connector':
     value => 'activemq',
