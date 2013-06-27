@@ -1,0 +1,8 @@
+policy default <%= @policy['default'] %>
+<% @policy['rules'].each do |rule| -%>
+<%= (rule['action'] || 'allow') + "\t" +
+        (rule['callerid'] || '*') + "\t"  +
+        (rule['actions'] || '*') + "\t" +
+        (rule['facts'] || '*') + "\t" +
+        (rule['classes'] || '*') %>
+<% end %>
