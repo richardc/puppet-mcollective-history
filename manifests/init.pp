@@ -17,13 +17,22 @@ class mcollective (
   $client = false,
   $middleware = false,
 ) inherits mcollective::defaults {
+  anchor { 'mcollective::begin': }
+  anchor { 'mcollective::end': }
+
   if $client {
-    class { 'mcollective::client': }
+    Anchor['mcollective::begin'] ->
+    class { 'mcollective::client': } ->
+    Anchor['mcollective::end']
   }
   if $server {
-    class { 'mcollective::server': }
+    Anchor['mcollective::begin'] ->
+    class { 'mcollective::server': } ->
+    Anchor['mcollective::end']
   }
   if $middleware {
-    class { "mcollective::middleware::${connector}": }
+    Anchor['mcollective::begin'] ->
+    class { "mcollective::middleware::${connector}": } ->
+    Anchor['mcollective::end']
   }
 }

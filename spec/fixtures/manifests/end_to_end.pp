@@ -23,6 +23,7 @@ user { 'nagios':
   managehome => true,
 } ->
 mcollective::user { 'nagios':
+  require      => Class['mcollective'],
   cert_public  => "${settings::ssldir}/public_keys/nagios.pem",
   cert_private => "${settings::ssldir}/private_keys/nagios.pem",
 }
