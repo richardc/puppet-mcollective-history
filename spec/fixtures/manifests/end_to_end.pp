@@ -8,19 +8,18 @@ class { 'mcollective':
 }
 
 mcollective::agent { 'nrpe':
-  policy       => {
-    'default'  => 'deny',
-    rules      => [ {
-      action   => 'allow',
-      callerid => 'uid=0',
-    },
-    {
-      action   => 'allow',
-      callerid => 'cert=nagios',
-      actions  => 'runcommand',
-    },
-    ],
-  },
+  policy => 'deny',
+}
+
+mcollective::agent::actionpolicy { 'root nrpe':
+  agent    => 'nrpe',
+  callerid => 'uid=0',
+}
+
+mcollective::agent::actionpolicy { 'nagios nrpe':
+  agent    => 'nrpe',
+  callerid => 'cert=nagios',
+  actions  => 'runcommand',
 }
 
 exec { 'create_nagios_cert':
