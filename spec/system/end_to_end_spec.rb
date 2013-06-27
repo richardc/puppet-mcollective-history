@@ -28,7 +28,7 @@ describe 'single node setup:' do
     end
 
     context shell('sudo -u nagios mco rpc rpcutil inventory -j </dev/null') do
-      its(:stdout) { should be_empty }
+      its(:stdout) { should =~ /You are not authorized to call this agent or action/ }
     end
 
     context shell('sudo -u nagios mco rpc nrpe runcommand command=hello_world -j </dev/null') do
