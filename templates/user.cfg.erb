@@ -1,3 +1,3 @@
-plugin.ssl_server_public = /etc/mcollective/server_public.pem
-plugin.ssl_client_private = <%= @homedir %>/.mcollective.d/<%= @username %>-private.pem
-plugin.ssl_client_public = <%= @homedir %>/.mcollective.d/<%= @username %>-public.pem
+plugin.ssl_server_public  = /etc/mcollective/server_public.pem
+plugin.ssl_client_public  = <%= @homedir %>/.mcollective.d/<%= @username %>.pem
+plugin.ssl_client_private = <%= @homedir %>/.mcollective.d/<%= @username %>.private.pem

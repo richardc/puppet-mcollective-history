@@ -10,7 +10,7 @@ define mcollective::user(
   }
 
   if $cert_public {
-    file { "${homedir}/.mcollective.d/${username}-public.pem":
+    file { "${homedir}/.mcollective.d/${username}.pem":
       source => $cert_public,
       owner  => $name,
       mode   => '0444',
@@ -18,7 +18,7 @@ define mcollective::user(
   }
 
   if $cert_private {
-    file { "${homedir}/.mcollective.d/${username}-private.pem":
+    file { "${homedir}/.mcollective.d/${username}.private.pem":
       source => $cert_private,
       owner  => $name,
       mode   => '0400',

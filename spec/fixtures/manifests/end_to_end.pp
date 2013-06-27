@@ -17,7 +17,7 @@ mcollective::agent { 'rpcutil':
 
 mcollective::agent::actionpolicy { 'root rpcutil':
   agent    => 'rpcutil',
-  callerid => 'cert=root-public',
+  callerid => 'cert=root',
 }
 
 mcollective::agent { 'nrpe':
@@ -27,12 +27,12 @@ mcollective::agent { 'nrpe':
 
 mcollective::agent::actionpolicy { 'root nrpe':
   agent    => 'nrpe',
-  callerid => 'cert=root-public',
+  callerid => 'cert=root',
 }
 
 mcollective::agent::actionpolicy { 'nagios nrpe':
   agent    => 'nrpe',
-  callerid => 'cert=nagios-public',
+  callerid => 'cert=nagios',
   actions  => 'runcommand',
 }
 
@@ -63,12 +63,10 @@ mcollective::user { 'root':
 
 mcollective::server::client { 'nagios':
   cert_public  => "${settings::ssldir}/public_keys/nagios.pem",
-  cert_private => "${settings::ssldir}/private_keys/nagios.pem",
 }
 
 mcollective::server::client { 'root':
   cert_public  => "${settings::ssldir}/public_keys/root.pem",
-  cert_private => "${settings::ssldir}/private_keys/root.pem",
 }
 
 # and fake install nrpe
