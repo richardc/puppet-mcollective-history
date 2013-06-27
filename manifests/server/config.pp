@@ -12,6 +12,10 @@ class mcollective::server::config {
     ensure => 'directory',
   }
 
+  file { '/etc/mcollective/clients':
+    ensure => 'directory',
+  }
+
   anchor { 'mcollective::server::config::begin': } ->
   class { "mcollective::server::config::connector::${mcollective::connector}": } ->
   class { "mcollective::server::config::securityprovider::${mcollective::securityprovider}": } ->
