@@ -45,9 +45,8 @@ user { 'nagios':
   managehome => true,
 } ->
 mcollective::user { 'nagios':
-  require      => Class['mcollective'],
-  cert_public  => "${settings::ssldir}/public_keys/nagios.pem",
-  cert_private => "${settings::ssldir}/private_keys/nagios.pem",
+  certificate => "${settings::ssldir}/certs/nagios.pem",
+  private_key => "${settings::ssldir}/private_keys/nagios.pem",
 }
 
 exec { 'create_root_cert':
@@ -55,18 +54,17 @@ exec { 'create_root_cert':
   creates => "${settings::ssldir}/certs/root.pem",
 } ->
 mcollective::user { 'root':
-  homedir      => '/root',
-  cert_public  => "${settings::ssldir}/public_keys/root.pem",
-  cert_private => "${settings::ssldir}/private_keys/root.pem",
-  require      => Class['mcollective'],
+  homedir     => '/root',
+  certificate => "${settings::ssldir}/certs/root.pem",
+  private_key => "${settings::ssldir}/private_keys/root.pem",
 }
 
 mcollective::server::client { 'nagios':
-  cert_public  => "${settings::ssldir}/public_keys/nagios.pem",
+  certificate => "${settings::ssldir}/certs/nagios.pem",
 }
 
 mcollective::server::client { 'root':
-  cert_public  => "${settings::ssldir}/public_keys/root.pem",
+  certificate => "${settings::ssldir}/certs/root.pem",
 }
 
 # and fake install nrpe

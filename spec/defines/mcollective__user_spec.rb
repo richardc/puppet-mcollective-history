@@ -7,8 +7,9 @@ describe "mcollective::user" do
   it { should contain_concat('/home/nagios/.mcollective') }
   it { should contain_concat__fragment('mcollective::user nagios') }
 
-  describe "specifying pem" do
-    let(:params) { { :cert_public => 'public.pem' } }
+  describe "specifying certificate" do
+    let(:params) { { :certificate => 'certs/nagios.pem' } }
     it { should contain_concat__fragment('mcollective::user nagios').with_content(/^plugin.ssl_client_public/m) }
+    it { should contain_file('/home/nagios/.mcollective.d/credentials/certs/nagios.pem') }
   end
 end

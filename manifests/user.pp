@@ -1,8 +1,8 @@
 # Define - mcollective::user
 define mcollective::user(
   $username = $title,
-  $cert_public = undef,
-  $cert_private = undef,
+  $certificate = undef,
+  $private_key = undef,
   $homedir = "/home/${title}",
 ) {
   file { [
@@ -14,18 +14,18 @@ define mcollective::user(
     ensure => 'directory',
   }
 
-  if $cert_public {
+  if $certificate {
     file { "${homedir}/.mcollective.d/credentials/certs/${username}.pem":
-      source => $cert_public,
+      source => $certificate,
       owner  => $name,
       mode   => '0444',
     }
   }
 
-  if $cert_private {
+  if $private_key {
     $private_path = "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem"
     file { $private_path:
-      source => $cert_private,
+      source => $private_key,
       owner  => $name,
       mode   => '0400',
     }
@@ -36,9 +36,10 @@ define mcollective::user(
   }
 
   concat::fragment { "mcollective::user ${name} global":
-    ensure => '/etc/mcollective/client.cfg',
-    order  => '10',
-    target => "${homedir}/.mcollective",
+    ensure  => '/etc/mcollective/client.cfg',
+    order   => '10',
+    target  => "${homedir}/.mcollective",
+    require => Class['mcollective::client::config'],
   }
 
   concat::fragment { "mcollective::user ${name}":
