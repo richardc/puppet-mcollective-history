@@ -5,6 +5,11 @@ define mcollective::user(
   $private_key = undef,
   $homedir = "/home/${title}",
 ) {
+  # This is icky - for now we want mcollective::client::config in play before
+  # this define so we can concat the global client config into the user
+  # ~/.mcollective but that's setting up all kinds of nasty ordering.
+  Class['mcollective::client::config'] -> Mcollective::User[$name]
+
   file { [
     "${homedir}/.mcollective.d",
     "${homedir}/.mcollective.d/credentials",
@@ -39,7 +44,6 @@ define mcollective::user(
     ensure  => '/etc/mcollective/client.cfg',
     order   => '10',
     target  => "${homedir}/.mcollective",
-    require => Class['mcollective::client::config'],
   }
 
   concat::fragment { "mcollective::user ${name}":
