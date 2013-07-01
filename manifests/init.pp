@@ -13,6 +13,7 @@ class mcollective (
   $server_public_pem = "${settings::ssldir}/public_keys/${::fqdn}.pem",
   $server_private_pem = "${settings::ssldir}/private_keys/${::fqdn}.pem",
   $server_daemonize = 1,
+  $middleware_ssl = true,
   $server = false,
   $client = false,
   $middleware = false,

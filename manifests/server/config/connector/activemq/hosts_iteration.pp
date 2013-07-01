@@ -16,4 +16,26 @@ define mcollective::server::config::connector::activemq::hosts_iteration {
   mcollective::server::setting { "plugin.activemq.pool.${name}.password":
     value => $mcollective::server_activemq_password,
   }
+
+  if $mcollective::middleware_ssl {
+    mcollective::server::setting { "plugin.activemq.pool.${name}.ssl":
+      value => 1,
+    }
+
+    mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.ca":
+      value => "${settings::ssldir}/certs/ca.pem",
+    }
+
+    mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.cert":
+      value => "${settings::ssldir}/certs/${::clientcert}.pem",
+    }
+
+    mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.key":
+      value => "${settings::ssldir}/private_keys/${::clientcert}.pem",
+    }
+
+    mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.fallback":
+      value => 0, # Only Forwards
+    }
+  }
 }

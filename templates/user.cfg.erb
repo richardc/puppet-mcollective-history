@@ -1,3 +1,11 @@
 plugin.ssl_server_public  = /etc/mcollective/server_public.pem
 plugin.ssl_client_public  = <%= @homedir %>/.mcollective.d/credentials/certs/<%= @username %>.pem
 plugin.ssl_client_private = <%= @homedir %>/.mcollective.d/credentials/private_keys/<%= @username %>.pem
+
+<% if scope['mcollective::middleware_ssl'] and scope['mcollective::connector'] == 'activemq' %>
+    <%# XXX This could instead be a mcollective::setting with scope of user - setting it for amq specifically sucks %>
+    <% 1.upto(scope['mcollective::activemq_hosts'].size).each do |i| %>
+plugin.activemq.pool.<%= i %>.ssl.cert = <%= @homedir %>/.mcollective.d/credentials/certs/<%= @username %>.pem
+plugin.activemq.pool.<%= i %>.ssl.key = <%= @homedir %>/.mcollective.d/credentials/private_keys/<%= @username %>.pem
+    <% end %>
+<% end %>
