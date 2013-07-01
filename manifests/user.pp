@@ -1,6 +1,7 @@
 # Define - mcollective::user
 define mcollective::user(
   $username = $title,
+  $ca_certificate = "${settings::ssldir}/certs/ca.pem",
   $certificate = undef,
   $private_key = undef,
   $homedir = "/home/${title}",
@@ -12,6 +13,12 @@ define mcollective::user(
     "${homedir}/.mcollective.d/credentials/private_keys"
   ]:
     ensure => 'directory',
+  }
+
+  file { "${homedir}/.mcollective.d/credentials/certs/ca.pem":
+    source => $ca_certificate,
+    owner  => $name,
+    mode   => '0444',
   }
 
   if $certificate {
