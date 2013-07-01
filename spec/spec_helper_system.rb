@@ -23,6 +23,7 @@ RSpec.configure do |c|
     # XXX would be better if puppet_module_install parsed this out of the
     # Modulefile
     shell "puppet module install puppetlabs/stdlib"
+    shell "puppet module install puppetlabs/java_ks"
     shell "puppet module install ripienaar/concat"
     # shell "puppet module install cprice404/inifile"
     # Local copy of inifile - may be in any of these relative paths as we move
