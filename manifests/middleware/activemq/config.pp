@@ -1,13 +1,15 @@
 # private class
 class mcollective::middleware::activemq::config {
   if $::osfamily == 'Debian' {
-    # no, rilly
-    file { '/etc/activemq/instances-available/mcollective':
+    # Debian-based systems use a instances-available/instances-enabled
+    # structure.
+    file { $mcollective::activemq_confdir:
       ensure => 'directory',
     }
-    # shouldn't rely on this being there to copy
+
+    # This will log to /var/lib/activemq/mcollective/data/activemq.log
     file { '/etc/activemq/instances-available/mcollective/log4j.properties':
-      source => '/etc/activemq/instances-available/main/log4j.properties',
+      source => 'puppet:///modules/mcollective/log4j.properties',
     }
 
     # make available
@@ -15,15 +17,10 @@ class mcollective::middleware::activemq::config {
       ensure => 'link',
       target => '/etc/activemq/instances-available/mcollective',
     }
-
-    $activemq_conf = '/etc/activemq/instances-available/mcollective/activemq.xml'
-  }
-  else {
-    $activemq_conf = '/etc/activemq/activemq.xml'
   }
 
   anchor { 'mcollective::middleware::activemq::config::begin': } ->
-  file { $activemq_conf:
+  file { "${mcollective::activemq_confdir}/activemq.xml":
     content => template("${module_name}/activemq.xml.erb"),
     owner   => 'activemq',
     group   => 'activemq',

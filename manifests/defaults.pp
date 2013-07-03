@@ -9,4 +9,8 @@ class mcollective::defaults {
     'RedHat' => '/usr/libexec/mcollective',
     'Debian' => '/usr/share/mcollective/plugins',
   }
+  $activemq_confdir = $::osfamily ? {
+    'Debian' => '/etc/activemq/instances-available/mcollective',
+    default  => '/etc/activemq',
+  }
 }
