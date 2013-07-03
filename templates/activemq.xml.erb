@@ -7,9 +7,9 @@
   http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
+<!--        <property name="locations">
             <value>file:${activemq.base}/conf/credentials.properties</value>
-        </property>
+        </property> -->
     </bean>
 
     <!--
@@ -23,7 +23,7 @@
       previous versions back to 5.4.
       https://issues.apache.org/jira/browse/AMQ-3570
     -->
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true" schedulePeriodForDestinationPurge="60000">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true" schedulePeriodForDestinationPurge="60000" persistent="false">
         <!--
           MCollective generally expects producer flow control to be turned off.
           It will also generate a limitless number of single-use reply queues,
@@ -137,6 +137,7 @@
         </transportConnectors>
     </broker>
 
+    <% if scope['mcollective::activemq_console'] %>
     <!--
       Enable web consoles, REST and Ajax APIs and demos.
       It also includes Camel (with its web console); see ${ACTIVEMQ_HOME}/conf/camel.xml for more info.
@@ -144,4 +145,5 @@
       See ${ACTIVEMQ_HOME}/conf/jetty.xml for more details.
     -->
     <import resource="jetty.xml"/>
+    <% end %>
 </beans>

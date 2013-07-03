@@ -4,11 +4,14 @@ exec { 'create_server_cert':
   creates => "${settings::ssldir}/certs/${::fqdn}.pem",
 } ->
 class { 'mcollective':
-  activemq_hosts           => [ $::fqdn ],
+  activemq_hosts           => [ "localhost" ],
   server_activemq_password => 'ilikepie',
-  server                   => true,
-  client                   => true,
-  middleware               => true,
+  # enable ez mode - for ubuntu testing
+  middleware_ssl   => false,
+  securityprovider => 'psk',
+  server         => true,
+  client         => true,
+  middleware     => true,
 }
 
 mcollective::agent { 'rpcutil':

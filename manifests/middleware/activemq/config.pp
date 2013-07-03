@@ -1,7 +1,33 @@
 # private class
 class mcollective::middleware::activemq::config {
+  if $::osfamily == 'Debian' {
+    # no, rilly
+    file { '/etc/activemq/instances-available/mcollective':
+      ensure => 'directory',
+    }
+    # shouldn't rely on this being there to copy
+    file { '/etc/activemq/instances-available/mcollective/log4j.properties':
+      source => '/etc/activemq/instances-available/main/log4j.properties',
+    }
+
+    file { '/etc/activemq/instances-available/mcollective/options':
+      source => 'puppet:///modules/mcollective/activemq.ubuntu.options',
+    }
+
+    # make available
+    file { '/etc/activemq/instances-enabled/mcollective':
+      ensure => 'link',
+      target => '/etc/activemq/instances-available/mcollective',
+    }
+
+    $activemq_conf = '/etc/activemq/instances-available/mcollective/activemq.xml'
+  }
+  else {
+    $activemq_conf = '/etc/activemq/activemq.xml'
+  }
+
   anchor { 'mcollective::middleware::activemq::config::begin': } ->
-  file { '/etc/activemq/activemq.xml':
+  file { $activemq_conf:
     content => template("${module_name}/activemq.xml.erb"),
     owner   => 'activemq',
     group   => 'activemq',
