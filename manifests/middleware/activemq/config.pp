@@ -10,10 +10,6 @@ class mcollective::middleware::activemq::config {
       source => '/etc/activemq/instances-available/main/log4j.properties',
     }
 
-    file { '/etc/activemq/instances-available/mcollective/options':
-      source => 'puppet:///modules/mcollective/activemq.ubuntu.options',
-    }
-
     # make available
     file { '/etc/activemq/instances-enabled/mcollective':
       ensure => 'link',
