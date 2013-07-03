@@ -6,9 +6,10 @@
 # list, it's leak and prevents users from actually having control.
 class mcollective::defaults {
   $libdir = $::osfamily ? {
-    'RedHat' => '/usr/libexec/mcollective',
     'Debian' => '/usr/share/mcollective/plugins',
+    default  => '/usr/libexec/mcollective',
   }
+
   $activemq_confdir = $::osfamily ? {
     'Debian' => '/etc/activemq/instances-available/mcollective',
     default  => '/etc/activemq',
