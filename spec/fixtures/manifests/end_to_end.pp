@@ -1,8 +1,27 @@
-# This shouldn't be needed normally
-exec { 'create_server_cert':
-  command => "/usr/bin/puppet cert generate ${::fqdn}",
-  creates => "${settings::ssldir}/certs/${::fqdn}.pem",
-} ->
+#
+class make_some_certs {
+  # This should lexically scope this resource default.
+  # On some vagrant vms puppet isn't in /etc/bin/puppet
+  Exec {
+    path => [ '/usr/bin', '/opt/ruby/bin' ]
+  }
+
+  # This shouldn't be needed normally but will be in a vagrant env
+  exec { 'create_server_cert':
+    command => "puppet cert generate ${::fqdn}",
+    creates => "${settings::ssldir}/certs/${::fqdn}.pem",
+  }
+  exec { 'create_nagios_cert':
+    command => 'puppet cert generate nagios',
+    creates => "${settings::ssldir}/certs/nagios.pem",
+  }
+  exec { 'create_root_cert':
+    command => 'puppet cert generate root',
+    creates => "${settings::ssldir}/certs/root.pem",
+  }
+}
+
+class { 'make_some_certs': } ->
 class { 'mcollective':
   activemq_hosts           => [ 'localhost' ],
   server_activemq_password => 'ilikepie',
@@ -36,10 +55,6 @@ mcollective::agent::actionpolicy { 'nagios nrpe':
   actions  => 'runcommand',
 }
 
-exec { 'create_nagios_cert':
-  command => '/usr/bin/puppet cert generate nagios',
-  creates => "${settings::ssldir}/certs/nagios.pem",
-} ->
 user { 'nagios':
   ensure     => 'present',
   managehome => true,
@@ -47,18 +62,20 @@ user { 'nagios':
 mcollective::user { 'nagios':
   certificate => "${settings::ssldir}/certs/nagios.pem",
   private_key => "${settings::ssldir}/private_keys/nagios.pem",
-  require     => Class['mcollective::client::config'], # HACK
+  require     => [
+    Class['make_some_certs'],
+    Class['mcollective::client::config'], # HACK
+  ],
 }
 
-exec { 'create_root_cert':
-  command => '/usr/bin/puppet cert generate root',
-  creates => "${settings::ssldir}/certs/root.pem",
-} ->
 mcollective::user { 'root':
   homedir     => '/root',
   certificate => "${settings::ssldir}/certs/root.pem",
   private_key => "${settings::ssldir}/private_keys/root.pem",
-  require     => Class['mcollective::client::config'], # HACK
+  require     => [
+    Class['make_some_certs'],
+    Class['mcollective::client::config'], # HACK
+  ],
 }
 
 mcollective::server::client { 'nagios':
