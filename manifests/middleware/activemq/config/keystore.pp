@@ -2,7 +2,7 @@
 class mcollective::middleware::activemq::config::keystore {
   java_ks { 'mcollective:truststore':
     ensure       => 'latest',
-    certificate  => '/var/lib/puppet/ssl/certs/ca.pem',
+    certificate  => "${::settings::ssldir}/certs/ca.pem",
     target       => "${mcollective::activemq_confdir}/truststore.jks",
     password     => 'puppet',
     trustcacerts => true,
