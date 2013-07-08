@@ -11,12 +11,15 @@ define mcollective::agent(
     }
   }
 
-  concat { "/etc/mcollective/policies/${name}.policy":
+  datacat { "mcollective::agent ${name} actionpolicy":
+    path     => "/etc/mcollective/policies/${name}.policy",
+    template => 'mcollective/actionpolicy.erb',
   }
 
-  concat::fragment { "mcollective::agent ${name} policy default":
-    order   => '00',
-    target  => "/etc/mcollective/policies/${name}.policy",
-    content => "policy default ${policy}\n",
+  datacat_fragment { "mcollective::agent ${name} actionpolicy default":
+    target => "mcollective::agent ${name} actionpolicy",
+    data   => {
+      'default' => $policy,
+    },
   }
 }

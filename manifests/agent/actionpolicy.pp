@@ -7,9 +7,18 @@ define mcollective::agent::actionpolicy(
   $facts = '*',
   $classes = '*'
 ) {
-  concat::fragment { "mcollective::agent::actionpolicy ${title}":
-    target  => "/etc/mcollective/policies/${agent}.policy",
-    content => template('mcollective/actionpolicy_line.erb'),
-    order   => '10',
+  datacat_fragment { "mcollective::agent::actionpolicy ${title}":
+    target => "mcollective::agent ${agent} actionpolicy",
+    data   => {
+      lines => [
+        {
+          'action'   => $action,
+          'callerid' => $callerid,
+          'actions'  => $actions,
+          'facts'    => $facts,
+          'classes'  => $classes,
+        },
+      ],
+    },
   }
 }
