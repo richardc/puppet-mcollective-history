@@ -24,8 +24,6 @@ RSpec.configure do |c|
     # Modulefile
     shell "puppet module install puppetlabs/stdlib"
     shell "puppet module install puppetlabs/java_ks"
-    shell "puppet module install ripienaar/concat"
     shell "puppet module install richardc/datacat"
-    puppet_module_install(:source => inifile_path, :module_name => 'inifile')
   end
 end
