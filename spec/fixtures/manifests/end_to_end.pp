@@ -62,20 +62,14 @@ user { 'nagios':
 mcollective::user { 'nagios':
   certificate => "${settings::ssldir}/certs/nagios.pem",
   private_key => "${settings::ssldir}/private_keys/nagios.pem",
-  require     => [
-    Class['make_some_certs'],
-    Class['mcollective::client::config'], # HACK
-  ],
+  require     => Class['make_some_certs'],
 }
 
 mcollective::user { 'root':
   homedir     => '/root',
   certificate => "${settings::ssldir}/certs/root.pem",
   private_key => "${settings::ssldir}/private_keys/root.pem",
-  require     => [
-    Class['make_some_certs'],
-    Class['mcollective::client::config'], # HACK
-  ],
+  require     => Class['make_some_certs'],
 }
 
 mcollective::server::client { 'nagios':

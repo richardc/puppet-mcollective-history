@@ -1,5 +1,10 @@
 # private class
 class mcollective::server::config {
+  datacat { 'mcollective::server':
+    path     => '/etc/mcollective/server.cfg',
+    template => 'mcollective/settings.cfg.erb',
+  }
+
   mcollective::server::setting { 'libdir':
     value => $mcollective::libdir,
   }

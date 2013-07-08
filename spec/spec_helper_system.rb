@@ -25,14 +25,7 @@ RSpec.configure do |c|
     shell "puppet module install puppetlabs/stdlib"
     shell "puppet module install puppetlabs/java_ks"
     shell "puppet module install ripienaar/concat"
-    # shell "puppet module install cprice404/inifile"
-    # Local copy of inifile - may be in any of these relative paths as we move
-    # around some
-    inifile_path = [ proj_root + '/../puppetlabs-inifile', proj_root + '/../inifile' ].select { |p| File.exists?(p) }.first
-    unless inifile_path
-      puts "Can't find inifile"
-      exit(0)
-    end
+    shell "puppet module install richardc/datacat"
     puppet_module_install(:source => inifile_path, :module_name => 'inifile')
   end
 end
