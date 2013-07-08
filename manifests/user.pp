@@ -46,14 +46,22 @@ define mcollective::user(
     template => 'mcollective/settings.cfg.erb',
   }
 
-  datacat_fragment { "mcollective::user ${username} defaults":
-    target => "mcollective::user ${username}",
-    order  => '70',
-    data   => {
-      'plugin.ssl_server_public'  => '/etc/mcollective/server_public.pem',
-      'plugin.ssl_client_public'  => "${homedir}/.mcollective.d/credentials/certs/${username}.pem",
-      'plugin.ssl_client_private' => "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem",
-    },
+  mcollective::user::setting { "${username}:plugin.ssl_server_public":
+    username => $username,
+    value    => '/etc/mcollective/server_public.pem',
+    order    => '70',
+  }
+
+  mcollective::user::setting { "${username}:plugin.ssl_client_public":
+    username => $username,
+    value    => "${homedir}/.mcollective.d/credentials/certs/${username}.pem",
+    order    => '70',
+  }
+
+  mcollective::user::setting { "${username}:plugin.ssl_client_private":
+    username => $username,
+    value    => "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem",
+    order    => '70',
   }
 
   # XXX for activemq?
