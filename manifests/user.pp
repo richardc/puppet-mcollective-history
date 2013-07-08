@@ -5,7 +5,6 @@ define mcollective::user(
   $certificate = undef,
   $private_key = undef,
   $homedir = "/home/${title}",
-  $settings = {},
 ) {
   file { [
     "${homedir}/.mcollective.d",
@@ -71,11 +70,5 @@ define mcollective::user(
       username => $username,
       homedir  => $homedir,
     }
-  }
-
-  datacat_fragment { "mcollective::user ${username} user override":
-    target => "mcollective::user ${username}",
-    order  => '80',
-    data   => $settings,
   }
 }
