@@ -63,7 +63,8 @@ define mcollective::user(
     order    => '70',
   }
 
-  # XXX for activemq?
+  # XXX this is specific to activemq, but refers to the user's certs
+  # Is there a better home for it?  I hope so
   if $mcollective::connector == 'activemq' {
     $connectors = prefix(range( '1', size( $mcollective::activemq_hosts ) ), "${username}_" )
     mcollective::user::activemq { $connectors:
