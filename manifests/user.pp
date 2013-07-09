@@ -45,22 +45,23 @@ define mcollective::user(
     template => 'mcollective/settings.cfg.erb',
   }
 
+  # Use order 60 so a user setting (default 70) will override
   mcollective::user::setting { "${username}:plugin.ssl_server_public":
     username => $username,
     value    => '/etc/mcollective/server_public.pem',
-    order    => '70',
+    order    => '60',
   }
 
   mcollective::user::setting { "${username}:plugin.ssl_client_public":
     username => $username,
     value    => "${homedir}/.mcollective.d/credentials/certs/${username}.pem",
-    order    => '70',
+    order    => '60',
   }
 
   mcollective::user::setting { "${username}:plugin.ssl_client_private":
     username => $username,
     value    => "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem",
-    order    => '70',
+    order    => '60',
   }
 
   # XXX this is specific to activemq, but refers to the user's certs
@@ -70,6 +71,7 @@ define mcollective::user(
     mcollective::user::activemq { $connectors:
       username => $username,
       homedir  => $homedir,
+      order    => '60',
     }
   }
 }
