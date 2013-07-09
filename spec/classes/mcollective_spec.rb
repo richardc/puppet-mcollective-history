@@ -46,5 +46,22 @@ describe 'mcollective' do
         end
       end
     end
+
+    describe "#securityprovider" do
+      it "should default to ssl" do
+        should contain_mcollective__server__setting('securityprovider').with_value('ssl')
+      end
+
+      describe "ssl" do
+        it { should contain_mcollective__server__setting('plugin.ssl_server_public').with_value('/etc/mcollective/server_public.pem') }
+        it { should contain_file('/etc/mcollective/server_public.pem') }
+      end
+
+      describe "psk" do
+        let(:params) { { :server => true, :securityprovider => 'psk' } }
+        it { should contain_mcollective__server__setting('securityprovider').with_value('psk') }
+        it { should contain_mcollective__server__setting('plugin.psk').with_value('changeme') }
+      end
+    end
   end
 end
