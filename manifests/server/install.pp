@@ -8,6 +8,7 @@ class mcollective::server::install {
     # XXX you be shitting me
     package { 'ruby-stomp':
       ensure => 'installed',
+      before => Package['mcollective'],
     }
   }
 }
