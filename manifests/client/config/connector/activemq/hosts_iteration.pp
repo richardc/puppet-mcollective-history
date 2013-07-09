@@ -24,22 +24,8 @@ define mcollective::client::config::connector::activemq::hosts_iteration {
     }
 
     mcollective::client::setting { "plugin.activemq.pool.${name}.ssl.ca":
-      value => "${settings::ssldir}/certs/ca.pem",
+      value => '/etc/mcollective/ca.pem',
     }
-
-    # We might not want this for the global settings at all, or will we want a
-    # mode where we're setting up a ssl transport but with a global 'server'
-    # cert.
-    # When we set this up for a user we use ~/.mcollective.d/credentials/certs/${username}.pem
-    # so for our current testing don't set this up globally
-    #mcollective::client::setting { "plugin.activemq.pool.${name}.ssl.cert":
-    # value => '',
-    #}
-
-    # Same noodlings for the .ssl.cert
-    #mcollective::client::setting { "plugin.activemq.pool.${name}.ssl.key":
-    #  value => $mcollective::server_activemq_password,
-    #}
 
     mcollective::client::setting { "plugin.activemq.pool.${name}.ssl.fallback":
       value => 0,

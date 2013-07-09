@@ -1,7 +1,7 @@
 # Define - mcollective::user
 define mcollective::user(
   $username = $title,
-  $ca_certificate = "${settings::ssldir}/certs/ca.pem",
+  $ca_certificate = $mcollective::ssl_ca_cert,
   $certificate = undef,
   $private_key = undef,
   $homedir = "/home/${title}",

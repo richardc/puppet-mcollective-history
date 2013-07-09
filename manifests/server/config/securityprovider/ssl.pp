@@ -16,6 +16,11 @@ class mcollective::server::config::securityprovider::ssl {
     value => '/etc/mcollective/server_private.pem',
   }
 
+  file { '/etc/mcollective/ca.pem':
+    source => $mcollective::ssl_ca_cert,
+    mode   => '0444',
+  }
+
   file { '/etc/mcollective/server_public.pem':
     source => $mcollective::ssl_server_public,
     mode   => '0444',

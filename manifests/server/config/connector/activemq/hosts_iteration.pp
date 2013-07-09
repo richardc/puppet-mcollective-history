@@ -23,15 +23,15 @@ define mcollective::server::config::connector::activemq::hosts_iteration {
     }
 
     mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.ca":
-      value => "${settings::ssldir}/certs/ca.pem",
+      value => '/etc/mcollective/ca.pem',
     }
 
     mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.cert":
-      value => "${settings::ssldir}/certs/${::clientcert}.pem",
+      value => '/etc/mcollective/server_public.pem',
     }
 
     mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.key":
-      value => "${settings::ssldir}/private_keys/${::clientcert}.pem",
+      value => '/etc/mcollective/server_private.pem',
     }
 
     mcollective::server::setting { "plugin.activemq.pool.${name}.ssl.fallback":

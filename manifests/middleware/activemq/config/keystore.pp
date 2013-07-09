@@ -2,7 +2,7 @@
 class mcollective::middleware::activemq::config::keystore {
   java_ks { 'mcollective:truststore':
     ensure       => 'latest',
-    certificate  => "${::settings::ssldir}/certs/ca.pem",
+    certificate  => '/etc/mcollective/ca.pem',
     target       => "${mcollective::activemq_confdir}/truststore.jks",
     password     => 'puppet',
     trustcacerts => true,
@@ -16,8 +16,8 @@ class mcollective::middleware::activemq::config::keystore {
 
   java_ks { 'mcollective:keystore':
     ensure       => 'latest',
-    certificate  => "${::settings::ssldir}/certs/${::clientcert}.pem",
-    private_key  => "${::settings::ssldir}/private_keys/${::clientcert}.pem",
+    certificate  => '/etc/mcollective/server_public.pem',
+    private_key  => '/etc/mcollective/server_private.pem',
     target       => "${mcollective::activemq_confdir}/keystore.jks",
     password     => 'puppet',
     trustcacerts => true,
