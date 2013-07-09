@@ -18,9 +18,11 @@ class mcollective::server::config::securityprovider::ssl {
 
   file { '/etc/mcollective/server_public.pem':
     source => $mcollective::server_public_pem,
+    mode   => '0444',
   }
 
   file { '/etc/mcollective/server_private.pem':
     source => $mcollective::server_private_pem,
+    mode   => '0400',
   }
 }
