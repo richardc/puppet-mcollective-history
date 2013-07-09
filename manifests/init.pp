@@ -10,8 +10,9 @@ class mcollective (
   $rpcauditprovider = 'logfile',
   $psk = 'changeme',
   $libdir = $mcollective::defaults::libdir,
-  $server_public_pem = "${settings::ssldir}/public_keys/${::fqdn}.pem",
-  $server_private_pem = "${settings::ssldir}/private_keys/${::fqdn}.pem",
+  $ssl_ca_cert = "${settings::ssldir}/certs/ca.pem",
+  $ssl_server_public = "${settings::ssldir}/certs/${::fqdn}.pem",
+  $ssl_server_private = "${settings::ssldir}/private_keys/${::fqdn}.pem",
   $server_daemonize = 1,
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!
