@@ -18,7 +18,11 @@ class mcollective::server::config {
   }
 
   file { '/etc/mcollective/clients':
-    ensure => 'directory',
+    ensure  => 'directory',
+    purge   => true,
+    recurse => true,
+    mode    => '0444',
+    source  => $mcollective::ssl_client_certs,
   }
 
   anchor { 'mcollective::server::config::begin': } ->
