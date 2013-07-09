@@ -14,12 +14,11 @@ RSpec.configure do |c|
 
   # This is where we 'setup' the nodes before running our tests
   c.before :suite do
-    # Install puppet
     puppet_install
-    puppet_master_install
 
-    # Replace mymodule with your module name
     puppet_module_install(:source => proj_root, :module_name => 'mcollective')
+    puppet_module_install(:source => proj_root + '/spec/fixtures/modules/site_mcollective', :module_name => 'site_mcollective')
+    puppet_module_install(:source => proj_root + '/spec/fixtures/modules/site_nagios', :module_name => 'site_nagios')
     # XXX would be better if puppet_module_install parsed this out of the
     # Modulefile
     shell "puppet module install puppetlabs/stdlib"
