@@ -37,7 +37,7 @@ class mcollective (
   }
   if $middleware {
     Anchor['mcollective::begin'] ->
-    class { "mcollective::middleware::${connector}": } ->
+    class { 'mcollective::middleware': } ->
     Anchor['mcollective::end']
   }
 }
