@@ -1,7 +1,8 @@
 # Define - mcollective::user
 define mcollective::user(
   $username = $title,
-  $ca_certificate = $mcollective::ssl_ca_cert,
+  $ssl_ca_cert = $mcollective::ssl_ca_cert,
+  $ssl_server_public = $mcollective::ssl_server_public,
   $certificate = undef,
   $private_key = undef,
   $homedir = "/home/${title}",
@@ -16,7 +17,13 @@ define mcollective::user(
   }
 
   file { "${homedir}/.mcollective.d/credentials/certs/ca.pem":
-    source => $ca_certificate,
+    source => $ssl_ca_cert,
+    owner  => $name,
+    mode   => '0444',
+  }
+
+  file { "${homedir}/.mcollective.d/credentials/certs/server_public.pem":
+    source => $ssl_server_public,
     owner  => $name,
     mode   => '0444',
   }
@@ -45,10 +52,10 @@ define mcollective::user(
     template => 'mcollective/settings.cfg.erb',
   }
 
-  # Use order 60 so a user setting (default 70) will override
+  # Use order 60 so a regular user setting (default 70) will override
   mcollective::user::setting { "${username}:plugin.ssl_server_public":
     username => $username,
-    value    => '/etc/mcollective/server_public.pem',
+    value    => "${homedir}/.mcollective.d/credentials/certs/server_public.pem",
     order    => '60',
   }
 
