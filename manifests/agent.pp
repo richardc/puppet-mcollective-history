@@ -2,11 +2,19 @@
 # Namevar will be the name of the agent to install
 define mcollective::agent(
   $policy = 'deny',
-  $package = false
+  $package = false,
+  $package_name = undef,
 )
 {
   if $package {
-    package { "mcollective-${name}-agent":
+    if $package_name {
+      $real_package_name = $package_name
+    }
+    else {
+      $real_package_name = "mcollective-${name}-agent"
+    }
+
+    package { $real_package_name:
       ensure => 'installed',
     }
   }
