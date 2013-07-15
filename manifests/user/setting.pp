@@ -1,11 +1,10 @@
 # Define - mcollective::user::setting
 define mcollective::user::setting($username, $value, $order = '70') {
   $setting = regsubst($title, "^${username}[ _:]", '')
-  $data = {}
-  $data[$setting] = $value
-  datacat_fragment { "mcollective::user ${username} ${setting}":
-    target => "mcollective::user ${username}",
-    data   => $data,
-    order  => $order,
+  mcollective::setting { "mcollective::user::setting ${title}":
+    setting => $setting,
+    value   => $value,
+    target  => "mcollective::user ${username}",
+    order   => $order,
   }
 }
