@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe "mcollective::user" do
   let(:title) { 'nagios' }
-  let(:facts) { { :concat_basedir => '/var/lib/concat' } }
   it { should contain_file('/home/nagios/.mcollective.d') }
   it { should contain_file('/home/nagios/.mcollective') }
 
