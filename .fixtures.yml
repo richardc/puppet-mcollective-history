@@ -1,7 +1,9 @@
 ---
 fixtures:
   repositories:
+    activemq: 'https://github.com/puppetlabs/puppetlabs-activemq.git'
     datacat: 'https://github.com/richardc/puppet-datacat.git'
+    java_ks: 'https://github.com/puppetlabs/puppetlabs-java_ks.git'
     stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
   symlinks:
     mcollective: '#{source_dir}'
