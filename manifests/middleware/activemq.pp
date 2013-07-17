@@ -47,6 +47,8 @@ class mcollective::middleware::activemq {
       owner => 'activemq',
       group => 'activemq',
       mode  => '0400',
-    }
+    } ->
+
+    Class['activemq::service']
   }
 }
