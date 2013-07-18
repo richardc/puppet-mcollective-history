@@ -24,7 +24,8 @@ class mcollective::middleware::activemq {
       owner => 'activemq',
       group => 'activemq',
       mode  => '0400',
-    }
+    } ->
+    Class ['activemq::service']
 
     file { "${mcollective::activemq_confdir}/server_public.pem":
       source => $mcollective::ssl_server_public,
