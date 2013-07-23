@@ -3,7 +3,6 @@ class mcollective (
   $connector = 'activemq',
   $server_activemq_user = 'mcollective',
   $server_activemq_password = 'marionette',
-  $activemq_hosts = [],
   $factsource = 'yaml',
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',
@@ -17,6 +16,7 @@ class mcollective (
   $server_daemonize = 1,
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!
+  $middleware_hosts = [],
   $middleware_ssl = true,
   $server = false,
   $client = false,

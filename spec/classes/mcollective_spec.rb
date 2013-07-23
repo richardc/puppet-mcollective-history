@@ -38,7 +38,7 @@ describe 'mcollective' do
 
       describe "activemq" do
         describe "setting connectors" do
-          let(:params) { { :server => true, :activemq_hosts => %w{ foo bar } } }
+          let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
           it { should contain_mcollective__server__setting('plugin.activemq.pool.size').with_value(2) }
           it { should contain_mcollective__server__setting('plugin.activemq.pool.1.host').with_value('foo') }
           it { should contain_mcollective__server__setting('plugin.activemq.pool.1.port').with_value(61614) }
