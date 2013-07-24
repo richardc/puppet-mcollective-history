@@ -5,10 +5,6 @@ class mcollective::server::config {
     template => 'mcollective/settings.cfg.erb',
   }
 
-  mcollective::server::setting { 'libdir':
-    value => $mcollective::libdir,
-  }
-
   mcollective::server::setting { 'daemonize':
     value => $mcollective::server_daemonize,
   }
@@ -25,8 +21,15 @@ class mcollective::server::config {
     source  => $mcollective::ssl_client_certs,
   }
 
+  $connector_class = "mcollective::server::config::connector::${mcollective::connector}"
+  if defined($connector_class) {
+    class { "mcollective::server::config::connector::${mcollective::connector}":
+      requre => Anchor['mcollective::server::config::begin'],
+      before => Anchor['mcollective::server::config::end'],
+    }
+  }
+
   anchor { 'mcollective::server::config::begin': } ->
-  class { "mcollective::server::config::connector::${mcollective::connector}": } ->
   class { "mcollective::server::config::securityprovider::${mcollective::securityprovider}": } ->
   class { "mcollective::server::config::factsource::${mcollective::factsource}": } ->
   class { "mcollective::server::config::rpcauditprovider::${mcollective::rpcauditprovider}": } ->
