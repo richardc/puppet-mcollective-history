@@ -8,7 +8,8 @@ class mcollective (
   $rpcauthprovider = 'action_policy',
   $rpcauditprovider = 'logfile',
   $psk = 'changeme',
-  $libdir = $mcollective::defaults::libdir,
+  $core_libdir = $mcollective::defaults::core_libdir,
+  $site_libdir = $mcollective::defaults::site_libdir,
   $ssl_ca_cert = "${settings::ssldir}/certs/ca.pem",
   $ssl_server_public = "${settings::ssldir}/certs/${::fqdn}.pem",
   $ssl_server_private = "${settings::ssldir}/private_keys/${::fqdn}.pem",
@@ -25,6 +26,12 @@ class mcollective (
   anchor { 'mcollective::begin': }
   anchor { 'mcollective::end': }
 
+  if $client or $server {
+    # We don't want this on middleware roles.
+    Anchor['mcollective::begin'] ->
+    class { 'mcollective::common': } ->
+    Anchor['mcollective::end']
+  }
   if $client {
     Anchor['mcollective::begin'] ->
     class { 'mcollective::client': } ->
