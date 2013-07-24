@@ -5,6 +5,14 @@ class mcollective::client::config {
     template => 'mcollective/settings.cfg.erb',
   }
 
+  mcollective::client::setting { 'loglevel':
+    value => 'warn',
+  }
+
+  mcollective::client::setting { 'logger_type':
+    value => 'console',
+  }
+
   mcollective::soft_include { [
     "mcollective::client::config::connector::${mcollective::connector}",
     "mcollective::client::config::securityprovider::${mcollective::securityprovider}",

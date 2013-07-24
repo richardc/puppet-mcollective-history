@@ -14,6 +14,8 @@ class mcollective (
   $ssl_server_public = "${settings::ssldir}/certs/${::fqdn}.pem",
   $ssl_server_private = "${settings::ssldir}/private_keys/${::fqdn}.pem",
   $ssl_client_certs = 'puppet:///modules/mcollective/empty',
+  $server_logfile   = '/var/log/mcollective.log',
+  $server_loglevel  = 'info',
   $server_daemonize = 1,
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!

@@ -34,6 +34,14 @@ class mcollective::common::config {
     value => $mcollective::securityprovider,
   }
 
+  mcollective::common::setting { 'collectives':
+    value => 'mcollective',
+  }
+
+  mcollective::common::setting { 'main_collective':
+    value => 'mcollective',
+  }
+
   mcollective::soft_include { [
     "mcollective::common::config::connector::${mcollective::connector}",
     "mcollective::common::config::securityprovider::${mcollective::securityprovider}",

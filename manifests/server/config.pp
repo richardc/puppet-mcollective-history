@@ -9,6 +9,14 @@ class mcollective::server::config {
     value => $mcollective::server_daemonize,
   }
 
+  mcollective::server::setting { 'logfile':
+    value => $mcollective::server_logfile,
+  }
+
+  mcollective::server::setting { 'loglevel':
+    value => $mcollective::server_loglevel,
+  }
+
   file { '/etc/mcollective/policies':
     ensure => 'directory',
   }
