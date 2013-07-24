@@ -1,8 +1,6 @@
 # private class
 class mcollective::server::config::rpcauthprovider::action_policy {
-  mcollective::plugin { 'actionpolicy':
-    source_path => 'puppet:///modules/mcollective/plugins/actionpolicy',
-  }
+  mcollective::plugin { 'actionpolicy': }
 
   mcollective::server::setting { 'rpcauthorization':
     value => 1,

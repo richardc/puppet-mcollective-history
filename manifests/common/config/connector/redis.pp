@@ -14,9 +14,7 @@ class mcollective::common::config::connector::redis {
     value => $mcollective::middleware_hosts[0],
   }
 
-  mcollective::plugin { 'mcollective::server::config::connector::redis':
-    source_path => 'puppet:///modules/mcollective_plugin_redis/lib',
-  }
+  mcollective::plugin { 'connector/redis': }
 
   package { 'rubygem-redis':
     ensure => installed,

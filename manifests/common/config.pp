@@ -4,6 +4,7 @@ class mcollective::common::config {
     ensure       => directory,
     recurse      => true,
     purge        => true,
+    force        => true,
     source       => [],
     sourceselect => 'all',
   }

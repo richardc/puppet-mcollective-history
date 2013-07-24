@@ -1,9 +1,9 @@
 #
-define mcollective::plugin($source_path = undef) {
+define mcollective::plugin($source = "puppet:///modules/mcollective/plugins/${name}") {
   datacat_fragment { "mcollective::plugin ${name}":
     target => 'mcollective::site_libdir',
     data   => {
-      source_path => [ $source_path ],
+      source_path => [ $source ],
     },
   }
 }
