@@ -7,6 +7,7 @@ class mcollective (
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',
   $rpcauditprovider = 'logfile',
+  $registration = undef,
   $psk = 'changeme',
   $core_libdir = $mcollective::defaults::core_libdir,
   $site_libdir = $mcollective::defaults::site_libdir,

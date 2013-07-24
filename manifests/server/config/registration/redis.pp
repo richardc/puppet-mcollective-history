@@ -1,5 +1,5 @@
 #
-class mcollective::server::config::connector::redis {
+class mcollective::server::config::registration::redis {
   mcollective::server::setting { 'registerinterval':
     value => 10,
   }
