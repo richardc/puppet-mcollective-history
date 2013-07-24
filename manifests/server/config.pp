@@ -21,18 +21,17 @@ class mcollective::server::config {
     source  => $mcollective::ssl_client_certs,
   }
 
-  $connector_class = "mcollective::server::config::connector::${mcollective::connector}"
-  if defined($connector_class) {
-    class { "mcollective::server::config::connector::${mcollective::connector}":
-      requre => Anchor['mcollective::server::config::begin'],
-      before => Anchor['mcollective::server::config::end'],
-    }
+  mcollective::soft_include { [
+    "mcollective::server::config::connector::${mcollective::connector}",
+    "mcollective::server::config::securityprovider::${mcollective::securityprovider}",
+    "mcollective::server::config::factsource::${mcollective::factsource}",
+    "mcollective::server::config::rpcauditprovider::${mcollective::rpcauditprovider}",
+    "mcollective::server::config::rpcauthprovider::${mcollective::rpcauthprovider}",
+  ]:
+    start => Anchor['mcollective::server::config::begin'],
+    end   => Anchor['mcollective::server::config::end'],
   }
 
-  anchor { 'mcollective::server::config::begin': } ->
-  class { "mcollective::server::config::securityprovider::${mcollective::securityprovider}": } ->
-  class { "mcollective::server::config::factsource::${mcollective::factsource}": } ->
-  class { "mcollective::server::config::rpcauditprovider::${mcollective::rpcauditprovider}": } ->
-  class { "mcollective::server::config::rpcauthprovider::${mcollective::rpcauthprovider}": } ->
+  anchor { 'mcollective::server::config::begin': }
   anchor { 'mcollective::server::config::end': }
 }

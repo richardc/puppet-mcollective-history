@@ -5,15 +5,14 @@ class mcollective::client::config {
     template => 'mcollective/settings.cfg.erb',
   }
 
-  anchor { 'mcollective::client::config::begin': } ->
-  class { "mcollective::client::config::securityprovider::${mcollective::securityprovider}": } ->
-  anchor { 'mcollective::client::config::end': }
-
-  $connector_class = "mcollective::client::config::connector::${mcollective::connector}"
-  if defined($connector_class) {
-    class { $connector_class:
-      require => Anchor['mcollective::client::config::begin'],
-      before  => Anchor['mcollective::client::config::end'],
-    }
+  mcollective::soft_include { [
+    "mcollective::client::config::connector::${mcollective::connector}",
+    "mcollective::client::config::securityprovider::${mcollective::securityprovider}",
+  ]:
+    start => Anchor['mcollective::client::config::begin'],
+    end   => Anchor['mcollective::client::config::end'],
   }
+
+  anchor { 'mcollective::client::config::begin': }
+  anchor { 'mcollective::client::config::end': }
 }

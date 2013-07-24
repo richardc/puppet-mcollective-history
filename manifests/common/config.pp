@@ -22,20 +22,26 @@ class mcollective::common::config {
     }
   }
 
-  mcollective::setting { 'mcollective::common libdir':
-    setting => 'libdir',
-    target  => [ 'mcollective::server', 'mcollective::client' ],
-    value   => "${mcollective::site_libdir}:${mcollective::core_libdir}",
+  mcollective::common::setting { 'libdir':
+    value => "${mcollective::site_libdir}:${mcollective::core_libdir}",
+  }
+
+  mcollective::common::setting { 'connector':
+    value => $mcollective::connector,
+  }
+
+  mcollective::common::setting { 'securityprovider':
+    value => $mcollective::securityprovider,
+  }
+
+  mcollective::soft_include { [
+    "mcollective::common::config::connector::${mcollective::connector}",
+    "mcollective::common::config::securityprovider::${mcollective::securityprovider}",
+  ]:
+    start => Anchor['mcollective::common::config::begin'],
+    end   => Anchor['mcollective::common::config::end'],
   }
 
   anchor { 'mcollective::common::config::begin': }
   anchor { 'mcollective::common::config::end': }
-
-  $connector_class = "mcollective::common::config::connector::${mcollective::connector}"
-  if defined($connector_class) {
-    class { $connector_class:
-      require => Anchor['mcollective::common::config::begin'],
-      before  => Anchor['mcollective::common::config::end'],
-    }
-  }
 }
