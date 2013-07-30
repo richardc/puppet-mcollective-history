@@ -1,9 +1,5 @@
 # private class
 class mcollective::server::config::securityprovider::ssl {
-  mcollective::server::setting { 'securityprovider':
-    value => 'ssl',
-  }
-
   mcollective::server::setting { 'plugin.ssl_client_cert_dir':
     value => '/etc/mcollective/clients',
   }

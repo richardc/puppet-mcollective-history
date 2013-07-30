@@ -50,7 +50,7 @@ describe 'mcollective' do
 
     describe "#securityprovider" do
       it "should default to ssl" do
-        should contain_mcollective__server__setting('securityprovider').with_value('ssl')
+        should contain_mcollective__common__setting('securityprovider').with_value('ssl')
       end
 
       describe "ssl" do
