@@ -60,8 +60,8 @@ describe 'mcollective' do
 
       describe "psk" do
         let(:params) { { :server => true, :securityprovider => 'psk' } }
-        it { should contain_mcollective__server__setting('securityprovider').with_value('psk') }
-        it { should contain_mcollective__server__setting('plugin.psk').with_value('changeme') }
+        it { should contain_mcollective__common__setting('securityprovider').with_value('psk') }
+        it { should contain_mcollective__common__setting('plugin.psk').with_value('changeme') }
       end
     end
   end
