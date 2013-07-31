@@ -1,5 +1,8 @@
 # private class
 class mcollective::server::config::factsource::yaml {
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
   # The facts.yaml file resource is generated in its own dedicated class
   # By doing this, the file produced isn't polluted with unwanted in scope
   # class variables.

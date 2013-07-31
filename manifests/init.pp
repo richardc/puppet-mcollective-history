@@ -42,7 +42,6 @@ class mcollective (
     Anchor['mcollective::end']
   }
   if $server {
-    fail('client')
     Anchor['mcollective::begin'] ->
     class { '::mcollective::server': } ->
     Anchor['mcollective::end']

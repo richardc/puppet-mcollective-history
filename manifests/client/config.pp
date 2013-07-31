@@ -1,5 +1,8 @@
 # private class
 class mcollective::client::config {
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
   datacat { 'mcollective::client':
     path     => '/etc/mcollective/client.cfg',
     template => 'mcollective/settings.cfg.erb',

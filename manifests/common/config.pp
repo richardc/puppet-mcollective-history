@@ -9,8 +9,6 @@ class mcollective::common::config {
     sourceselect => 'all',
   }
 
-  fail('time to die')
-
   datacat_collector { 'mcollective::site_libdir':
     before          => File[$mcollective::site_libdir],
     target_resource => File[$mcollective::site_libdir],

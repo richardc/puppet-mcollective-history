@@ -1,5 +1,8 @@
 # private class
 class mcollective::server::config::connector::activemq {
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
   mcollective::server::setting { 'connector':
     value => 'activemq',
   }
