@@ -1,6 +1,5 @@
 #
 class site_mcollective::client {
-  class { '::mcollective::client': }
   mcollective::user { 'root':
     homedir     => '/root',
     certificate => "puppet:///modules/${module_name}/certs/root.pem",
