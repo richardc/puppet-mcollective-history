@@ -1,6 +1,6 @@
 #
 class site_mcollective($middleware_hosts = [ 'localhost' ]) {
-  class { 'mcollective':
+  class { '::mcollective':
     middleware_hosts   => $middleware_hosts,
     ssl_client_certs   => "puppet:///modules/${module_name}/certs",
     ssl_ca_cert        => "puppet:///modules/${module_name}/certs/ca.pem",

@@ -3,7 +3,7 @@
 # configuration)
 class mcollective::client {
   anchor { 'mcollective::client::begin': } ->
-  class { 'mcollective::client::install': } ->
-  class { 'mcollective::client::config': } ->
+  class { '::mcollective::client::install': } ->
+  class { '::mcollective::client::config': } ->
   anchor { 'mcollective::client::end': }
 }

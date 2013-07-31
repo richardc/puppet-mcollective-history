@@ -29,25 +29,27 @@ class mcollective (
   anchor { 'mcollective::begin': }
   anchor { 'mcollective::end': }
 
+
   if $client or $server {
     # We don't want this on middleware roles.
     Anchor['mcollective::begin'] ->
-    class { 'mcollective::common': } ->
+    class { '::mcollective::common': } ->
     Anchor['mcollective::end']
   }
   if $client {
     Anchor['mcollective::begin'] ->
-    class { 'mcollective::client': } ->
+    class { '::mcollective::client': } ->
     Anchor['mcollective::end']
   }
   if $server {
+    fail('client')
     Anchor['mcollective::begin'] ->
-    class { 'mcollective::server': } ->
+    class { '::mcollective::server': } ->
     Anchor['mcollective::end']
   }
   if $middleware {
     Anchor['mcollective::begin'] ->
-    class { 'mcollective::middleware': } ->
+    class { '::mcollective::middleware': } ->
     Anchor['mcollective::end']
   }
 }

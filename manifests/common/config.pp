@@ -9,6 +9,8 @@ class mcollective::common::config {
     sourceselect => 'all',
   }
 
+  fail('time to die')
+
   datacat_collector { 'mcollective::site_libdir':
     before          => File[$mcollective::site_libdir],
     target_resource => File[$mcollective::site_libdir],
@@ -44,8 +46,8 @@ class mcollective::common::config {
   }
 
   mcollective::soft_include { [
-    "mcollective::common::config::connector::${mcollective::connector}",
-    "mcollective::common::config::securityprovider::${mcollective::securityprovider}",
+    "::mcollective::common::config::connector::${mcollective::connector}",
+    "::mcollective::common::config::securityprovider::${mcollective::securityprovider}",
   ]:
     start => Anchor['mcollective::common::config::begin'],
     end   => Anchor['mcollective::common::config::end'],

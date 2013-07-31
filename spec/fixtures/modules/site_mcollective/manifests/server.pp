@@ -1,6 +1,6 @@
 #
 class site_mcollective::server {
-  class { 'mcollective::server': }
+  class { '::mcollective::server': }
 
   mcollective::agent { 'rpcutil':
     policy => 'deny',
