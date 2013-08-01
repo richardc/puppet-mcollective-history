@@ -33,17 +33,17 @@ describe 'mcollective' do
 
     describe "#connector" do
       it "should default to activemq" do
-        should contain_mcollective__server__setting('connector').with_value('activemq')
+        should contain_mcollective__common__setting('connector').with_value('activemq')
       end
 
       describe "activemq" do
         describe "setting connectors" do
           let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
-          it { should contain_mcollective__server__setting('plugin.activemq.pool.size').with_value(2) }
-          it { should contain_mcollective__server__setting('plugin.activemq.pool.1.host').with_value('foo') }
-          it { should contain_mcollective__server__setting('plugin.activemq.pool.1.port').with_value(61614) }
-          it { should contain_mcollective__server__setting('plugin.activemq.pool.2.host').with_value('bar') }
-          it { should contain_mcollective__server__setting('plugin.activemq.pool.2.port').with_value(61614) }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.1.host').with_value('foo') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value(61614) }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.2.host').with_value('bar') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.2.port').with_value(61614) }
         end
       end
     end
