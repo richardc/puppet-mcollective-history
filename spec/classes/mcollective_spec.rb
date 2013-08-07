@@ -1,14 +1,21 @@
 require 'spec_helper'
 describe 'mcollective' do
   it { should contain_class('mcollective') }
-  it { should_not contain_class('mcollective::server') }
   it { should_not contain_class('mcollective::client') }
   it { should_not contain_class('mcollective::middleware') }
 
-  describe "installing a server" do
-    let(:params) { { :server => true } }
-    it { should contain_class('mcollective::server') }
+  describe '#server' do
+    context 'default (true)' do
+      it { should contain_class('mcollective::server') }
+    end
 
+    context 'false' do
+      let(:params) { { :server => false } }
+      it { should_not contain_class('mcollective::server') }
+    end
+  end
+
+  describe "installing a server" do
     describe "#factsource" do
       it "should default to yaml" do
         should contain_mcollective__server__setting('factsource').with_value('yaml')

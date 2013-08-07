@@ -22,7 +22,7 @@ class mcollective (
   $activemq_console = false, # ubuntu why you no jetty.xml!
   $middleware_hosts = [],
   $middleware_ssl = true,
-  $server = false,
+  $server = true,
   $client = false,
   $middleware = false,
 ) inherits mcollective::defaults {
