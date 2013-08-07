@@ -1,6 +1,7 @@
 # Class - mcollective
 class mcollective (
   $version = 'present',
+  $enterprise = false,
   $connector = 'activemq',
   $server_activemq_user = 'mcollective',
   $server_activemq_password = 'marionette',
