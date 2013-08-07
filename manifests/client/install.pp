@@ -4,6 +4,6 @@ class mcollective::client::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
   package { 'mcollective-client':
-    ensure => 'installed',
+    ensure => $mcollective::version,
   }
 }
