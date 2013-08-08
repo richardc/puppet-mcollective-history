@@ -6,13 +6,13 @@ class mcollective::server::config {
 
   if $mcollective::server_config {
     file { 'mcollective::server':
-      path    => '/etc/mcollective/server.cfg',
+      path    => $mcollective::server_config_file,
       content => $mcollective::server_config,
     }
   }
   else {
     datacat { 'mcollective::server':
-      path     => '/etc/mcollective/server.cfg',
+      path     => $mcollective::server_config_file,
       template => 'mcollective/settings.cfg.erb',
     }
   }

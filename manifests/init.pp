@@ -27,6 +27,7 @@ class mcollective (
   $middleware_ssl = true,
   $server = true,
   $server_config = undef,
+  $server_config_file = '/etc/mcollective/server.cfg',
   $client = false,
   $middleware = false,
 ) inherits mcollective::defaults {

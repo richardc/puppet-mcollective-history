@@ -71,12 +71,12 @@ describe 'mcollective' do
 
   context '#server_config_file' do
     context 'default (unset)' do
-      it { should contain_file('server_config').with_path('/etc/mcollective/server.cfg') }
+      it { should contain_file('mcollective::server').with_path('/etc/mcollective/server.cfg') }
     end
 
     context 'set' do
       let(:params) { { :server_config_file => '/etc/mco/server.cfg' } }
-      it { should contain_file('server_config').with_path('/etc/mco/server.cfg') }
+      it { should contain_file('mcollective::server').with_path('/etc/mco/server.cfg') }
     end
   end
 
