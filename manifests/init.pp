@@ -6,6 +6,8 @@ class mcollective (
   $connector = 'activemq',
   $server_activemq_user = 'mcollective',
   $server_activemq_password = 'marionette',
+  $main_collective = 'mcollective',
+  $collectives = 'mcollective',
   $factsource = 'yaml',
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',

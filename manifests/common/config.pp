@@ -36,11 +36,11 @@ class mcollective::common::config {
   }
 
   mcollective::common::setting { 'collectives':
-    value => 'mcollective',
+    value => $mcollective::collectives,
   }
 
   mcollective::common::setting { 'main_collective':
-    value => 'mcollective',
+    value => $mcollective::main_collective,
   }
 
   mcollective::soft_include { [

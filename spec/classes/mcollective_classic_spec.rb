@@ -120,23 +120,23 @@ describe 'mcollective' do
 
   context '#main_collective' do
     context 'default (mcollective)' do
-      it { should contain_file('server_config').with_content(/^main_collective\s+=\s+mcollective$/m) }
+      it { should contain_mcollective__common__setting('main_collective').with_value('mcollective') }
     end
 
     context 'set' do
       let(:params) { { :main_collective => 'pies' } }
-      it { should contain_file('server_config').with_content(/^main_collective\s+=\s+pies$/m) }
+      it { should contain_mcollective__common__setting('main_collective').with_value('pies') }
     end
   end
 
   context '#collectives' do
     context 'default (mcollective)' do
-      it { should contain_file('server_config').with_content(/collectives\s+=\s+mcollective$/m) }
+      it { should contain_mcollective__common__setting('collectives').with_value('mcollective') }
     end
 
     context 'set' do
       let(:params) { { :collectives => 'pies' } }
-      it { should contain_file('server_config').with_content(/^collectives\s+=\s+pies$/m) }
+      it { should contain_mcollective__common__setting('collectives').with_value('pies') }
     end
   end
 
