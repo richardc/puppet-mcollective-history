@@ -26,6 +26,7 @@ class mcollective (
   $middleware_hosts = [],
   $middleware_ssl = true,
   $server = true,
+  $server_config = undef,
   $client = false,
   $middleware = false,
 ) inherits mcollective::defaults {

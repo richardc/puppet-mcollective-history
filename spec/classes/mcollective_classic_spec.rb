@@ -60,12 +60,12 @@ describe 'mcollective' do
 
   context '#server_config' do
     context 'default (unset)' do
-      it { should contain_file('server_config').with_content(/Basic stuff/) }
+      it { should contain_file('mcollective::server').with_content(/To be replaced/) }
     end
 
     context 'set' do
       let(:params) { { :server_config => 'I like pie' } }
-      it { should contain_file('server_config').with_content('I like pie') }
+      it { should contain_file('mcollective::server').with_content('I like pie') }
     end
   end
 

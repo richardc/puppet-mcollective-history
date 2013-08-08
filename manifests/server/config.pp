@@ -3,9 +3,18 @@ class mcollective::server::config {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
-  datacat { 'mcollective::server':
-    path     => '/etc/mcollective/server.cfg',
-    template => 'mcollective/settings.cfg.erb',
+
+  if $mcollective::server_config {
+    file { 'mcollective::server':
+      path    => '/etc/mcollective/server.cfg',
+      content => $mcollective::server_config,
+    }
+  }
+  else {
+    datacat { 'mcollective::server':
+      path     => '/etc/mcollective/server.cfg',
+      template => 'mcollective/settings.cfg.erb',
+    }
   }
 
   mcollective::server::setting { 'daemonize':
