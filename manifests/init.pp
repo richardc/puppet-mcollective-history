@@ -29,6 +29,8 @@ class mcollective (
   $server_config = undef,
   $server_config_file = '/etc/mcollective/server.cfg',
   $client = false,
+  $client_config = undef,
+  $client_config_file = '/etc/mcollective/client.cfg',
   $middleware = false,
 ) inherits mcollective::defaults {
   anchor { 'mcollective::begin': }
