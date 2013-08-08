@@ -142,12 +142,15 @@ describe 'mcollective' do
 
   context '#connector' do
     context 'default (stomp)' do
-      it { should contain_file('server_config').with_content(/^connector\s+=\s+stomp$/m) }
+      it {
+        pending "default is now activemq.  deprecate/alert how?"
+        should contain_mcollective__common__setting('connector').with_value('stomp')
+      }
     end
 
     context 'set' do
-      let(:params) { { :connector => 'activemq' } }
-      it { should contain_file('server_config').with_content(/^connector\s+=\s+activemq$/m) }
+      let(:params) { { :connector => 'activemq_too' } }
+      it { should contain_mcollective__common__setting('connector').with_value('activemq_too') }
     end
   end
 
