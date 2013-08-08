@@ -4,15 +4,17 @@ class mcollective::server::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  package { 'mcollective':
-    ensure => $mcollective::version,
-  }
+  if $mcollective::manage_packages {
+    package { 'mcollective':
+      ensure => $mcollective::version,
+    }
 
-  if $::osfamily == 'Debian' {
-    # XXX you be shitting me
-    package { 'ruby-stomp':
-      ensure => 'installed',
-      before => Package['mcollective'],
+    if $::osfamily == 'Debian' {
+      # XXX you be shitting me
+      package { 'ruby-stomp':
+        ensure => 'installed',
+        before => Package['mcollective'],
+      }
     }
   }
 }
