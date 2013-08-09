@@ -218,12 +218,13 @@ describe 'mcollective' do
 
   context '#mc_security_psk' do
     context 'default (changemeplease)' do
-      it { should contain_file('server_config').with_content(/^plugin.psk\s+=\s+changemeplease$/m) }
+      let(:params) { { :securityprovider => 'psk' } }
+      it { should contain_mcollective__common__setting('plugin.psk').with_value('changemeplease') }
     end
 
     context 'set' do
-      let(:params) { { :mc_security_psk => 'pies' } }
-      it { should contain_file('server_config').with_content(/^plugin.psk\s+=\s+pies$/m) }
+      let(:params) { { :securityprovider => 'psk', :mc_security_psk => 'pies' } }
+      it { should contain_mcollective__common__setting('plugin.psk').with_value('pies') }
     end
   end
 

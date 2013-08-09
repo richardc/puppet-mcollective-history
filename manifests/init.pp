@@ -11,11 +11,12 @@ class mcollective (
   $classesfile = '/var/lib/puppet/state/classes.txt',
   $factsource = 'yaml',
   $mc_security_provider = 'UNSET',
+  $mc_security_psk = 'UNSET',
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',
   $rpcauditprovider = 'logfile',
   $registration = undef,
-  $psk = 'changeme',
+  $psk = 'changemeplease',
   $core_libdir = $mcollective::defaults::core_libdir,
   $site_libdir = $mcollective::defaults::site_libdir,
   $ssl_ca_cert = "${settings::ssldir}/certs/ca.pem",
@@ -48,6 +49,13 @@ class mcollective (
     $securityprovider_real = $securityprovider
   }
 
+  if $mc_security_psk != 'UNSET' {
+    notice('Use of deprecated parameter `mc_security_psk`.  Use `psk` instead.')
+    $psk_real = $mc_security_psk
+  }
+  else {
+    $psk_real = $psk
+  }
 
   if $client or $server {
     # We don't want this on middleware roles.
