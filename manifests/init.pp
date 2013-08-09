@@ -10,6 +10,7 @@ class mcollective (
   $collectives = 'mcollective',
   $classesfile = '/var/lib/puppet/state/classes.txt',
   $factsource = 'yaml',
+  $mc_security_provider = 'UNSET',
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',
   $rpcauditprovider = 'logfile',
@@ -38,6 +39,14 @@ class mcollective (
 ) inherits mcollective::defaults {
   anchor { 'mcollective::begin': }
   anchor { 'mcollective::end': }
+
+  if $mc_security_provider != 'UNSET' {
+    notice('Use of deprecated parameter `mc_security_provider`.  Use `securityprovider` instead.')
+    $securityprovider_real = $mc_security_provider
+  }
+  else {
+    $securityprovider_real = $securityprovider
+  }
 
 
   if $client or $server {
