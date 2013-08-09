@@ -17,6 +17,10 @@ class mcollective::server::config {
     }
   }
 
+  mcollective::server::setting { 'classesfile':
+    value => $mcollective::classesfile,
+  }
+
   mcollective::server::setting { 'daemonize':
     value => $mcollective::server_daemonize,
   }

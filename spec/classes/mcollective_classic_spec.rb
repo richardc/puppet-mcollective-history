@@ -156,12 +156,12 @@ describe 'mcollective' do
 
   context '#classesfile' do
     context 'default (/var/lib/puppet/state/classes.txt)' do
-      it { should contain_file('server_config').with_content(/^classesfile\s+=\s+\/var\/lib\/puppet\/state\/classes.txt$/m) }
+      it { should contain_mcollective__server__setting('classesfile').with_value('/var/lib/puppet/state/classes.txt') }
     end
 
     context 'set' do
       let(:params) { { :classesfile => 'pies' } }
-      it { should contain_file('server_config').with_content(/^classesfile\s+=\s+pies$/m) }
+      it { should contain_mcollective__server__setting('classesfile').with_value('pies') }
     end
   end
 

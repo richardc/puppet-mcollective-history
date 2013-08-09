@@ -8,6 +8,7 @@ class mcollective (
   $server_activemq_password = 'marionette',
   $main_collective = 'mcollective',
   $collectives = 'mcollective',
+  $classesfile = '/var/lib/puppet/state/classes.txt',
   $factsource = 'yaml',
   $securityprovider = 'ssl',
   $rpcauthprovider = 'action_policy',
