@@ -1,8 +1,8 @@
 # private define
-# $name will be an index into the $mcollective::middleware_hosts array + 1
+# $name will be an index into the $mcollective::middleware_hosts_real array + 1
 define mcollective::common::config::connector::activemq::hosts_iteration {
   mcollective::common::setting { "plugin.activemq.pool.${name}.host":
-    value => $mcollective::middleware_hosts[$name - 1], # puppet array 0-based
+    value => $mcollective::middleware_hosts_real[$name - 1], # puppet array 0-based
   }
 
   mcollective::common::setting { "plugin.activemq.pool.${name}.port":

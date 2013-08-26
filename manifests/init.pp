@@ -19,7 +19,11 @@ class mcollective (
   $psk = 'changemeplease',
   $core_libdir = $mcollective::defaults::core_libdir,
   $site_libdir = $mcollective::defaults::site_libdir,
+  # stomp_* parameters are from the old module, deprecated
   $stomp_pool = 'UNSET',
+  $stomp_server = 'UNSET',
+  $stomp_user = 'UNSET',
+  $stomp_password = 'UNSET',
   $ssl_ca_cert = "${settings::ssldir}/certs/ca.pem",
   $ssl_server_public = "${settings::ssldir}/certs/${::fqdn}.pem",
   $ssl_server_private = "${settings::ssldir}/private_keys/${::fqdn}.pem",
@@ -46,6 +50,14 @@ class mcollective (
     # We don't really have a sane way to unpack/remap this one as it's a wierd
     # data structure with irregular keys for configuration.
     fail('Use of deprecated parameter `stomp_hosts`.  Use `middleware_hosts`, `middleware_user`, and `middleware_password` instead.')
+  }
+
+  if $stomp_server != 'UNSET' {
+    notice('Use of deprecated parameter `stomp_server`. Use `middleware_hosts` instead.')
+    $middleware_hosts_real = [ $stomp_server ]
+  }
+  else {
+    $middleware_hosts_real = $middleware_hosts
   }
 
   if $mc_security_provider != 'UNSET' {
