@@ -4,7 +4,6 @@ class mcollective (
   $enterprise = false,
   $manage_packages = true,
   $connector = 'activemq',
-  $server_activemq_user = 'mcollective',
   $server_activemq_password = 'marionette',
   $main_collective = 'mcollective',
   $collectives = 'mcollective',
@@ -34,6 +33,7 @@ class mcollective (
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!
   $middleware_hosts = [],
+  $middleware_user = 'mcollective',
   $middleware_ssl = true,
   $server = true,
   $server_config = undef,
@@ -58,6 +58,14 @@ class mcollective (
   }
   else {
     $middleware_hosts_real = $middleware_hosts
+  }
+
+  if $stomp_user != 'UNSET' {
+    notice('Use of deprecated parameter `stomp_user`. Use `middleware_user` instead.')
+    $middleware_user_real = $stomp_user
+  }
+  else {
+    $middleware_user_real = $middleware_user
   }
 
   if $mc_security_provider != 'UNSET' {

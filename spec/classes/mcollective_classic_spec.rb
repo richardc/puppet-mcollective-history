@@ -192,12 +192,13 @@ describe 'mcollective' do
 
   context '#stomp_user' do
     context 'default (mcollective)' do
-      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.user1\s+=\s+mcollective$/m) }
+      let(:params) { { :stomp_server => 'padding' } }
+      it { should contain_mcollective__common__setting('plugin.activemq.pool.1.user').with_value('mcollective') }
     end
 
     context 'set' do
-      let(:params) { { :stomp_user => 'pies' } }
-      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.user1\s+=\s+pies$/m) }
+      let(:params) { { :stomp_server => 'padding', :stomp_user => 'pies' } }
+      it { should contain_mcollective__common__setting('plugin.activemq.pool.1.user').with_value('pies') }
     end
   end
 

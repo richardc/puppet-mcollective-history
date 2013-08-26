@@ -10,7 +10,7 @@ define mcollective::common::config::connector::activemq::hosts_iteration {
   }
 
   mcollective::common::setting { "plugin.activemq.pool.${name}.user":
-    value => $mcollective::server_activemq_user,
+    value => $mcollective::middleware_user_real,
   }
 
   mcollective::common::setting { "plugin.activemq.pool.${name}.password":
