@@ -239,12 +239,15 @@ describe 'mcollective' do
 
   context '#fact_source' do
     context 'default (facter)' do
-      it { should contain_file('server_config').with_content(/^factsource\s+=\s+facter$/m) }
+      it {
+        pending "the old default is silly"
+        should contain_mcollective__server__setting('factsource').with_value('facter')
+      }
     end
 
     context 'set' do
       let(:params) { { :fact_source => 'yaml' } }
-      it { should contain_file('server_config').with_content(/^factsource\s+=\s+yaml$/m) }
+      it { should contain_mcollective__server__setting('factsource').with_value('yaml') }
     end
   end
 

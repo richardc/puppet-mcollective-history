@@ -8,6 +8,7 @@ class mcollective (
   $collectives = 'mcollective',
   $classesfile = '/var/lib/puppet/state/classes.txt',
   $factsource = 'yaml',
+  $fact_source = 'UNSET',
   $mc_security_provider = 'UNSET',
   $mc_security_psk = 'UNSET',
   $securityprovider = 'ssl',
@@ -90,6 +91,14 @@ class mcollective (
   }
   else {
     $psk_real = $psk
+  }
+
+  if $fact_source != 'UNSET' {
+    notice('Use of deprecated parameter `fact_source`. Use `factsource` instead.')
+    $factsource_real = $fact_source
+  }
+  else {
+    $factsource_real = $factsource
   }
 
   if $client or $server {

@@ -48,7 +48,7 @@ class mcollective::server::config {
   mcollective::soft_include { [
     "::mcollective::server::config::connector::${mcollective::connector}",
     "::mcollective::server::config::securityprovider::${mcollective::securityprovider_real}",
-    "::mcollective::server::config::factsource::${mcollective::factsource}",
+    "::mcollective::server::config::factsource::${mcollective::factsource_real}",
     "::mcollective::server::config::registration::${mcollective::registration}",
     "::mcollective::server::config::rpcauditprovider::${mcollective::rpcauditprovider}",
     "::mcollective::server::config::rpcauthprovider::${mcollective::rpcauthprovider}",
