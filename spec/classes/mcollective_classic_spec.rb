@@ -169,7 +169,9 @@ describe 'mcollective' do
     # The parameter is horrible, and heavily tied to the deprecated stomp
     # connector.  Kill.
     let(:params) { { :stomp_pool => { 'pool1' => { 'host1' => 'pies' } } } }
-    it { should contain_file('server_config').with_content(/^plugin.stomp.pool.host1\s+=\s+pies$/m) }
+    it "should fail when used" do
+      expect { should contain_file('server_config').with_content(/^plugin.stomp.pool.host1\s+=\s+pies$/m) }.to raise_error(/Use of deprecated parameter `stomp_hosts`./)
+    end
   end
 
   context '#stomp_server' do

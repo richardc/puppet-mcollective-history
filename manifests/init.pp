@@ -19,6 +19,7 @@ class mcollective (
   $psk = 'changemeplease',
   $core_libdir = $mcollective::defaults::core_libdir,
   $site_libdir = $mcollective::defaults::site_libdir,
+  $stomp_pool = 'UNSET',
   $ssl_ca_cert = "${settings::ssldir}/certs/ca.pem",
   $ssl_server_public = "${settings::ssldir}/certs/${::fqdn}.pem",
   $ssl_server_private = "${settings::ssldir}/private_keys/${::fqdn}.pem",
@@ -40,6 +41,12 @@ class mcollective (
 ) inherits mcollective::defaults {
   anchor { 'mcollective::begin': }
   anchor { 'mcollective::end': }
+
+  if $stomp_pool != 'UNSET' {
+    # We don't really have a sane way to unpack/remap this one as it's a wierd
+    # data structure with irregular keys for configuration.
+    fail('Use of deprecated parameter `stomp_hosts`.  Use `middleware_hosts`, `middleware_user`, and `middleware_password` instead.')
+  }
 
   if $mc_security_provider != 'UNSET' {
     notice('Use of deprecated parameter `mc_security_provider`.  Use `securityprovider` instead.')
