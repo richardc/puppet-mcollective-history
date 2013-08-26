@@ -204,12 +204,13 @@ describe 'mcollective' do
 
   context '#stomp_passwd' do
     context 'default (marionette)' do
-      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.password1\s+=\s+marionette$/m) }
+      let(:params) { { :stomp_server => 'padding' } }
+      it { should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('marionette') }
     end
 
     context 'set' do
-      let(:params) { { :stomp_passwd => 'pies' } }
-      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.password1\s+=\s+pies$/m) }
+      let(:params) { { :stomp_server => 'padding', :stomp_passwd => 'pies' } }
+      it { should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('pies') }
     end
   end
 

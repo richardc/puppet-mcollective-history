@@ -56,7 +56,7 @@
           -->
           <simpleAuthenticationPlugin>
             <users>
-              <authenticationUser username="<%= scope["mcollective::middleware_user_real"] %>" password="<%= scope["mcollective::server_activemq_password"] %>" groups="mcollective,everyone"/>
+              <authenticationUser username="<%= scope["mcollective::middleware_user_real"] %>" password="<%= scope["mcollective::middleware_password_real"] %>" groups="mcollective,everyone"/>
               <authenticationUser username="admin" password="secret" groups="mcollective,admins,everyone"/>
             </users>
           </simpleAuthenticationPlugin>

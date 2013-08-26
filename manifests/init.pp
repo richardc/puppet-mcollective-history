@@ -4,7 +4,6 @@ class mcollective (
   $enterprise = false,
   $manage_packages = true,
   $connector = 'activemq',
-  $server_activemq_password = 'marionette',
   $main_collective = 'mcollective',
   $collectives = 'mcollective',
   $classesfile = '/var/lib/puppet/state/classes.txt',
@@ -22,7 +21,7 @@ class mcollective (
   $stomp_pool = 'UNSET',
   $stomp_server = 'UNSET',
   $stomp_user = 'UNSET',
-  $stomp_password = 'UNSET',
+  $stomp_passwd = 'UNSET',
   $ssl_ca_cert = "${settings::ssldir}/certs/ca.pem",
   $ssl_server_public = "${settings::ssldir}/certs/${::fqdn}.pem",
   $ssl_server_private = "${settings::ssldir}/private_keys/${::fqdn}.pem",
@@ -34,6 +33,7 @@ class mcollective (
   $activemq_console = false, # ubuntu why you no jetty.xml!
   $middleware_hosts = [],
   $middleware_user = 'mcollective',
+  $middleware_password = 'marionette',
   $middleware_ssl = true,
   $server = true,
   $server_config = undef,
@@ -66,6 +66,14 @@ class mcollective (
   }
   else {
     $middleware_user_real = $middleware_user
+  }
+
+  if $stomp_passwd != 'UNSET' {
+    notice('Use of deprecated parameter `stomp_passwd`. Use `middleware_password` instead.')
+    $middleware_password_real = $stomp_passwd
+  }
+  else {
+    $middleware_password_real = $middleware_password
   }
 
   if $mc_security_provider != 'UNSET' {

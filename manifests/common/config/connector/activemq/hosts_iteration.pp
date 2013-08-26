@@ -14,7 +14,7 @@ define mcollective::common::config::connector::activemq::hosts_iteration {
   }
 
   mcollective::common::setting { "plugin.activemq.pool.${name}.password":
-    value => $mcollective::server_activemq_password,
+    value => $mcollective::middleware_password_real,
   }
 
   if $mcollective::middleware_ssl {
