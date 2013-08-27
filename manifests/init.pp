@@ -9,6 +9,8 @@ class mcollective (
   $classesfile = '/var/lib/puppet/state/classes.txt',
   $factsource = 'yaml',
   $fact_source = 'UNSET',
+  $yaml_fact_path = '/etc/mcollective/facts.yaml',
+  $yaml_facter_source = 'UNSET',
   $mc_security_provider = 'UNSET',
   $mc_security_psk = 'UNSET',
   $securityprovider = 'ssl',
@@ -99,6 +101,14 @@ class mcollective (
   }
   else {
     $factsource_real = $factsource
+  }
+
+  if $yaml_facter_source != 'UNSET' {
+    notice('Use of deprecated parameter `yaml_facter_source`. Use `yaml_fact_path` instead')
+    $yaml_fact_path_real = $yaml_facter_source
+  }
+  else {
+    $yaml_fact_path_real = $yaml_fact_path
   }
 
   if $client or $server {

@@ -254,12 +254,12 @@ describe 'mcollective' do
   context '#yaml_facter_source' do
     context 'default (/etc/mcollective/facts.yaml)' do
       let(:params) { { :fact_source => 'yaml' } }
-      it { should contain_file('server_config').with_content(/^plugin.yaml\s+=\s+\/etc\/mcollective\/facts.yaml$/m) }
+      it { should contain_mcollective__server__setting('plugin.yaml').with_value('/etc/mcollective/facts.yaml') }
     end
 
     context 'set' do
       let(:params) { { :fact_source => 'yaml', :yaml_facter_source => 'pies' } }
-      it { should contain_file('server_config').with_content(/^plugin.yaml\s+=\s+pies$/m) }
+      it { should contain_mcollective__server__setting('plugin.yaml').with_value('pies') }
     end
   end
 
