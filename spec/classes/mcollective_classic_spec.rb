@@ -99,7 +99,7 @@ describe 'mcollective' do
       let(:params) { { :client => true } }
       it { should contain_file('mcollective::client').with_content(/To be replaced/) }
     end
-      
+
     context 'set' do
       let(:params) { { :client => true, :client_config => 'mmm, donuts' } }
       it { should contain_file('mcollective::client').with_content('mmm, donuts') }
@@ -111,7 +111,7 @@ describe 'mcollective' do
       let(:params) { { :client => true } }
       it { should contain_file('mcollective::client').with_path('/etc/mcollective/client.cfg') }
     end
-      
+
     context 'set' do
       let(:params) { { :client => true, :client_config_file => '/etc/mco/donuts.cfg' } }
       it { should contain_file('mcollective::client').with_path('/etc/mco/donuts.cfg') }
@@ -264,7 +264,10 @@ describe 'mcollective' do
   end
 
   context '#plugin_params' do
+    # Another ugly parameter to kill off
     let(:params) { { :plugin_params => { 'foo' => 'bar' } } }
-    it { should contain_file('server_config').with_content(/^plugin.foo\s+=\s+bar$/m) }
+    it "should fail when used" do
+      expect { should contain_class('mcollective') }.to raise_error(/Use of deprecated parameter `plugin_params`./)
+    end
   end
 end
