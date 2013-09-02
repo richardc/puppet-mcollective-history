@@ -3,7 +3,7 @@ require "spec_helper"
 describe "mcollective::user" do
   let(:title) { 'nagios' }
   it { should contain_file('/home/nagios/.mcollective.d') }
-  it { should contain_file('/home/nagios/.mcollective') }
+  it { should contain_file('mcollective::user nagios').with_path('/home/nagios/.mcollective') }
 
   describe "#certificate" do
     context "unspecified" do
