@@ -3,9 +3,22 @@ class mcollective::server::config {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
-  datacat { 'mcollective::server':
-    path     => '/etc/mcollective/server.cfg',
-    template => 'mcollective/settings.cfg.erb',
+
+  if $mcollective::server_config {
+    file { 'mcollective::server':
+      path    => $mcollective::server_config_file,
+      content => $mcollective::server_config,
+    }
+  }
+  else {
+    datacat { 'mcollective::server':
+      path     => $mcollective::server_config_file,
+      template => 'mcollective/settings.cfg.erb',
+    }
+  }
+
+  mcollective::server::setting { 'classesfile':
+    value => $mcollective::classesfile,
   }
 
   mcollective::server::setting { 'daemonize':
@@ -34,8 +47,8 @@ class mcollective::server::config {
 
   mcollective::soft_include { [
     "::mcollective::server::config::connector::${mcollective::connector}",
-    "::mcollective::server::config::securityprovider::${mcollective::securityprovider}",
-    "::mcollective::server::config::factsource::${mcollective::factsource}",
+    "::mcollective::server::config::securityprovider::${mcollective::securityprovider_real}",
+    "::mcollective::server::config::factsource::${mcollective::factsource_real}",
     "::mcollective::server::config::registration::${mcollective::registration}",
     "::mcollective::server::config::rpcauditprovider::${mcollective::rpcauditprovider}",
     "::mcollective::server::config::rpcauthprovider::${mcollective::rpcauthprovider}",

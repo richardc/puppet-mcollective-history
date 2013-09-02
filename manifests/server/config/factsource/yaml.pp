@@ -9,7 +9,7 @@ class mcollective::server::config::factsource::yaml {
   # Also we're not in the config class as we don't need to restart the service
   # when the facts just change.
 
-  file { '/etc/mcollective/facts.yaml':
+  file { $mcollective::yaml_fact_path_real:
     owner   => root,
     group   => root,
     mode    => '0400',
@@ -21,6 +21,6 @@ class mcollective::server::config::factsource::yaml {
   }
 
   mcollective::server::setting { 'plugin.yaml':
-    value => '/etc/mcollective/facts.yaml',
+    value => $mcollective::yaml_fact_path_real,
   }
 }

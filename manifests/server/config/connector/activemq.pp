@@ -6,7 +6,7 @@ class mcollective::server::config::connector::activemq {
 
   # Oh puppet!  Fake iteration of the indexes (+1 as plugin.activemq.pool is
   # 1-based)
-  $pool_size = size($mcollective::middleware_hosts)
-  $indexes = range('1', size($mcollective::middleware_hosts))
+  $pool_size = size($mcollective::middleware_hosts_real)
+  $indexes = range('1', size($mcollective::middleware_hosts_real))
   mcollective::server::config::connector::activemq::hosts_iteration { $indexes: }
 }
