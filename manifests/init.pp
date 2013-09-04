@@ -33,6 +33,8 @@ class mcollective (
   $server_logfile   = '/var/log/mcollective.log',
   $server_loglevel  = 'info',
   $server_daemonize = 1,
+  $activemq_template = 'mcollective/activemq.xml.erb',
+  $activemq_config = undef,
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!
   $middleware_hosts = [],

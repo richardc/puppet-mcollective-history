@@ -3,10 +3,18 @@ class mcollective::middleware::activemq {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
+  if $mcollective::activemq_config {
+    $server_config = $mcollective::activemq_config
+  }
+  else {
+    $server_config = template($mcollective::activemq_template)
+  }
+
   anchor { 'mcollective::middleware::activemq::begin': } ->
   class { '::activemq':
     instance      => 'mcollective',
-    server_config => template("${module_name}/activemq.xml.erb"),
+    server_config => $server_config,
   } ->
   anchor { 'mcollective::middleware::activemq::end': }
 

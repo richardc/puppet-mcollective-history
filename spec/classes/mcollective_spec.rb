@@ -101,6 +101,30 @@ describe 'mcollective' do
             it { should_not contain_java_ks('mcollective:truststore') }
           end
         end
+
+        context "#activemq_template" do
+          context "default (in-module)" do
+            let(:params) { { :middleware => true } }
+            it { should contain_file('activemq.xml').with_content(/middleware/) }
+          end
+
+          context "set" do
+            let(:params) { { :middleware => true, :activemq_template => 'site_mcollective/test_activemq.xml.erb' } }
+            it { should contain_file('activemq.xml').with_content(/^Test of the mcollective::activemq_template parameter/) }
+          end
+        end
+
+        context "#activemq_config" do
+          context "default (use template in-module)" do
+            let(:params) { { :middleware => true } }
+            it { should contain_file('activemq.xml').with_content(/middleware/) }
+          end
+
+          context "set" do
+            let(:params) { { :middleware => true, :activemq_config => 'Lovingly hand-crafted' } }
+            it { should contain_file('activemq.xml').with_content('Lovingly hand-crafted') }
+          end
+        end
       end
     end
   end
