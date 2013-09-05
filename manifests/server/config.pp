@@ -45,6 +45,21 @@ class mcollective::server::config {
     source  => $mcollective::ssl_client_certs,
   }
 
+  file { '/etc/mcollective/ca.pem':
+    source => $mcollective::ssl_ca_cert,
+    mode   => '0444',
+  }
+
+  file { '/etc/mcollective/server_public.pem':
+    source => $mcollective::ssl_server_public,
+    mode   => '0444',
+  }
+
+  file { '/etc/mcollective/server_private.pem':
+    source => $mcollective::ssl_server_private,
+    mode   => '0400',
+  }
+
   mcollective::soft_include { [
     "::mcollective::server::config::connector::${mcollective::connector}",
     "::mcollective::server::config::securityprovider::${mcollective::securityprovider_real}",
