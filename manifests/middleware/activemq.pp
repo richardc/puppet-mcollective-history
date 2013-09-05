@@ -19,6 +19,8 @@ class mcollective::middleware::activemq {
   anchor { 'mcollective::middleware::activemq::end': }
 
   if $mcollective::middleware_ssl {
+    Class['activemq::packages'] ->
+
     file { "${mcollective::activemq_confdir}/ca.pem":
       source => $mcollective::ssl_ca_cert,
     } ->
@@ -36,7 +38,6 @@ class mcollective::middleware::activemq {
       group => 'activemq',
       mode  => '0400',
     } ->
-    Class ['activemq::service']
 
     file { "${mcollective::activemq_confdir}/server_public.pem":
       source => $mcollective::ssl_server_public,
