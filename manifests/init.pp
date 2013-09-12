@@ -42,6 +42,7 @@ class mcollective (
   $middleware_password = 'marionette',
   $middleware_ssl = true,
   $middleware_port = '61614',
+  $middleware_vhost = '/mcollective', # used by rabbitmq
   $server = true,
   $server_config = undef,
   $server_config_file = '/etc/mcollective/server.cfg',
