@@ -37,6 +37,7 @@ class mcollective (
   $activemq_config = undef,
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!
+  $rabbitmq_confdir = '/etc/rabbitmq',
   $middleware_hosts = [],
   $middleware_user = 'mcollective',
   $middleware_password = 'marionette',

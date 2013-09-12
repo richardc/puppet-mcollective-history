@@ -1,9 +1,28 @@
 #
 class mcollective::middleware::rabbitmq {
+  if $mcollective::middleware_ssl {
+    file { "${mcollective::rabbitmq_confdir}/ca.pem":
+      source => $mcollective::ssl_ca_cert,
+    }
+
+    file { "${mcollective::rabbitmq_confdir}/server_public.pem":
+      source => $mcollective::ssl_server_public,
+    }
+
+    file { "${mcollective::rabbitmq_confdir}/server_private.pem":
+      source => $mcollective::ssl_server_private,
+    }
+  }
+
   class { '::rabbitmq':
-    erlang_manage     => true,
-    config_stomp      => true,
-    stomp_port        => $mcollective::middleware_port,
+    erlang_manage  => true,
+    config_stomp   => true,
+    ssl            => $mcollective::middleware_ssl,
+    stomp_port     => $mcollective::middleware_port,
+    ssl_stomp_port => $mcollective::middleware_ssl_port,
+    ssl_cacert     => "${mcollective::rabbitmq_confdir}/ca.pem",
+    ssl_cert       => "${mcollective::rabbitmq_confdir}/server_public.pem",
+    ssl_key        => "${mcollective::rabbitmq_confdir}/server_private.pem",
   }
 
   rabbitmq_plugin { 'rabbitmq_stomp':
