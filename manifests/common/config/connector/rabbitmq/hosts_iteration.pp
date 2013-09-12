@@ -5,8 +5,13 @@ define mcollective::common::config::connector::rabbitmq::hosts_iteration {
     value => $mcollective::middleware_hosts_real[$name - 1], # puppet array 0-based
   }
 
+  $port = $mcollective::middleware_ssl ? {
+    true    => $mcollective::middleware_ssl_port,
+    default => $mcollective::middleware_port,
+  }
+
   mcollective::common::setting { "plugin.rabbitmq.pool.${name}.port":
-    value => $mcollective::middleware_port,
+    value => $port,
   }
 
   mcollective::common::setting { "plugin.rabbitmq.pool.${name}.user":
