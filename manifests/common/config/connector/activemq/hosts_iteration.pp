@@ -6,7 +6,7 @@ define mcollective::common::config::connector::activemq::hosts_iteration {
   }
 
   mcollective::common::setting { "plugin.activemq.pool.${name}.port":
-    value => 61614,
+    value => $mcollective::middleware_port,
   }
 
   mcollective::common::setting { "plugin.activemq.pool.${name}.user":

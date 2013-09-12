@@ -130,9 +130,9 @@
         -->
         <transportConnectors>
         <% if scope['mcollective::middleware_ssl'] %>
-            <transportConnector name="stomp+ssl" uri="stomp+ssl://0.0.0.0:61614?needClientAuth=true"/>
+            <transportConnector name="stomp+ssl" uri="stomp+ssl://0.0.0.0:<%= scope['mcollective::middleware_port'] %>?needClientAuth=true"/>
         <% else %>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:61614"/>
+            <transportConnector name="stomp" uri="stomp://0.0.0.0:<%= scope['mcollective::middleware_port'] %>"/>
         <% end %>
         </transportConnectors>
     </broker>

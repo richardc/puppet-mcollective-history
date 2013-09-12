@@ -41,6 +41,7 @@ class mcollective (
   $middleware_user = 'mcollective',
   $middleware_password = 'marionette',
   $middleware_ssl = true,
+  $middleware_port = '61614',
   $server = true,
   $server_config = undef,
   $server_config_file = '/etc/mcollective/server.cfg',
