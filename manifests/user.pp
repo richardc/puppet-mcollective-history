@@ -72,9 +72,9 @@ define mcollective::user(
 
   # XXX this is specific to activemq, but refers to the user's certs
   # Is there a better home for it?  I hope so
-  if $mcollective::connector == 'activemq' {
+  if $mcollective::connector in [ 'activemq', 'rabbitmq' ] {
     $connectors = prefix(range( '1', size( $mcollective::middleware_hosts_real ) ), "${username}_" )
-    mcollective::user::activemq { $connectors:
+    mcollective::user::connector { $connectors:
       username => $username,
       homedir  => $homedir,
       order    => '60',

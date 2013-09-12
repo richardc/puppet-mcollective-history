@@ -18,15 +18,15 @@ define mcollective::common::config::connector::rabbitmq::hosts_iteration {
   }
 
   if $mcollective::middleware_ssl {
-    mcollective::common::setting { "plugin.activemq.pool.${name}.ssl":
+    mcollective::common::setting { "plugin.rabbitmq.pool.${name}.ssl":
       value => 1,
     }
 
-    mcollective::common::setting { "plugin.activemq.pool.${name}.ssl.ca":
+    mcollective::common::setting { "plugin.rabbitmq.pool.${name}.ssl.ca":
       value => '/etc/mcollective/ca.pem',
     }
 
-    mcollective::common::setting { "plugin.activemq.pool.${name}.ssl.fallback":
+    mcollective::common::setting { "plugin.rabbitmq.pool.${name}.ssl.fallback":
       value => 0,
     }
   }
