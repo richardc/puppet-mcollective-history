@@ -37,11 +37,14 @@ class mcollective (
   $activemq_config = undef,
   $activemq_confdir = $mcollective::defaults::activemq_confdir,
   $activemq_console = false, # ubuntu why you no jetty.xml!
+  $rabbitmq_confdir = '/etc/rabbitmq',
   $middleware_hosts = [],
   $middleware_user = 'mcollective',
   $middleware_password = 'marionette',
   $middleware_ssl = true,
-  $middleware_port = '61614',
+  $middleware_port = '61613',
+  $middleware_ssl_port = '61614',
+  $middleware_vhost = '/mcollective', # used by rabbitmq
   $server = true,
   $server_config = undef,
   $server_config_file = '/etc/mcollective/server.cfg',

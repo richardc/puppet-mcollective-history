@@ -70,11 +70,18 @@ define mcollective::user(
     }
   }
 
-  # XXX this is specific to activemq, but refers to the user's certs
-  # Is there a better home for it?  I hope so
-  if $mcollective::connector == 'activemq' {
+  # default to '' as you can't undef in $array
+  if $mcollective::connector {
+    $connector = $mcollective::connector
+  }
+  else {
+    $connector = ''
+  }
+
+  # XXX this is specific to connector, but refers to the user's certs
+  if $connector in [ 'activemq', 'rabbitmq' ] {
     $connectors = prefix(range( '1', size( $mcollective::middleware_hosts_real ) ), "${username}_" )
-    mcollective::user::activemq { $connectors:
+    mcollective::user::connector { $connectors:
       username => $username,
       homedir  => $homedir,
       order    => '60',
