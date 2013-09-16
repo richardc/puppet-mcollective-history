@@ -8,7 +8,7 @@ describe 'single node setup:' do
     its(:exit_code) { should_not eq(1) }
   end
 
-  describe "root can do what they like" do
+  describe 'root can do what they like' do
     context shell('mco ping') do
       its(:stdout) { should =~ /main.foo.vm/ }
     end
@@ -22,7 +22,7 @@ describe 'single node setup:' do
     end
   end
 
-  describe "nagios user can do limited things" do
+  describe 'nagios user can do limited things' do
     context shell('sudo -u nagios mco ping') do
       its(:stdout) { should =~ /main.foo.vm/ }
     end

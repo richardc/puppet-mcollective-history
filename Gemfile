@@ -8,7 +8,9 @@ group :development, :test do
   gem 'puppet-lint'
 end
 
-if puppetversion = ENV['PUPPET_GEM_VERSION']
+puppetversion = ENV['PUPPET_GEM_VERSION']
+
+if puppetversion
   gem 'puppet', puppetversion, :require => false
 else
   gem 'puppet', :require => false

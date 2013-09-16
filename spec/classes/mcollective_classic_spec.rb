@@ -4,18 +4,18 @@ describe 'mcollective' do
   let(:facts) { { :osfamily => 'RedHat' } }
 
   context '#version' do
-    context "default" do
+    context 'default' do
       it { should contain_package('mcollective').with_ensure('present') }
     end
 
-    context "set" do
+    context 'set' do
       let(:params) { { :version => '1.21' } }
       it { should contain_package('mcollective').with_ensure('1.21') }
     end
   end
 
   context '#enterprise' do
-    context "default (false)" do
+    context 'default (false)' do
       it { should contain_service('mcollective').with_name('mcollective') }
     end
 
@@ -26,25 +26,25 @@ describe 'mcollective' do
   end
 
   context '#manage_packages' do
-    context "default (true)" do
+    context 'default (true)' do
       it { should contain_package('mcollective') }
     end
 
-    context "false" do
+    context 'false' do
       let(:params) { { :manage_packages => false } }
       it { should_not contain_package('mcollective') }
     end
   end
 
   context '#manage_plugins' do
-    context "default (false)" do
+    context 'default (false)' do
       it { should_not contain_mcollective__plugins__plugin('registration') }
     end
 
-    context "true" do
+    context 'true' do
       let(:params) { { :manage_plugins => true } }
       it {
-        pending "mcollective::plugins::plugin didn't get translated"
+        pending 'mcollective::plugins::plugin didn\'t get translated'
         should contain_mcollective__plugins__plugin('registration')
       }
     end
@@ -143,7 +143,7 @@ describe 'mcollective' do
   context '#connector' do
     context 'default (stomp)' do
       it {
-        pending "default is now activemq.  deprecate/alert how?"
+        pending 'default is now activemq.  deprecate/alert how?'
         should contain_mcollective__common__setting('connector').with_value('stomp')
       }
     end
@@ -169,7 +169,7 @@ describe 'mcollective' do
     # The parameter is horrible, and heavily tied to the deprecated stomp
     # connector.  Kill.
     let(:params) { { :stomp_pool => { 'pool1' => { 'host1' => 'pies' } } } }
-    it "should fail when used" do
+    it 'should fail when used' do
       expect { should contain_file('server_config').with_content(/^plugin.stomp.pool.host1\s+=\s+pies$/m) }.to raise_error(/Use of deprecated parameter `stomp_hosts`./)
     end
   end
@@ -177,7 +177,7 @@ describe 'mcollective' do
   context '#stomp_server' do
     context 'default (stomp)' do
       it {
-        pending "rethink the default"
+        pending 'rethink the default'
         # New module defaults to [], old defaults to 'stomp'.  Calling a box
         # 'stomp' is weird but people probably did it
         should contain_mcollective__common__setting('plugin.activemq.pool.1.host').with_value('stomp')
@@ -240,7 +240,7 @@ describe 'mcollective' do
   context '#fact_source' do
     context 'default (facter)' do
       it {
-        pending "the old default is silly"
+        pending 'the old default is silly'
         should contain_mcollective__server__setting('factsource').with_value('facter')
       }
     end
@@ -266,7 +266,7 @@ describe 'mcollective' do
   context '#plugin_params' do
     # Another ugly parameter to kill off
     let(:params) { { :plugin_params => { 'foo' => 'bar' } } }
-    it "should fail when used" do
+    it 'should fail when used' do
       expect { should contain_class('mcollective') }.to raise_error(/Use of deprecated parameter `plugin_params`./)
     end
   end

@@ -21,9 +21,9 @@ RSpec.configure do |c|
     puppet_module_install(:source => proj_root + '/spec/fixtures/modules/site_nagios', :module_name => 'site_nagios')
     # XXX would be better if puppet_module_install parsed this out of the
     # Modulefile
-    shell "puppet module install puppetlabs/activemq"
-    shell "puppet module install puppetlabs/stdlib"
-    shell "puppet module install puppetlabs/java_ks"
-    shell "puppet module install richardc/datacat"
+    shell 'puppet module install puppetlabs/activemq'
+    shell 'puppet module install puppetlabs/stdlib'
+    shell 'puppet module install puppetlabs/java_ks'
+    shell 'puppet module install richardc/datacat'
   end
 end

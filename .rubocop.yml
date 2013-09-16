@@ -1,4 +1,9 @@
 ---
+AllCops:
+  Excludes:
+    - files/**
+    - spec/fixtures/**
+
 # Lines should be as short as they can be, but no shorter
 LineLength:
   Enabled: false
