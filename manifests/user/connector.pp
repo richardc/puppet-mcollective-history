@@ -1,22 +1,24 @@
 # private define
-define mcollective::user::connector($username, $homedir, $order) {
+define mcollective::user::connector($username, $homedir, $order, $connector, $middleware_ssl) {
   $i = regsubst($title, "^${username}_", '')
 
-  mcollective::user::setting { "${username} plugin.${mcollective::connector}.pool.${i}.ssl.ca":
-    username => $username,
-    order    => $order,
-    value    => "${homedir}/.mcollective.d/credentials/certs/ca.pem",
-  }
+  if $middleware_ssl {
+    mcollective::user::setting { "${username} plugin.${connector}.pool.${i}.ssl.ca":
+      username => $username,
+      order    => $order,
+      value    => "${homedir}/.mcollective.d/credentials/certs/ca.pem",
+    }
 
-  mcollective::user::setting { "${username} plugin.${mcollective::connector}.pool.${i}.ssl.cert":
-    username => $username,
-    order    => $order,
-    value    => "${homedir}/.mcollective.d/credentials/certs/${username}.pem",
-  }
+    mcollective::user::setting { "${username} plugin.${connector}.pool.${i}.ssl.cert":
+      username => $username,
+      order    => $order,
+      value    => "${homedir}/.mcollective.d/credentials/certs/${username}.pem",
+    }
 
-  mcollective::user::setting { "${username} plugin.${mcollective::connector}.pool.${i}.ssl.key":
-    username => $username,
-    order    => $order,
-    value    => "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem",
+    mcollective::user::setting { "${username} plugin.${connector}.pool.${i}.ssl.key":
+      username => $username,
+      order    => $order,
+      value    => "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem",
+    }
   }
 }
