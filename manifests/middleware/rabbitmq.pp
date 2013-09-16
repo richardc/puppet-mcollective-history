@@ -14,6 +14,7 @@ class mcollective::middleware::rabbitmq {
     }
   }
 
+  anchor { 'mcollective::middleware::rabbitmq::start': }
   class { '::rabbitmq':
     erlang_manage  => true,
     config_stomp   => true,
@@ -23,17 +24,15 @@ class mcollective::middleware::rabbitmq {
     ssl_cacert     => "${mcollective::rabbitmq_confdir}/ca.pem",
     ssl_cert       => "${mcollective::rabbitmq_confdir}/server_public.pem",
     ssl_key        => "${mcollective::rabbitmq_confdir}/server_private.pem",
-  }
+  } ->
 
   rabbitmq_plugin { 'rabbitmq_stomp':
     ensure => present,
-    # needs a restart to enable
-    notify => Class['::rabbitmq::service'],
-  }
+  } ->
 
   rabbitmq_vhost { $mcollective::middleware_vhost:
     ensure => present,
-  }
+  } ->
 
   # it's not ideal that this user is an admin, but we need one in order to
   # create the exchange. XXX maybe add another user for that
@@ -41,25 +40,27 @@ class mcollective::middleware::rabbitmq {
     ensure   => present,
     admin    => true,
     password => $mcollective::middleware_password,
-  }
+  } ->
 
   rabbitmq_user_permissions { "${mcollective::middleware_user}@${mcollective::middleware_vhost}":
     configure_permission => '.*',
     read_permission      => '.*',
     write_permission     => '.*',
-  }
+  } ->
 
   rabbitmq_exchange { "mcollective_broadcast@${mcollective::middleware_vhost}":
     ensure   => present,
     type     => 'topic',
     user     => $mcollective::middleware_user,
     password => $mcollective::middleware_password,
-  }
+  } ->
 
   rabbitmq_exchange { "mcollective_directed@${mcollective::middleware_vhost}":
     ensure   => present,
     type     => 'direct',
     user     => $mcollective::middleware_user,
     password => $mcollective::middleware_password,
-  }
+  } ->
+
+  anchor { 'mcollective::middleware::rabbitmq::end': }
 }
