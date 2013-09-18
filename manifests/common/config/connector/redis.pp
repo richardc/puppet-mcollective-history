@@ -1,5 +1,9 @@
 # Private class
 class mcollective::common::config::connector::redis {
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
+
   mcollective::common::setting { 'direct_addressing':
     value => 'yes',
   }

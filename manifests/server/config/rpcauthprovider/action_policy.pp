@@ -3,6 +3,7 @@ class mcollective::server::config::rpcauthprovider::action_policy {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
   mcollective::plugin { 'actionpolicy': }
 
   mcollective::server::setting { 'rpcauthorization':

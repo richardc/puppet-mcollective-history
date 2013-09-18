@@ -1,5 +1,9 @@
 #
 class mcollective::middleware::rabbitmq {
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
+
   if $mcollective::middleware_ssl {
     file { "${mcollective::rabbitmq_confdir}/ca.pem":
       source => $mcollective::ssl_ca_cert,

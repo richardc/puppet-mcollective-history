@@ -5,6 +5,7 @@ class mcollective::client {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
   anchor { 'mcollective::client::begin': } ->
   class { '::mcollective::client::install': } ->
   class { '::mcollective::client::config': } ->

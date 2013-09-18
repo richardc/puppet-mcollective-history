@@ -3,6 +3,7 @@ class mcollective::server::config::securityprovider::ssl {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
   mcollective::server::setting { 'plugin.ssl_client_cert_dir':
     value => '/etc/mcollective/clients',
   }

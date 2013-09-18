@@ -1,5 +1,9 @@
 #
 class mcollective::server::config::registration::redis {
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
+
   mcollective::server::setting { 'registerinterval':
     value => 10,
   }
