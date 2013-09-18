@@ -9,9 +9,12 @@ class site_nagios::mcollective {
       content => "command[hello_world]=echo Hello World!\n",
   }
 
+  mcollective::plugin { 'nrpe':
+    package => true,
+  }
+
   mcollective::agent { 'nrpe':
     policy  => 'deny',
-    package => true,
   }
 
   mcollective::agent::actionpolicy { 'root nrpe':
