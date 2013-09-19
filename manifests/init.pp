@@ -13,7 +13,7 @@ class mcollective (
   $yaml_facter_source = 'UNSET',
   $mc_security_provider = 'UNSET',
   $mc_security_psk = 'UNSET',
-  $securityprovider = 'ssl',
+  $securityprovider = 'psk',
   $rpcauthprovider = 'action_policy',
   $rpcauditprovider = 'logfile',
   $registration = undef,
@@ -41,7 +41,7 @@ class mcollective (
   $middleware_hosts = [],
   $middleware_user = 'mcollective',
   $middleware_password = 'marionette',
-  $middleware_ssl = true,
+  $middleware_ssl = false,
   $middleware_port = '61613',
   $middleware_ssl_port = '61614',
   $middleware_vhost = '/mcollective', # used by rabbitmq

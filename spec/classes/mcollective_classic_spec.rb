@@ -215,8 +215,8 @@ describe 'mcollective' do
   end
 
   context '#mc_security_provider' do
-    context 'default (ssl)' do
-      it { should contain_mcollective__common__setting('securityprovider').with_value('ssl') }
+    context 'default (psk)' do
+      it { should contain_mcollective__common__setting('securityprovider').with_value('psk') }
     end
 
     context 'set' do

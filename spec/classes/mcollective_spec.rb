@@ -49,19 +49,20 @@ describe 'mcollective' do
           let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.1.host').with_value('foo') }
-          it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61614') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61613') }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.2.host').with_value('bar') }
-          it { should contain_mcollective__common__setting('plugin.activemq.pool.2.port').with_value('61614') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.2.port').with_value('61613') }
         end
       end
     end
 
     describe '#securityprovider' do
-      it 'should default to ssl' do
-        should contain_mcollective__common__setting('securityprovider').with_value('ssl')
+      it 'should default to psk' do
+        should contain_mcollective__common__setting('securityprovider').with_value('psk')
       end
 
       describe 'ssl' do
+        let(:params) { { :server => true, :securityprovider => 'ssl' } }
         it { should contain_mcollective__server__setting('plugin.ssl_server_public').with_value('/etc/mcollective/server_public.pem') }
         it { should contain_file('/etc/mcollective/server_public.pem') }
       end
@@ -88,18 +89,13 @@ describe 'mcollective' do
         it { should contain_class('activemq').with_instance('mcollective') }
 
         context '#middleware_ssl' do
-          it 'should default to true' do
-            # We create a truststore when we're doing tls
-            should contain_java_ks('mcollective:truststore')
+          it 'should default to false' do
+            should_not contain_java_ks('mcollective:truststore')
           end
 
           context 'true' do
+            let(:params) { { :middleware => true, :middleware_ssl => true } }
             it { should contain_java_ks('mcollective:truststore').with_password('puppet') }
-          end
-
-          context 'false' do
-            let(:params) { { :middleware => true, :middleware_ssl => false } }
-            it { should_not contain_java_ks('mcollective:truststore') }
           end
         end
 
