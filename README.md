@@ -4,7 +4,7 @@
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with ntp](#setup)
+3. [Setup - The basics of getting started with mcollective](#setup)
     * [What mcollective affects](#what-ntp-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with mcollective](#beginning-with-ntp)
@@ -16,7 +16,7 @@
 ## Overview
 
 The mcollective module installs, configures, and manages the mcollective
-agents, clients, and middleware.
+agents, clients, and middleware of an mcollective cluster.
 
 ## Module Description
 
@@ -25,7 +25,7 @@ range of operating systems and distributions.  Where possible we follow the
 standards laid down by the
 [MCollective Standard Deployment guide](http://docs.puppetlabs.com/mcollective/deploy/standard.html).
 
-## MCollective Terminology
+### MCollective Terminology
 
 A quick aside, mcollective's terminology differs a little from what you might
 be used to in puppet.  There are 3 main components, the client (the mco
@@ -35,14 +35,14 @@ message broker which the servers and agent will connect to).
 
 If it helps to these to puppet concepts you loosely have:
 
-* Puppet Master - Middleware
-* Puppet Agent  - MCollective Server
-*               - MCollective Client
+* Middleware -> Puppet Master
+* MCollective Server -> Puppet Agent
+* MCollective Client -> no direct equivalent
 
 
 ## Setup
 
-### What mcollective affects
+### What the mcollective module affects
 
 On a server
 
@@ -69,37 +69,37 @@ add a server to mcollective.
 
 ```puppet
 class { '::mcollective':
-  middleware_hosts => [ 'broker1.corp.com', 'broker2.corp.com' ],
+  middleware_hosts => [ 'broker1.example.com' ],
 }
 ```
 
 ## Usage
 
-Your primary interactions with the mcollective module will be though the main
-mcollective class, and the defined types `mcollective::user`,
-`mcollective::plugin`, `mcollective::agent`,
+Your primary interaction with the mcollective module will be though the main
+mcollective class, with secondary configuration managed by the defined types
+`mcollective::user`, `mcollective::plugin`, `mcollective::agent`, and
 `mcollective::agent::actionpolicy`.
 
 ### I just want to run it, what's the minimum I need?
 
 ```puppet
-node 'middleware.example.com' {
+node 'broker1.example.com' {
   class { '::mcollective':
     middleware       => true,
-    middleware_hosts => [ 'middleware.example.com' ],
+    middleware_hosts => [ 'broker1.example.com' ],
   }
 }
 
 node 'server1.example.com' {
   class { '::mcollective':
-    middleware_hosts => [ 'middleware.example.com' ],
+    middleware_hosts => [ 'broker1.example.com' ],
   }
 }
 
-node 'control.example.com' {
+node 'control1.example.com' {
   class { '::mcollective':
     client            => true,
-    middleware_hosts => [ 'middleware.example.com' ],
+    middleware_hosts => [ 'broker1.example.com' ],
   }
 }
 ```
@@ -118,10 +118,10 @@ XXX flesh this out way more
 
 
 ```puppet
-node 'middleware.example.com' {
+node 'broker1.example.com' {
   class { '::mcollective':
     middleware         => true,
-    middleware_hosts   => [ 'middleware.example.com' ],
+    middleware_hosts   => [ 'broker1.example.com' ],
     middleware_ssl     => true,
     ssl_ca_cert        => 'puppet:///modules/site_mcollective/certs/ca.pem',
     ssl_server_public  => 'puppet:///modules/site_mcollective/certs/server.pem',
@@ -131,7 +131,7 @@ node 'middleware.example.com' {
 
 node 'server1.example.com' {
   class { '::mcollective':
-    middleware_hosts => [ 'middleware.example.com' ],
+    middleware_hosts => [ 'broker1.example.com' ],
     middleware_ssl   => true,
     ssl_ca_cert        => 'puppet:///modules/site_mcollective/certs/ca.pem',
     ssl_server_public  => 'puppet:///modules/site_mcollective/certs/server.pem',
@@ -142,12 +142,11 @@ node 'server1.example.com' {
 node 'control.example.com' {
   class { '::mcollective':
     client             => true,
-    middleware_hosts   => [ 'middleware.example.com' ],
+    middleware_hosts   => [ 'broker1.example.com' ],
     middleware_ssl     => true,
     ssl_ca_cert        => 'puppet:///modules/site_mcollective/certs/ca.pem',
     ssl_server_public  => 'puppet:///modules/site_mcollective/certs/server.pem',
     ssl_server_private => 'puppet:///modules/site_mcollective/private_keys/server.pem',
-
   }
 }
 ```
