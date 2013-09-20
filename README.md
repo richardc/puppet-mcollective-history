@@ -173,6 +173,83 @@ Boolean: defaults to false.  Whether to install middleware that matches
 
 Currently supported are `activemq`, `rabbitmq`, and `redis`
 
+##### `connector`
+
+String: defaults to 'activemq'.  Name of the connector plugin to use.
+
+##### `securityprovider`
+
+String: defaults to 'psk'.  Name of the security provider plugin to use.
+'ssl' is recommended but requires some additional setup.
+
+##### `psk`
+
+String: defaults to 'changemeplease'.  Used by the 'psk' security provider as
+the pre-shared key to secure the collective with.
+
+##### `factsource`
+
+String: defaults to 'yaml'.  Name of the factsource plugin to use on the
+server.
+
+##### `yaml_fact_path`
+
+String: defaults to '/etc/mcollective/facts.yaml'.  Name of the file the
+'yaml' factsource plugin should load facts from.
+
+##### `rpcauthprovider`
+
+String: defaults to 'action_policy'.  Name of the RPC Auth Provider to use on
+the server.
+
+##### `rpcauditprovider`
+
+String: defaults to 'logfile'.  Name of the RPC Audit Provider to use on the
+server.
+
+##### `registration`
+
+String: defaults to undef.  Name of the registration plugin to use on the
+server.
+
+##### `core_libdir`
+
+String: default is based on platform.  Path to the core plugins that are
+installed by the mcollective-common package.
+
+##### `site_libdir`
+
+String: default is based on platform.  Path to the site-specific plugins that
+the `mcollective::plugin` type will install with its `source` parameter.
+
+This path will be managed and purged by puppet, so don't point it at
+core_libdir or any other non-dedicated path.
+
+##### `middleware_hosts`
+
+Array of strings: defaults to [].  Where the middleware servers this
+client/server should talk to are.
+
+##### `middleware_user`
+
+String: defaults to 'mcollective'. Username to use when connecting to the
+middleware.
+
+##### `middleware_password`
+
+String: defaults to 'marionette'.  Password to use when connecting to the
+middleware.
+
+##### `middleware_port`
+
+String: defaults to '61613'.  Port number to use when connecting to the
+middleware over an unencrypted connection.
+
+##### `middleware_port_ssl`
+
+String: defaults to '61614'. Port number to use when connecting to the
+middleware over a ssl connection.
+
 ##### `middleware_ssl`
 
 Boolean: defaults to false.  Whether to talk to the middleware over a ssl
