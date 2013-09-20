@@ -3,7 +3,7 @@ define mcollective::user(
   $username = $title,
   # duplication of $connector, $middleware_ssl, $middleware_hosts,
   # and $securityprovider to allow for spec testing
-  $middleware_hosts = $mcollective::middleware_hosts_real,
+  $middleware_hosts = $mcollective::middleware_hosts,
   $middleware_ssl = $mcollective::middleware_ssl,
   $securityprovider = $mcollective::securityprovider,
   $connector = $mcollective::connector,

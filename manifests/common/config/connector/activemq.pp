@@ -16,7 +16,7 @@ class mcollective::common::config::connector::activemq {
     value => 'true',
   }
 
-  $pool_size = size($mcollective::middleware_hosts_real)
+  $pool_size = size($mcollective::middleware_hosts)
   mcollective::common::setting { 'plugin.activemq.pool.size':
     value => $pool_size,
   }

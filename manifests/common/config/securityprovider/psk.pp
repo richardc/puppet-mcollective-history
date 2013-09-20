@@ -5,6 +5,6 @@ class mcollective::common::config::securityprovider::psk {
   }
 
   mcollective::common::setting { 'plugin.psk':
-    value => $mcollective::psk_real,
+    value => $mcollective::psk,
   }
 }

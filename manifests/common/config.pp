@@ -36,7 +36,7 @@ class mcollective::common::config {
   }
 
   mcollective::common::setting { 'securityprovider':
-    value => $mcollective::securityprovider_real,
+    value => $mcollective::securityprovider,
   }
 
   mcollective::common::setting { 'collectives':
@@ -49,7 +49,7 @@ class mcollective::common::config {
 
   mcollective::soft_include { [
     "::mcollective::common::config::connector::${mcollective::connector}",
-    "::mcollective::common::config::securityprovider::${mcollective::securityprovider_real}",
+    "::mcollective::common::config::securityprovider::${mcollective::securityprovider}",
   ]:
     start => Anchor['mcollective::common::config::begin'],
     end   => Anchor['mcollective::common::config::end'],

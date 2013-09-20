@@ -27,7 +27,7 @@ class mcollective::client::config {
 
   mcollective::soft_include { [
     "::mcollective::client::config::connector::${mcollective::connector}",
-    "::mcollective::client::config::securityprovider::${mcollective::securityprovider_real}",
+    "::mcollective::client::config::securityprovider::${mcollective::securityprovider}",
   ]:
     start => Anchor['mcollective::client::config::begin'],
     end   => Anchor['mcollective::client::config::end'],
