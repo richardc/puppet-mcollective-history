@@ -4,17 +4,9 @@ class mcollective::client::config {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  if $mcollective::client_config {
-    file { 'mcollective::client':
-      path    => $mcollective::client_config_file,
-      content => $mcollective::client_config,
-    }
-  }
-  else {
-    datacat { 'mcollective::client':
-      path     => $mcollective::client_config_file,
-      template => 'mcollective/settings.cfg.erb',
-    }
+  datacat { 'mcollective::client':
+    path     => $mcollective::client_config_file,
+    template => 'mcollective/settings.cfg.erb',
   }
 
   mcollective::client::setting { 'loglevel':

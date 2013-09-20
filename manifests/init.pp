@@ -36,10 +36,8 @@ class mcollective (
   $middleware_ssl_port = '61614',
   $middleware_vhost = '/mcollective', # used by rabbitmq
   $server = true,
-  $server_config = undef,
   $server_config_file = '/etc/mcollective/server.cfg',
   $client = false,
-  $client_config = undef,
   $client_config_file = '/etc/mcollective/client.cfg',
   $middleware = false,
 ) inherits mcollective::defaults {

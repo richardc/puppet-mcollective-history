@@ -4,17 +4,9 @@ class mcollective::server::config {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  if $mcollective::server_config {
-    file { 'mcollective::server':
-      path    => $mcollective::server_config_file,
-      content => $mcollective::server_config,
-    }
-  }
-  else {
-    datacat { 'mcollective::server':
-      path     => $mcollective::server_config_file,
-      template => 'mcollective/settings.cfg.erb',
-    }
+  datacat { 'mcollective::server':
+    path     => $mcollective::server_config_file,
+    template => 'mcollective/settings.cfg.erb',
   }
 
   mcollective::server::setting { 'classesfile':
