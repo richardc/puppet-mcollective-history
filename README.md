@@ -46,14 +46,14 @@ If it helps to these to puppet concepts you loosely have:
 
 On a server
 
-* mcollective package.
+* mcollective package
 * mcollective server configuration file
 * mcollective service
 
 On a client
 
-* mcollective-client package.
-* mcollective client configuration file.
+* mcollective-client package
+* mcollective client configuration file
 * optionally user configuration files (~/.mcollective and ~/.mcollective.d)
 
 On a middleware host
