@@ -141,6 +141,17 @@ describe 'mcollective' do
         it { should contain_mcollective__server__setting('classesfile').with_value('/tmp/classes.txt') }
       end
     end
+
+    describe '#registration' do
+      it 'should default to undef' do
+        should_not contain_mcollective__server__setting('registration')
+      end
+
+      context 'redis' do
+        let(:params) { { :server => true, :registration => 'redis' } }
+        it { should contain_mcollective__server__setting('registration').with_value('redis') }
+      end
+    end
   end
 
   describe '#middleware' do
