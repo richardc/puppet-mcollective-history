@@ -31,7 +31,6 @@
     $collectives = 'mcollective',
     $core_libdir = $mcollective::defaults::core_libdir,
     $site_libdir = $mcollective::defaults::site_libdir,
-    $ssl_client_certs = 'puppet:///modules/mcollective/empty',
     $activemq_confdir = $mcollective::defaults::activemq_confdir,
     $activemq_console = false, # ubuntu why you no jetty.xml!
     $rabbitmq_confdir = '/etc/rabbitmq',

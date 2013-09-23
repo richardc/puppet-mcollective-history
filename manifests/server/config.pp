@@ -29,14 +29,6 @@ class mcollective::server::config {
     ensure => 'directory',
   }
 
-  file { '/etc/mcollective/clients':
-    ensure  => 'directory',
-    purge   => true,
-    recurse => true,
-    mode    => '0444',
-    source  => $mcollective::ssl_client_certs,
-  }
-
   if $mcollective::middleware_ssl or $mcollective::securityprovider == 'ssl' {
     file { '/etc/mcollective/ca.pem':
       source => $mcollective::ssl_ca_cert,
