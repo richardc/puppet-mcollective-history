@@ -57,7 +57,7 @@ describe 'mcollective' do
       end
 
       describe 'activemq' do
-        describe 'setting connectors' do
+        describe '#middleware_hosts' do
           let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.1.host').with_value('foo') }
@@ -204,8 +204,8 @@ describe 'mcollective' do
       end
 
       describe 'activemq' do
-        describe 'setting connectors' do
-          let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
+        describe '#middleware_hosts' do
+          let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo bar } } }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.1.host').with_value('foo') }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61613') }
