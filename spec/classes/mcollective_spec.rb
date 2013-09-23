@@ -62,6 +62,17 @@ describe 'mcollective' do
       end
     end
 
+    describe '#server_logfile' do
+      it 'should default to /var/log/mcollective.log' do
+        should contain_mcollective__server__setting('logfile').with_value('/var/log/mcollective.log')
+      end
+
+      context '/tmp/log' do
+        let(:params) { { :server_logfile => '/tmp/log' } }
+        it { should contain_mcollective__server__setting('logfile').with_value('/tmp/log') }
+      end
+    end
+
     describe '#factsource' do
       it 'should default to yaml' do
         should contain_mcollective__server__setting('factsource').with_value('yaml')
