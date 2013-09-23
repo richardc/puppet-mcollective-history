@@ -30,6 +30,4 @@
     $activemq_confdir = $mcollective::defaults::activemq_confdir,
     $activemq_console = false, # ubuntu why you no jetty.xml!
     $rabbitmq_confdir = '/etc/rabbitmq',
-    $middleware_port = '61613',
-    $middleware_ssl_port = '61614',
     $middleware_vhost = '/mcollective', # used by rabbitmq

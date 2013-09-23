@@ -226,6 +226,32 @@ describe 'mcollective' do
             end
           end
         end
+
+        describe '#middleware_port' do
+          let(:common_params) { { :server => true, :middleware_hosts => %w[ foo ] }}
+          let(:params) { common_params }
+          context 'default' do
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61613') }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :middleware_port => '1701' }) }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('1701') }
+          end
+        end
+
+        describe '#middleware_ssl_port' do
+          let(:common_params) { { :server => true, :middleware_hosts => %w[ foo ], :middleware_ssl => true }}
+          let(:params) { common_params }
+          context 'default' do
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61614') }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :middleware_ssl_port => '1702' }) }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('1702') }
+          end
+        end
       end
     end
 
@@ -426,7 +452,7 @@ describe 'mcollective' do
           end
 
           context 'true' do
-            let(:common_params) { { :server => true, :middleware => true, :middleware_ssl => true } }
+            let(:common_params) { { :server => false, :middleware => true, :middleware_ssl => true } }
             let(:params) { common_params }
             it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp\+ssl" uri="stomp\+ssl:/) }
 
@@ -450,6 +476,32 @@ describe 'mcollective' do
                 it { should contain_file('/etc/activemq/server_private.pem').with_source('puppet:///modules/foo/server_private.pem')}
               end
             end
+          end
+        end
+
+        describe '#middleware_port' do
+          let(:common_params) { { :server => false, :middleware => true } }
+          let(:params) { common_params }
+          context 'default' do
+            it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp" uri="stomp:.*?:61613"/) }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :middleware_port => '1701' }) }
+            it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp" uri="stomp:.*?:1701"/) }
+          end
+        end
+
+        describe '#middleware_ssl_port' do
+          let(:common_params) { { :server => true, :middleware => true, :middleware_ssl => true }}
+          let(:params) { common_params }
+          context 'default' do
+            it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp\+ssl" uri="stomp\+ssl:.*?:61614\?/) }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :middleware_ssl_port => '1702' }) }
+            it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp\+ssl" uri="stomp\+ssl:.*?:1702\?/) }
           end
         end
       end
