@@ -167,6 +167,18 @@ describe 'mcollective' do
             it { should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('bob') }
           end
         end
+
+        describe '#middleware_ssl' do
+          let(:params) { { :server => true, :middleware_hosts => %w{ foo } } }
+          it 'should default to false' do
+            should_not contain_mcollective__common__setting('plugin.activemq.pool.1.ssl')
+          end
+
+          context 'bob' do
+            let(:params) { { :server => true, :middleware_hosts => %w{ foo }, :middleware_ssl => true } }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.ssl').with_value('1') }
+          end
+        end
       end
     end
 
@@ -316,6 +328,18 @@ describe 'mcollective' do
             it { should contain_file('activemq.xml').with_content(/authenticationUser username="mcollective" password="thereichangedit"/) }
           end
         end
+
+        describe '#middleware_ssl' do
+          let(:params) { { :server => false, :middleware => true } }
+          it 'should default to false' do
+            should contain_file('activemq.xml').with_content(/transportConnector name="stomp" uri="stomp:/)
+          end
+
+          context 'true' do
+            let(:params) { { :server => true, :middleware => true, :middleware_ssl => true } }
+            it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp\+ssl" uri="stomp\+ssl:/) }
+          end
+        end
       end
     end
   end
@@ -405,6 +429,18 @@ describe 'mcollective' do
           context 'bob' do
             let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo }, :middleware_password => 'bob' } }
             it { should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('bob') }
+          end
+        end
+
+        describe '#middleware_ssl' do
+          let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo } } }
+          it 'should default to false' do
+            should_not contain_mcollective__common__setting('plugin.activemq.pool.1.ssl')
+          end
+
+          context 'true' do
+            let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo }, :middleware_ssl => true } }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.ssl').with_value('1') }
           end
         end
       end
