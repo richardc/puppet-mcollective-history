@@ -31,9 +31,6 @@
     $collectives = 'mcollective',
     $core_libdir = $mcollective::defaults::core_libdir,
     $site_libdir = $mcollective::defaults::site_libdir,
-    $ssl_ca_cert = undef,
-    $ssl_server_public = undef,
-    $ssl_server_private = undef,
     $ssl_client_certs = 'puppet:///modules/mcollective/empty',
     $activemq_confdir = $mcollective::defaults::activemq_confdir,
     $activemq_console = false, # ubuntu why you no jetty.xml!

@@ -170,13 +170,38 @@ describe 'mcollective' do
 
         describe '#middleware_ssl' do
           let(:params) { { :server => true, :middleware_hosts => %w{ foo } } }
-          it 'should default to false' do
-            should_not contain_mcollective__common__setting('plugin.activemq.pool.1.ssl')
+          context 'default' do
+            it { should_not contain_mcollective__common__setting('plugin.activemq.pool.1.ssl') }
+            it { should_not contain_file('/etc/mcollective/ca.pem') }
+            it { should_not contain_file('/etc/mcollective/server_public.pem') }
+            it { should_not contain_file('/etc/mcollective/server_private.pem') }
           end
 
-          context 'bob' do
-            let(:params) { { :server => true, :middleware_hosts => %w{ foo }, :middleware_ssl => true } }
+          context 'true' do
+            let(:common_params) { { :server => true, :middleware_hosts => %w{ foo }, :middleware_ssl => true } }
+            let(:params) { common_params }
             it { should contain_mcollective__common__setting('plugin.activemq.pool.1.ssl').with_value('1') }
+
+            describe '#ssl_ca_cert' do
+              context 'set' do
+                let(:params) { common_params.merge({ :ssl_ca_cert => 'puppet:///modules/foo/ca_cert.pem' }) }
+                it { should contain_file('/etc/mcollective/ca.pem').with_source('puppet:///modules/foo/ca_cert.pem')}
+              end
+            end
+
+            describe '#ssl_server_public' do
+              context 'set' do
+                let(:params) { common_params.merge({ :ssl_server_public => 'puppet:///modules/foo/server_public.pem' }) }
+                it { should contain_file('/etc/mcollective/server_public.pem').with_source('puppet:///modules/foo/server_public.pem')}
+              end
+            end
+
+            describe '#ssl_server_private' do
+              context 'set' do
+                let(:params) { common_params.merge({ :ssl_server_private => 'puppet:///modules/foo/server_private.pem' }) }
+                it { should contain_file('/etc/mcollective/server_private.pem').with_source('puppet:///modules/foo/server_private.pem')}
+              end
+            end
           end
         end
       end
@@ -335,9 +360,37 @@ describe 'mcollective' do
             should contain_file('activemq.xml').with_content(/transportConnector name="stomp" uri="stomp:/)
           end
 
+          context 'false' do
+            it { should_not contain_file('/etc/activemq/ca.pem') }
+            it { should_not contain_file('/etc/activemq/server_public.pem') }
+            it { should_not contain_file('/etc/activemq/server_private.pem') }
+          end
+
           context 'true' do
-            let(:params) { { :server => true, :middleware => true, :middleware_ssl => true } }
+            let(:common_params) { { :server => true, :middleware => true, :middleware_ssl => true } }
+            let(:params) { common_params }
             it { should contain_file('activemq.xml').with_content(/transportConnector name="stomp\+ssl" uri="stomp\+ssl:/) }
+
+            describe '#ssl_ca_cert' do
+              context 'set' do
+                let(:params) { common_params.merge({ :ssl_ca_cert => 'puppet:///modules/foo/ca_cert.pem' }) }
+                it { should contain_file('/etc/activemq/ca.pem').with_source('puppet:///modules/foo/ca_cert.pem')}
+              end
+            end
+
+            describe '#ssl_server_public' do
+              context 'set' do
+                let(:params) { common_params.merge({ :ssl_server_public => 'puppet:///modules/foo/server_public.pem' }) }
+                it { should contain_file('/etc/activemq/server_public.pem').with_source('puppet:///modules/foo/server_public.pem')}
+              end
+            end
+
+            describe '#ssl_server_private' do
+              context 'set' do
+                let(:params) { common_params.merge({ :ssl_server_private => 'puppet:///modules/foo/server_private.pem' }) }
+                it { should contain_file('/etc/activemq/server_private.pem').with_source('puppet:///modules/foo/server_private.pem')}
+              end
+            end
           end
         end
       end
