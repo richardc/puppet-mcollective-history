@@ -380,6 +380,30 @@ describe 'mcollective' do
         it { should contain_class('activemq') }
         it { should contain_class('activemq').with_instance('mcollective') }
 
+        describe '#activemq_confdir' do
+          let(:common_params) { { :server => false, :middleware => true,  :middleware_ssl => true } }
+          let(:params) { common_params }
+          context 'default (/etc/activemq)' do
+            it { should contain_file('/etc/activemq/ca.pem') }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :activemq_confdir => '/etc/special' }) }
+            it { should contain_file('/etc/special/ca.pem') }
+          end
+        end
+
+        describe '#activemq_console' do
+          context 'default (false)' do
+            it { should contain_file('activemq.xml').with_content(/(?!:jetty)/) }
+          end
+
+          context 'true' do
+            let(:params) { { :server => false, :middleware => true, :activemq_console => true }}
+            it { should contain_file('activemq.xml').with_content(/jetty/) }
+          end
+        end
+
         describe '#middleware_ssl' do
           it 'should default to false' do
             should_not contain_java_ks('mcollective:truststore')
