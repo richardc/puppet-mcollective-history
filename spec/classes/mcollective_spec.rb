@@ -40,6 +40,17 @@ describe 'mcollective' do
       end
     end
 
+    describe '#enterprise' do
+      context 'default (false)' do
+        it { should contain_service('mcollective').with_name('mcollective') }
+      end
+
+      context 'true' do
+        let(:params) { { :enterprise => true } }
+        it { should contain_service('mcollective').with_name('pe-mcollective') }
+      end
+    end
+
     describe '#factsource' do
       it 'should default to yaml' do
         should contain_mcollective__server__setting('factsource').with_value('yaml')
