@@ -245,7 +245,7 @@ middleware.
 String: defaults to '61613'.  Port number to use when connecting to the
 middleware over an unencrypted connection.
 
-##### `middleware_port_ssl`
+##### `middleware_ssl_port`
 
 String: defaults to '61614'. Port number to use when connecting to the
 middleware over a ssl connection.
