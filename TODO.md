@@ -27,5 +27,4 @@
 
 = Untested
 
-    $rabbitmq_confdir = '/etc/rabbitmq',
     $middleware_vhost = '/mcollective', # used by rabbitmq

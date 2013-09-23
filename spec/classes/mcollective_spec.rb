@@ -532,8 +532,31 @@ describe 'mcollective' do
 
       context 'rabbitmq' do
         let(:facts) { { :osfamily => 'RedHat' } }
-        let(:params) { { :server => false, :middleware => true, :connector => 'rabbitmq' } }
+        let(:common_params) { { :server => false, :middleware => true, :connector => 'rabbitmq' } }
+        let(:params) { common_params }
         it { should contain_class('rabbitmq') }
+
+        describe '#middleware_ssl' do
+          context 'false' do
+            let(:params) { common_params.merge({ :middleware_ssl => false }) }
+            it { should_not contain_file('/etc/rabbitmq/ca.pem') }
+          end
+
+          context 'true' do
+            let(:params) { common_params.merge({ :middleware_ssl => true }) }
+
+            describe '#rabbitmq_confdir' do
+              context 'default' do
+                it { should contain_file('/etc/rabbitmq/ca.pem') }
+              end
+
+              context 'set' do
+                let(:params) { common_params.merge({ :middleware_ssl => true, :rabbitmq_confdir => '/etc/special' }) }
+                it { should contain_file('/etc/special/ca.pem') }
+              end
+            end
+          end
+        end
       end
     end
   end
