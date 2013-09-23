@@ -22,6 +22,8 @@ class mcollective (
   $ssl_client_certs = 'puppet:///modules/mcollective/empty',
   $server_logfile   = '/var/log/mcollective.log',
   $server_loglevel  = 'info',
+  $client_logger_type = 'console',
+  $client_loglevel = 'warn',
   $server_daemonize = 1,
   $activemq_template = 'mcollective/activemq.xml.erb',
   $activemq_config = undef,

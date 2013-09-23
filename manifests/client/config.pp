@@ -10,11 +10,11 @@ class mcollective::client::config {
   }
 
   mcollective::client::setting { 'loglevel':
-    value => 'warn',
+    value => $mcollective::client_loglevel,
   }
 
   mcollective::client::setting { 'logger_type':
-    value => 'console',
+    value => $mcollective::client_logger_type,
   }
 
   mcollective::soft_include { [
