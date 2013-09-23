@@ -73,6 +73,28 @@ describe 'mcollective' do
       end
     end
 
+    describe '#server_loglevel' do
+      it 'should default to info' do
+        should contain_mcollective__server__setting('loglevel').with_value('info')
+      end
+
+      context 'debug' do
+        let(:params) { { :server_loglevel => 'debug' } }
+        it { should contain_mcollective__server__setting('loglevel').with_value('debug') }
+      end
+    end
+
+    describe '#server_daemonize' do
+      it 'should default to 1' do
+        should contain_mcollective__server__setting('daemonize').with_value('1')
+      end
+
+      context '0' do
+        let(:params) { { :server_daemonize => '0' } }
+        it { should contain_mcollective__server__setting('daemonize').with_value('0') }
+      end
+    end
+
     describe '#factsource' do
       it 'should default to yaml' do
         should contain_mcollective__server__setting('factsource').with_value('yaml')
