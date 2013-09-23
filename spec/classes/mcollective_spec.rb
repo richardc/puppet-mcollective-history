@@ -17,6 +17,29 @@ describe 'mcollective' do
   end
 
   describe 'installing a server' do
+    describe '#manage_packages' do
+      context 'true' do
+        let(:params) { { :server => true, :manage_packages => true } }
+        it { should contain_package('mcollective') }
+      end
+
+      context 'false' do
+        let(:params) { { :server => true, :manage_packages => false } }
+        it { should_not contain_package('mcollective') }
+      end
+    end
+
+    describe '#version' do
+      it 'should default to present' do
+        should contain_package('mcollective').with_ensure('present')
+      end
+
+      context '42' do
+        let(:params) { { :version => '42' } }
+        it { should contain_package('mcollective').with_ensure('42') }
+      end
+    end
+
     describe '#factsource' do
       it 'should default to yaml' do
         should contain_mcollective__server__setting('factsource').with_value('yaml')
@@ -197,6 +220,29 @@ describe 'mcollective' do
 
   describe 'installing a client' do
     let(:params) { { :server => false, :client => true } }
+
+    describe '#manage_packages' do
+      context 'true' do
+        let(:params) { { :client => true, :manage_packages => true } }
+        it { should contain_package('mcollective-client') }
+      end
+
+      context 'false' do
+        let(:params) { { :client => true, :manage_packages => false } }
+        it { should_not contain_package('mcollective-client') }
+      end
+    end
+
+    describe '#version' do
+      it 'should default to present' do
+        should contain_package('mcollective-client').with_ensure('present')
+      end
+
+      context '42' do
+        let(:params) { { :client => true, :version => '42' } }
+        it { should contain_package('mcollective-client').with_ensure('42') }
+      end
+    end
 
     describe '#connector' do
       it 'should default to activemq' do
