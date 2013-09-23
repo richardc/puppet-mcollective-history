@@ -16,7 +16,7 @@ describe 'mcollective' do
     end
   end
 
-  describe 'installing a server' do
+  context 'installing a server' do
     describe '#manage_packages' do
       context 'true' do
         let(:params) { { :server => true, :manage_packages => true } }
@@ -67,7 +67,7 @@ describe 'mcollective' do
         should contain_mcollective__server__setting('factsource').with_value('yaml')
       end
 
-      describe 'yaml' do
+      context 'yaml' do
         let(:facts) { { :osfamily => 'RedHat', :number_of_cores => 42 } }
         it { should contain_file('/etc/mcollective/facts.yaml') }
         it { should contain_file('/etc/mcollective/facts.yaml').with_content(/^  osfamily: RedHat/) }
@@ -81,7 +81,7 @@ describe 'mcollective' do
             should contain_mcollective__server__setting('plugin.yaml').with_value('/etc/mcollective/facts.yaml')
           end
 
-          describe '/tmp/facts' do
+          context '/tmp/facts' do
             let(:params) { { :yaml_fact_path => '/tmp/facts' } }
             it { should contain_file('/tmp/facts') }
             it { should contain_mcollective__server__setting('plugin.yaml').with_value('/tmp/facts') }
@@ -89,7 +89,7 @@ describe 'mcollective' do
         end
       end
 
-      describe 'facter' do
+      context 'facter' do
         let(:params) { { :server => true, :factsource => 'facter' } }
         it { should contain_mcollective__server__setting('factsource').with_value('facter') }
         it { should contain_package('mcollective-facter-facts') }
@@ -101,7 +101,7 @@ describe 'mcollective' do
         should contain_mcollective__common__setting('connector').with_value('activemq')
       end
 
-      describe 'activemq' do
+      context 'activemq' do
         describe '#middleware_hosts' do
           let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
@@ -118,13 +118,13 @@ describe 'mcollective' do
         should contain_mcollective__common__setting('securityprovider').with_value('psk')
       end
 
-      describe 'ssl' do
+      context 'ssl' do
         let(:params) { { :server => true, :securityprovider => 'ssl' } }
         it { should contain_mcollective__server__setting('plugin.ssl_server_public').with_value('/etc/mcollective/server_public.pem') }
         it { should contain_file('/etc/mcollective/server_public.pem') }
       end
 
-      describe 'psk' do
+      context 'psk' do
         let(:params) { { :server => true, :securityprovider => 'psk' } }
         it { should contain_mcollective__common__setting('securityprovider').with_value('psk') }
         it { should contain_mcollective__common__setting('plugin.psk').with_value('changemeplease') }
@@ -136,7 +136,7 @@ describe 'mcollective' do
         should contain_mcollective__server__setting('rpcauthprovider').with_value('action_policy')
       end
 
-      describe 'action_policy' do
+      context 'action_policy' do
         let(:params) { { :server => true, :rpcauthprovider => 'action_policy' } }
         it { should contain_mcollective__server__setting('plugin.actionpolicy.allow_unconfigured').with_value('1') }
       end
@@ -147,18 +147,18 @@ describe 'mcollective' do
         should contain_mcollective__server__setting('rpcauditprovider').with_value('logfile')
       end
 
-      describe 'logfile' do
+      context 'logfile' do
         let(:params) { { :server => true, :rpcauditprovider => 'logfile' } }
         it { should contain_mcollective__server__setting('plugin.rpcaudit.logfile').with_value('/var/log/mcollective-audit.log') }
       end
     end
 
-    describe('#classesfile') do
+    describe '#classesfile' do
       it 'should default to /var/lib/puppet/state/classes.txt' do
         should contain_mcollective__server__setting('classesfile').with_value('/var/lib/puppet/state/classes.txt')
       end
 
-      describe '/tmp/classes.txt' do
+      context '/tmp/classes.txt' do
         let(:params) { { :server => true, :classesfile => '/tmp/classes.txt' } }
         it { should contain_mcollective__server__setting('classesfile').with_value('/tmp/classes.txt') }
       end
@@ -192,7 +192,7 @@ describe 'mcollective' do
     let(:params) { { :server => false, :middleware => true } }
     it { should contain_class('mcollective::middleware') }
 
-    context '#connector' do
+    describe '#connector' do
       it 'should default to apache' do
         should contain_class('mcollective::middleware::activemq')
       end
@@ -201,7 +201,7 @@ describe 'mcollective' do
         it { should contain_class('activemq') }
         it { should contain_class('activemq').with_instance('mcollective') }
 
-        context '#middleware_ssl' do
+        describe '#middleware_ssl' do
           it 'should default to false' do
             should_not contain_java_ks('mcollective:truststore')
           end
@@ -212,7 +212,7 @@ describe 'mcollective' do
           end
         end
 
-        context '#activemq_template' do
+        describe '#activemq_template' do
           context 'default (in-module)' do
             let(:params) { { :middleware => true } }
             it { should contain_file('activemq.xml').with_content(/middleware/) }
@@ -224,7 +224,7 @@ describe 'mcollective' do
           end
         end
 
-        context '#activemq_config' do
+        describe '#activemq_config' do
           context 'default (use template in-module)' do
             let(:params) { { :middleware => true } }
             it { should contain_file('activemq.xml').with_content(/middleware/) }
@@ -293,7 +293,7 @@ describe 'mcollective' do
         should contain_mcollective__common__setting('connector').with_value('activemq')
       end
 
-      describe 'activemq' do
+      context 'activemq' do
         describe '#middleware_hosts' do
           let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo bar } } }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
@@ -310,13 +310,13 @@ describe 'mcollective' do
         should contain_mcollective__common__setting('securityprovider').with_value('psk')
       end
 
-      describe 'ssl' do
+      context 'ssl' do
         let(:params) { { :server => true, :securityprovider => 'ssl' } }
         it { should contain_mcollective__server__setting('plugin.ssl_server_public').with_value('/etc/mcollective/server_public.pem') }
         it { should contain_file('/etc/mcollective/server_public.pem') }
       end
 
-      describe 'psk' do
+      context 'psk' do
         let(:params) { { :server => true, :securityprovider => 'psk' } }
         it { should contain_mcollective__common__setting('securityprovider').with_value('psk') }
         it { should contain_mcollective__common__setting('plugin.psk').with_value('changemeplease') }
