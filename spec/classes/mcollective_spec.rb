@@ -30,6 +30,18 @@ describe 'mcollective' do
         it 'should be alpha-sorted' do
           should contain_file('/etc/mcollective/facts.yaml').with_content(/^  number_of_cores:.*?^  osfamily:/m)
         end
+
+        describe '#yaml_fact_path' do
+          it 'should default to /etc/mcollective/facts.yaml' do
+            should contain_mcollective__server__setting('plugin.yaml').with_value('/etc/mcollective/facts.yaml')
+          end
+
+          describe '/tmp/facts' do
+            let(:params) { { :yaml_fact_path => '/tmp/facts' } }
+            it { should contain_file('/tmp/facts') }
+            it { should contain_mcollective__server__setting('plugin.yaml').with_value('/tmp/facts') }
+          end
+        end
       end
 
       describe 'facter' do
@@ -73,10 +85,55 @@ describe 'mcollective' do
         it { should contain_mcollective__common__setting('plugin.psk').with_value('changemeplease') }
       end
     end
+
+    describe '#rpcauthprovider' do
+      it 'should default to action_policy' do
+        should contain_mcollective__server__setting('rpcauthprovider').with_value('action_policy')
+      end
+
+      describe 'action_policy' do
+        let(:params) { { :server => true, :rpcauthprovider => 'action_policy' } }
+        it { should contain_mcollective__server__setting('plugin.actionpolicy.allow_unconfigured').with_value('1') }
+      end
+    end
+
+    describe '#rpcauditprovider' do
+      it 'should default to logfile' do
+        should contain_mcollective__server__setting('rpcauditprovider').with_value('logfile')
+      end
+
+      describe 'logfile' do
+        let(:params) { { :server => true, :rpcauditprovider => 'logfile' } }
+        it { should contain_mcollective__server__setting('plugin.rpcaudit.logfile').with_value('/var/log/mcollective-audit.log') }
+      end
+    end
+
+    describe('#classesfile') do
+      it 'should default to /var/lib/puppet/state/classes.txt' do
+        should contain_mcollective__server__setting('classesfile').with_value('/var/lib/puppet/state/classes.txt')
+      end
+
+      describe '/tmp/classes.txt' do
+        let(:params) { { :server => true, :classesfile => '/tmp/classes.txt' } }
+        it { should contain_mcollective__server__setting('classesfile').with_value('/tmp/classes.txt') }
+      end
+    end
+  end
+
+  describe '#middleware' do
+    context 'true' do
+      let(:params) { { :middleware => true } }
+      it { should contain_class('mcollective::middleware') }
+    end
+
+    context 'false' do
+      let(:params) { { :middleware => false } }
+      it { should_not contain_class('mcollective::middleware') }
+    end
   end
 
   describe 'installing middleware' do
-    let(:params) { { :middleware => true } }
+    let(:params) { { :server => false, :middleware => true } }
     it { should contain_class('mcollective::middleware') }
 
     context '#connector' do
@@ -122,6 +179,57 @@ describe 'mcollective' do
             it { should contain_file('activemq.xml').with_content('Lovingly hand-crafted') }
           end
         end
+      end
+    end
+  end
+
+  describe '#client' do
+    context 'true' do
+      let(:params) { { :client => true } }
+      it { should contain_class('mcollective::client') }
+    end
+
+    context 'false' do
+      let(:params) { { :client => false } }
+      it { should_not contain_class('mcollective::client') }
+    end
+  end
+
+  describe 'installing a client' do
+    let(:params) { { :server => false, :client => true } }
+
+    describe '#connector' do
+      it 'should default to activemq' do
+        should contain_mcollective__common__setting('connector').with_value('activemq')
+      end
+
+      describe 'activemq' do
+        describe 'setting connectors' do
+          let(:params) { { :server => true, :middleware_hosts => %w{ foo bar } } }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.size').with_value(2) }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.1.host').with_value('foo') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61613') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.2.host').with_value('bar') }
+          it { should contain_mcollective__common__setting('plugin.activemq.pool.2.port').with_value('61613') }
+        end
+      end
+    end
+
+    describe '#securityprovider' do
+      it 'should default to psk' do
+        should contain_mcollective__common__setting('securityprovider').with_value('psk')
+      end
+
+      describe 'ssl' do
+        let(:params) { { :server => true, :securityprovider => 'ssl' } }
+        it { should contain_mcollective__server__setting('plugin.ssl_server_public').with_value('/etc/mcollective/server_public.pem') }
+        it { should contain_file('/etc/mcollective/server_public.pem') }
+      end
+
+      describe 'psk' do
+        let(:params) { { :server => true, :securityprovider => 'psk' } }
+        it { should contain_mcollective__common__setting('securityprovider').with_value('psk') }
+        it { should contain_mcollective__common__setting('plugin.psk').with_value('changemeplease') }
       end
     end
   end
