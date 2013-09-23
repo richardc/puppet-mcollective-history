@@ -41,13 +41,24 @@ describe 'mcollective' do
     end
 
     describe '#enterprise' do
-      context 'default (false)' do
-        it { should contain_service('mcollective').with_name('mcollective') }
+      it 'should default to false' do
+        should contain_service('mcollective').with_name('mcollective')
       end
 
       context 'true' do
         let(:params) { { :enterprise => true } }
         it { should contain_service('mcollective').with_name('pe-mcollective') }
+      end
+    end
+
+    describe '#server_config_file' do
+      it 'should default to /etc/mcollective/server.cfg' do
+        should contain_file('mcollective::server').with_path('/etc/mcollective/server.cfg')
+      end
+
+      context '/foo' do
+        let(:params) { { :server_config_file => '/foo' } }
+        it { should contain_file('mcollective::server').with_path('/foo') }
       end
     end
 
@@ -263,6 +274,17 @@ describe 'mcollective' do
       context '42' do
         let(:params) { { :client => true, :version => '42' } }
         it { should contain_package('mcollective-client').with_ensure('42') }
+      end
+    end
+
+    describe '#client_config_file' do
+      it 'should default to /etc/mcollective/client.cfg' do
+        should contain_file('mcollective::client').with_path('/etc/mcollective/client.cfg')
+      end
+
+      context '/foo' do
+        let(:params) { { :client => true, :client_config_file => '/foo' } }
+        it { should contain_file('mcollective::client').with_path('/foo') }
       end
     end
 
