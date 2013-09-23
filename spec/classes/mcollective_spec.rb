@@ -143,6 +143,30 @@ describe 'mcollective' do
           it { should contain_mcollective__common__setting('plugin.activemq.pool.2.host').with_value('bar') }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.2.port').with_value('61613') }
         end
+
+        describe '#middleware_user' do
+          let(:params) { { :server => true, :middleware_hosts => %w{ foo } } }
+          it 'should default to mcollective' do
+            should contain_mcollective__common__setting('plugin.activemq.pool.1.user').with_value('mcollective')
+          end
+
+          context 'bob' do
+            let(:params) { { :server => true, :middleware_hosts => %w{ foo }, :middleware_user => 'bob' } }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.user').with_value('bob') }
+          end
+        end
+
+        describe '#middleware_password' do
+          let(:params) { { :server => true, :middleware_hosts => %w{ foo } } }
+          it 'should default to marionette' do
+            should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('marionette')
+          end
+
+          context 'bob' do
+            let(:params) { { :server => true, :middleware_hosts => %w{ foo }, :middleware_password => 'bob' } }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('bob') }
+          end
+        end
       end
     end
 
@@ -268,6 +292,30 @@ describe 'mcollective' do
             it { should contain_file('activemq.xml').with_content('Lovingly hand-crafted') }
           end
         end
+
+        describe '#middleware_user' do
+          let(:params) { { :server => false, :middleware => true } }
+          it 'should default to mcollective' do
+            should contain_file('activemq.xml').with_content(/authenticationUser username="mcollective"/)
+          end
+
+          context 'bob' do
+            let(:params) { { :server => false, :middleware => true, :middleware_user => 'bob' } }
+            it { should contain_file('activemq.xml').with_content(/authenticationUser username="bob"/) }
+          end
+        end
+
+        describe '#middleware_password' do
+          let(:params) { { :server => false, :middleware => true } }
+          it 'should default to marionette' do
+            should contain_file('activemq.xml').with_content(/authenticationUser username="mcollective" password="marionette"/)
+          end
+
+          context 'thereichangedit' do
+            let(:params) { { :server => false, :middleware => true, :middleware_password => 'thereichangedit' } }
+            it { should contain_file('activemq.xml').with_content(/authenticationUser username="mcollective" password="thereichangedit"/) }
+          end
+        end
       end
     end
   end
@@ -334,6 +382,30 @@ describe 'mcollective' do
           it { should contain_mcollective__common__setting('plugin.activemq.pool.1.port').with_value('61613') }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.2.host').with_value('bar') }
           it { should contain_mcollective__common__setting('plugin.activemq.pool.2.port').with_value('61613') }
+        end
+
+        describe '#middleware_user' do
+          let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo } } }
+          it 'should default to mcollective' do
+            should contain_mcollective__common__setting('plugin.activemq.pool.1.user').with_value('mcollective')
+          end
+
+          context 'bob' do
+            let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo }, :middleware_user => 'bob' } }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.user').with_value('bob') }
+          end
+        end
+
+        describe '#middleware_password' do
+          let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo } } }
+          it 'should default to marionette' do
+            should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('marionette')
+          end
+
+          context 'bob' do
+            let(:params) { { :server => false, :client => true, :middleware_hosts => %w{ foo }, :middleware_password => 'bob' } }
+            it { should contain_mcollective__common__setting('plugin.activemq.pool.1.password').with_value('bob') }
+          end
         end
       end
     end
