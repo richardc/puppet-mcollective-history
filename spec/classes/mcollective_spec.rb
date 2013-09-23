@@ -51,6 +51,28 @@ describe 'mcollective' do
       end
     end
 
+    describe '#main_collective' do
+      context 'default' do
+        it { should contain_mcollective__common__setting('main_collective').with_value('mcollective') }
+      end
+
+      context 'set' do
+        let(:params) { { :main_collective => 'bob' } }
+        it { should contain_mcollective__common__setting('main_collective').with_value('bob') }
+      end
+    end
+
+    describe '#collectives' do
+     context 'default' do
+        it { should contain_mcollective__common__setting('collectives').with_value('mcollective') }
+      end
+
+      context 'set' do
+        let(:params) { { :collectives => 'henry' } }
+        it { should contain_mcollective__common__setting('collectives').with_value('henry') }
+      end
+    end
+
     describe '#server_config_file' do
       it 'should default to /etc/mcollective/server.cfg' do
         should contain_file('mcollective::server').with_path('/etc/mcollective/server.cfg')

@@ -27,8 +27,6 @@
 
 = Untested
 
-    $main_collective = 'mcollective',
-    $collectives = 'mcollective',
     $core_libdir = $mcollective::defaults::core_libdir,
     $site_libdir = $mcollective::defaults::site_libdir,
     $activemq_confdir = $mcollective::defaults::activemq_confdir,
