@@ -293,6 +293,30 @@ describe 'mcollective' do
       end
     end
 
+    describe '#core_libdir' do
+      context 'default' do
+        it { should contain_mcollective__common__setting('libdir').with_value('/usr/local/libexec/mcollective:/usr/libexec/mcollective') }
+      end
+
+      context 'set' do
+        let(:params) { { :core_libdir => '/usr/libexec/fishy/fishy' } }
+        it { should contain_mcollective__common__setting('libdir').with_value('/usr/local/libexec/mcollective:/usr/libexec/fishy/fishy') }
+      end
+    end
+
+    describe '#site_libdir' do
+      context 'default' do
+        it { should contain_file('/usr/local/libexec/mcollective') }
+        it { should contain_mcollective__common__setting('libdir').with_value('/usr/local/libexec/mcollective:/usr/libexec/mcollective') }
+      end
+
+      context 'set' do
+        let(:params) { { :site_libdir => '/usr/local/fishy/fishy' } }
+        it { should contain_file('/usr/local/fishy/fishy') }
+        it { should contain_mcollective__common__setting('libdir').with_value('/usr/local/fishy/fishy:/usr/libexec/mcollective') }
+      end
+    end
+
     describe '#registration' do
       it 'should default to undef' do
         should_not contain_mcollective__server__setting('registration')
