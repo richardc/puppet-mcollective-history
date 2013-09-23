@@ -253,6 +253,21 @@ describe 'mcollective' do
           end
         end
       end
+
+      context 'rabbitmq' do
+        let(:common_params) { { :server => true, :connector => 'rabbitmq' } }
+        let(:params) { common_params }
+        describe '#middleware_vhost' do
+          context 'default' do
+            it { should contain_mcollective__common__setting('plugin.rabbitmq.vhost').with_value('/mcollective') }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :middleware_vhost => '/pies' }) }
+            it { should contain_mcollective__common__setting('plugin.rabbitmq.vhost').with_value('/pies') }
+          end
+        end
+      end
     end
 
     describe '#securityprovider' do
@@ -555,6 +570,17 @@ describe 'mcollective' do
                 it { should contain_file('/etc/special/ca.pem') }
               end
             end
+          end
+        end
+
+        describe '#middleware_vhost' do
+          context 'default' do
+            it { should contain_rabbitmq_vhost('/mcollective') }
+          end
+
+          context 'set' do
+            let(:params) { common_params.merge({ :middleware_vhost => '/pies' }) }
+            it { should contain_rabbitmq_vhost('/pies') }
           end
         end
       end

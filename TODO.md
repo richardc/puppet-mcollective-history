@@ -24,7 +24,3 @@
     $middleware_vhost = '/mcollective', # used by rabbitmq
     $server_config_file = '/etc/mcollective/server.cfg',
     $client_config_file = '/etc/mcollecti
-
-= Untested
-
-    $middleware_vhost = '/mcollective', # used by rabbitmq
