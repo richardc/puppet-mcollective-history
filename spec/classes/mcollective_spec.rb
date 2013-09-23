@@ -529,6 +529,12 @@ describe 'mcollective' do
           end
         end
       end
+
+      context 'rabbitmq' do
+        let(:facts) { { :osfamily => 'RedHat' } }
+        let(:params) { { :server => false, :middleware => true, :connector => 'rabbitmq' } }
+        it { should contain_class('rabbitmq') }
+      end
     end
   end
 
