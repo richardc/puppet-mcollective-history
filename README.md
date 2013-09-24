@@ -408,7 +408,7 @@ installing from a source uri the plugin will be copied to
 
 ##### `name`
 
-String: its the resource title.  The base name of the plugin to install.
+String: the resource title.  The base name of the plugin to install.
 
 ##### `source`
 
@@ -435,6 +435,15 @@ to install `mcollective-${name}-client` on the client node.
 conjunction with `mcollective::agent::actionpolicy`.
 
 #### Parameters
+
+##### `name`
+
+String: the resource title.  The name of the agent to set up an actionpolicy
+for.
+
+##### `policy`
+
+String: defaults to 'deny'.  The default actionpolicy to apply to the agent.
 
 ### `mcollective::agent::actionpolicy` defined type
 
