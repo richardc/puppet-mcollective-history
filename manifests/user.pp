@@ -1,17 +1,19 @@
 # Define - mcollective::user
 define mcollective::user(
   $username = $title,
-  # duplication of $connector, $middleware_ssl, $middleware_hosts,
-  # and $securityprovider to allow for spec testing
+  $homedir = "/home/${title}",
+  $certificate = undef,
+  $private_key = undef,
+
+  # duplication of $ssl_ca_cert, $ssl_server_public, $connector,
+  # $middleware_ssl, $middleware_hosts, and $securityprovider parameters to
+  # allow for spec testing.  These are otherwise considered private.
+  $ssl_ca_cert = $mcollective::ssl_ca_cert,
+  $ssl_server_public = $mcollective::ssl_server_public,
   $middleware_hosts = $mcollective::middleware_hosts,
   $middleware_ssl = $mcollective::middleware_ssl,
   $securityprovider = $mcollective::securityprovider,
   $connector = $mcollective::connector,
-  $ssl_ca_cert = $mcollective::ssl_ca_cert,
-  $ssl_server_public = $mcollective::ssl_server_public,
-  $certificate = undef,
-  $private_key = undef,
-  $homedir = "/home/${title}",
 ) {
   file { [
     "${homedir}/.mcollective.d",
@@ -76,7 +78,7 @@ define mcollective::user(
     }
   }
 
-  # XXX this is specific to connector, but refers to the user's certs
+  # This is specific to connector, but refers to the user's certs
   if $connector in [ 'activemq', 'rabbitmq' ] {
     $connectors = prefix(range( '1', size( $middleware_hosts ) ), "${username}_" )
     mcollective::user::connector { $connectors:

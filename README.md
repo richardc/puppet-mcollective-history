@@ -378,6 +378,26 @@ certificates in a users home directory.
 
 #### Parameters
 
+##### `username`
+
+String: defaults to $name. The username of the user to install for.
+
+##### `homedir`
+
+String: defaults to "/home/${name}".  The home directory of the user to
+install for.
+
+##### `certificate`
+
+String: defaults to undef.  A file source for the certificate of the user.
+Used by the 'ssl' securityprovider to set the identity of the user.
+
+##### `private_key`
+
+String: defaults to undef.  A file source for the private key of the user.
+Used when `mcollective::middleware_ssl` is true to connect to the middleware
+and by the 'ssl' securityprovider to sign messages as from this user.
+
 ### `mcollective::plugin` defined type
 
 `mcollective::plugin` installs a plugin from a source uri or a package.
@@ -387,7 +407,7 @@ certificates in a users home directory.
 ### `mcollective::agent` defined type
 
 `mcollective::agent` configures an agent for use with actionpolicy in
-conjunction with `mcollective::agent::actionpolicy`.ß
+conjunction with `mcollective::agent::actionpolicy`.
 
 #### Parameters
 
