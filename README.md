@@ -445,12 +445,42 @@ for.
 
 String: defaults to 'deny'.  The default actionpolicy to apply to the agent.
 
-### `mcollective::actionpolicy::rulo` defined type
+### `mcollective::actionpolicy::rule` defined type
 
 `mcollective::actionpolicy::rule` represents a single actionpolicy policy
 entry.
 
 #### Parameters
+
+##### `name`
+
+String: the resource title.  A descriptive name for the rule you are adding.
+
+##### `agent`
+
+String: required, no default.  The name of the agent you are adding a rule
+for.
+
+##### `action`
+
+String: defaults to 'allow'.  What to do when the other conditions of this
+line are matched.
+
+##### `callerid`
+
+String: defaults to '*'.  What callerids should match this rule.
+
+##### `actions`
+
+String: defaults to '*'.  What actions should match this rule.
+
+##### `facts`
+
+String: defaults to '*'.  What facts should match this rule.
+
+##### `classes`
+
+String: defaults to '*'.  What classes should match this rule.
 
 ### `mcollective::common::setting` defined type
 
