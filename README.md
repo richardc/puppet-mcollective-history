@@ -151,8 +151,13 @@ node 'control.example.com' {
 }
 ```
 
+### The `::mcollective::` class
 
-### `class { '::mcollective': }` Parameters
+The `mcollective` class is the main entry point to the module.  From here you
+can configure the behaviour of your mcollective install of server, client, and
+middleware.
+
+#### Parameters
 
 The following parameters are available to the mcollective class:
 
@@ -281,6 +286,11 @@ the `mcollective::plugin` type will install with its `source` parameter.
 This path will be managed and purged by puppet, so don't point it at
 core_libdir or any other non-dedicated path.
 
+##### `server_config_file`
+
+String: default is '/etc/mcollective/server.cfg'.  Path to the server
+configuration file.
+
 ##### `server_logfile`
 
 String: defaults to '/var/log/mcollective.log'.  Logfile the mcollective
@@ -294,6 +304,11 @@ String: defaults to 'info'.  Level the mcollective server should log at.
 
 String: defaults to '1'.  Should the mcollective server daemonize when
 started.
+
+##### `client_config_file`
+
+String: defaults to '/etc/mcollective/client.cfg'.  Path to the client
+configuration file.
 
 ##### `client_logger_type`
 
