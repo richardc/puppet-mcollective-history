@@ -173,6 +173,52 @@ Boolean: defaults to false.  Whether to install middleware that matches
 
 Currently supported are `activemq`, `rabbitmq`, and `redis`
 
+##### `activemq_template`
+
+String: defaults to 'mcollective/activemq.xml.erb'.  Template to use when
+configuring activemq middleware.
+
+##### `activemq_console`
+
+Boolean: defaults to false.  Whether to enable the jetty admin console when
+configuring the activemq middleware.
+
+##### `activemq_config`
+
+String: defaults to undef.  If supplied the contents of the activemq.xml
+configuration file to use when configuring activemq middleware.  Bypasses
+`mcollective::activemq_template`
+
+##### `activemq_confdir`
+
+String: default based on distribution.  The directory to copy ssl certificates
+to when configuring activemq middleware with `mcollective::middleware_ssl`.
+
+##### `rabbitmq_confdir`
+
+String: defaults to '/etc/rabbitmq'. The directory to copy ssl certificates to
+when configuring rabbitmq middleware with `mcollective::middleware_ssl`.
+
+##### `manage_packages`
+
+Boolean: defaults to true.  Whether to install mcollective and mcollective-
+client packages when installing the server and client components.
+
+##### `version`
+
+String: defaults to 'present'.  What version of packages to `ensure` when
+`mcollective::manage_packages` is true.
+
+##### `main_collective`
+
+String: defaults to 'mcollective'.  The name of the main collective for this
+client/server.
+
+##### `collectives`
+
+String: defaults to 'mcollective'.  Comma seperated list of collectives this
+server should join.
+
 ##### `connector`
 
 String: defaults to 'activemq'.  Name of the connector plugin to use.
@@ -196,6 +242,11 @@ server.
 
 String: defaults to '/etc/mcollective/facts.yaml'.  Name of the file the
 'yaml' factsource plugin should load facts from.
+
+##### `classesfile`
+
+String: defaults to '/var/lib/puppet/state/classes.txt'.  Name of the file the
+server will load the configuration management class for filtering.
 
 ##### `rpcauthprovider`
 
@@ -224,6 +275,28 @@ the `mcollective::plugin` type will install with its `source` parameter.
 
 This path will be managed and purged by puppet, so don't point it at
 core_libdir or any other non-dedicated path.
+
+##### `server_logfile`
+
+String: defaults to '/var/log/mcollective.log'.  Logfile the mcollective
+server should log to.
+
+##### `server_loglevel`
+
+String: defaults to 'info'.  Level the mcollective server should log at.
+
+##### `server_daemonize`
+
+String: defaults to '1'.  Should the mcollective server daemonize when
+started.
+
+##### `client_logger_type`
+
+String: defaults to 'console'.  What type of logger the client should use.
+
+##### `client_loglevel`
+
+String: defaults to 'warn'.  Level the mcollective client should log at.
 
 ##### `middleware_hosts`
 
@@ -257,6 +330,26 @@ protected channel.  Highly recommended.  Requires `mcollective::ssl_ca_cert`,
 `mcollective::ssl_server_public`, `mcollective::ssl_server_private` parameters
 for the server/client install.
 
+##### `ssl_ca_cert`
+
+String: defaults to undef.  A file source that points to the ca certificate
+used to manage the ssl keys of the mcollective install.
+
+##### `ssl_server_public`
+
+String: defaults to undef.  A file source that points to the public key or
+certificate of the server keypair.
+
+##### `ssl_server_private`
+
+String: defaults to undef.  A file source that points to the private key of
+the server keypair.
+
+##### `ssl_client_certs`
+
+String: defaults to 'puppet:///modules/mcollective/empty'.  A file source that
+contains a directory of user certificates which are used by the ssl security
+provider in authenticating user requests.
 
 ## Reference
 
