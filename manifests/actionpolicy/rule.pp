@@ -1,5 +1,5 @@
-# Define - mcollective::agent::actionpolicy
-define mcollective::agent::actionpolicy(
+# Define - mcollective::actionpolicy::rule
+define mcollective::actionpolicy::rule(
   $agent,
   $action   = 'allow',
   $callerid = '*',
@@ -7,8 +7,8 @@ define mcollective::agent::actionpolicy(
   $facts = '*',
   $classes = '*'
 ) {
-  datacat_fragment { "mcollective::agent::actionpolicy ${title}":
-    target => "mcollective::agent ${agent} actionpolicy",
+  datacat_fragment { "mcollective::actionpolicy::rule ${title}":
+    target => "mcollective::actionpolicy ${agent}",
     data   => {
       lines => [
         {

@@ -13,16 +13,16 @@ class site_nagios::mcollective {
     package => true,
   }
 
-  mcollective::agent { 'nrpe':
-    policy  => 'deny',
+  mcollective::actionpolicy { 'nrpe':
+    default  => 'deny',
   }
 
-  mcollective::agent::actionpolicy { 'root nrpe':
+  mcollective::actionpolicy::rule { 'root nrpe':
     agent    => 'nrpe',
     callerid => 'cert=root',
   }
 
-  mcollective::agent::actionpolicy { 'nagios nrpe':
+  mcollective::actionpolicy::rule { 'nagios nrpe':
     agent    => 'nrpe',
     callerid => 'cert=nagios',
     actions  => 'runcommand',

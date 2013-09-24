@@ -77,8 +77,8 @@ class { '::mcollective':
 
 Your primary interaction with the mcollective module will be though the main
 mcollective class, with secondary configuration managed by the defined types
-`mcollective::user`, `mcollective::plugin`, `mcollective::agent`, and
-`mcollective::agent::actionpolicy`.
+`mcollective::user`, `mcollective::plugin`, `mcollective::actionpolicy`, and
+`mcollective::actionpolicy::rule`.
 
 ### I just want to run it, what's the minimum I need?
 
@@ -429,10 +429,10 @@ String: defaults to 'agent'.  The type of the plugin package to install.
 Boolean: defaults to true.  When installing from a package, whether to attempt
 to install `mcollective-${name}-client` on the client node.
 
-### `mcollective::agent` defined type
+### `mcollective::actionpolicy` defined type
 
-`mcollective::agent` configures an agent for use with actionpolicy in
-conjunction with `mcollective::agent::actionpolicy`.
+`mcollective::actionpolicy` configures an agent for use with actionpolicy in
+conjunction with `mcollective::actionpolicy::rule`.
 
 #### Parameters
 
@@ -441,13 +441,13 @@ conjunction with `mcollective::agent::actionpolicy`.
 String: the resource title.  The name of the agent to set up an actionpolicy
 for.
 
-##### `policy`
+##### `default`
 
 String: defaults to 'deny'.  The default actionpolicy to apply to the agent.
 
-### `mcollective::agent::actionpolicy` defined type
+### `mcollective::actionpolicy::rulo` defined type
 
-`mcollective::agent::actionpolicy` represents a single actionpolicy policy
+`mcollective::actionpolicy::rule` represents a single actionpolicy policy
 entry.
 
 #### Parameters

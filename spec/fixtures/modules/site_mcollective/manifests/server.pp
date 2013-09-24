@@ -1,10 +1,10 @@
 #
 class site_mcollective::server {
-  mcollective::agent { 'rpcutil':
-    policy => 'deny',
+  mcollective::actionpolicy { 'rpcutil':
+    default => 'deny',
   }
 
-  mcollective::agent::actionpolicy { 'root rpcutil':
+  mcollective::actionpolicy::rule { 'root rpcutil':
     agent    => 'rpcutil',
     callerid => 'cert=root',
   }
