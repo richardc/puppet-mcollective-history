@@ -286,6 +286,38 @@ the `mcollective::plugin` type will install with its `source` parameter.
 This path will be managed and purged by puppet, so don't point it at
 core_libdir or any other non-dedicated path.
 
+##### `middleware_hosts`
+
+Array of strings: defaults to [].  Where the middleware servers this
+client/server should talk to are.
+
+##### `middleware_user`
+
+String: defaults to 'mcollective'. Username to use when connecting to the
+middleware.
+
+##### `middleware_password`
+
+String: defaults to 'marionette'.  Password to use when connecting to the
+middleware.
+
+##### `middleware_port`
+
+String: defaults to '61613'.  Port number to use when connecting to the
+middleware over an unencrypted connection.
+
+##### `middleware_ssl_port`
+
+String: defaults to '61614'. Port number to use when connecting to the
+middleware over a ssl connection.
+
+##### `middleware_ssl`
+
+Boolean: defaults to false.  Whether to talk to the middleware over a ssl
+protected channel.  Highly recommended.  Requires `mcollective::ssl_ca_cert`,
+`mcollective::ssl_server_public`, `mcollective::ssl_server_private` parameters
+for the server/client install.
+
 ##### `server_config_file`
 
 String: default is '/etc/mcollective/server.cfg'.  Path to the server
@@ -318,37 +350,6 @@ String: defaults to 'console'.  What type of logger the client should use.
 
 String: defaults to 'warn'.  Level the mcollective client should log at.
 
-##### `middleware_hosts`
-
-Array of strings: defaults to [].  Where the middleware servers this
-client/server should talk to are.
-
-##### `middleware_user`
-
-String: defaults to 'mcollective'. Username to use when connecting to the
-middleware.
-
-##### `middleware_password`
-
-String: defaults to 'marionette'.  Password to use when connecting to the
-middleware.
-
-##### `middleware_port`
-
-String: defaults to '61613'.  Port number to use when connecting to the
-middleware over an unencrypted connection.
-
-##### `middleware_ssl_port`
-
-String: defaults to '61614'. Port number to use when connecting to the
-middleware over a ssl connection.
-
-##### `middleware_ssl`
-
-Boolean: defaults to false.  Whether to talk to the middleware over a ssl
-protected channel.  Highly recommended.  Requires `mcollective::ssl_ca_cert`,
-`mcollective::ssl_server_public`, `mcollective::ssl_server_private` parameters
-for the server/client install.
 
 ##### `ssl_ca_cert`
 

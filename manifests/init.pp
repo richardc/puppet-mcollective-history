@@ -1,46 +1,61 @@
 # Class - mcollective
 class mcollective (
-  $version = 'present',
+  # which subcomponents to install here
+  $server = true,
+  $client = false,
+  $middleware = false,
+
+  # middleware tweaking
+  $activemq_template = 'mcollective/activemq.xml.erb',
+  $activemq_console = false, # ubuntu why you no jetty.xml!
+  $activemq_config = undef,
+  $activemq_confdir = $mcollective::defaults::activemq_confdir,
+  $rabbitmq_confdir = '/etc/rabbitmq',
+  $rabbitmq_vhost = '/mcollective', # used by rabbitmq
+
+  # installing packages
   $manage_packages = true,
-  $connector = 'activemq',
+  $version = 'present',
+
+  # core configuration
   $main_collective = 'mcollective',
   $collectives = 'mcollective',
-  $classesfile = '/var/lib/puppet/state/classes.txt',
+  $connector = 'activemq',
+  $securityprovider = 'psk',
+  $psk = 'changemeplease',
   $factsource = 'yaml',
   $yaml_fact_path = '/etc/mcollective/facts.yaml',
-  $securityprovider = 'psk',
+  $classesfile = '/var/lib/puppet/state/classes.txt',
   $rpcauthprovider = 'action_policy',
   $rpcauditprovider = 'logfile',
   $registration = undef,
-  $psk = 'changemeplease',
   $core_libdir = $mcollective::defaults::core_libdir,
   $site_libdir = $mcollective::defaults::site_libdir,
+
+  # networking
+  $middleware_hosts = [],
+  $middleware_user = 'mcollective',
+  $middleware_password = 'marionette',
+  $middleware_port = '61613',
+  $middleware_ssl_port = '61614',
+  $middleware_ssl = false,
+
+  # server-specific
+  $server_config_file = '/etc/mcollective/server.cfg',
+  $server_logfile   = '/var/log/mcollective.log',
+  $server_loglevel  = 'info',
+  $server_daemonize = 1,
+
+  # client-specific
+  $client_config_file = '/etc/mcollective/client.cfg',
+  $client_logger_type = 'console',
+  $client_loglevel = 'warn',
+
+  # ssl certs
   $ssl_ca_cert = undef,
   $ssl_server_public = undef,
   $ssl_server_private = undef,
   $ssl_client_certs = 'puppet:///modules/mcollective/empty',
-  $server_logfile   = '/var/log/mcollective.log',
-  $server_loglevel  = 'info',
-  $client_logger_type = 'console',
-  $client_loglevel = 'warn',
-  $server_daemonize = 1,
-  $activemq_template = 'mcollective/activemq.xml.erb',
-  $activemq_config = undef,
-  $activemq_confdir = $mcollective::defaults::activemq_confdir,
-  $activemq_console = false, # ubuntu why you no jetty.xml!
-  $rabbitmq_confdir = '/etc/rabbitmq',
-  $middleware_hosts = [],
-  $middleware_user = 'mcollective',
-  $middleware_password = 'marionette',
-  $middleware_ssl = false,
-  $middleware_port = '61613',
-  $middleware_ssl_port = '61614',
-  $rabbitmq_vhost = '/mcollective', # used by rabbitmq
-  $server = true,
-  $server_config_file = '/etc/mcollective/server.cfg',
-  $client = false,
-  $client_config_file = '/etc/mcollective/client.cfg',
-  $middleware = false,
 ) inherits mcollective::defaults {
   anchor { 'mcollective::begin': }
   anchor { 'mcollective::end': }
