@@ -22,6 +22,9 @@ class mcollective::middleware::activemq {
     Class['activemq::packages'] ->
 
     file { "${mcollective::activemq_confdir}/ca.pem":
+      owner  => 'activemq',
+      group  => 'activemq',
+      mode   => '0444',
       source => $mcollective::ssl_ca_cert,
     } ->
 
@@ -40,10 +43,16 @@ class mcollective::middleware::activemq {
     } ->
 
     file { "${mcollective::activemq_confdir}/server_public.pem":
+      owner  => 'activemq',
+      group  => 'activemq',
+      mode   => '0444',
       source => $mcollective::ssl_server_public,
     } ->
 
     file { "${mcollective::activemq_confdir}/server_private.pem":
+      owner  => 'activemq',
+      group  => 'activemq',
+      mode   => '0400',
       source => $mcollective::ssl_server_private,
     } ->
 

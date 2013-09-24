@@ -5,6 +5,9 @@ class mcollective::server::config {
   }
 
   datacat { 'mcollective::server':
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0400',
     path     => $mcollective::server_config_file,
     template => 'mcollective/settings.cfg.erb',
   }
@@ -27,22 +30,31 @@ class mcollective::server::config {
 
   file { '/etc/mcollective/policies':
     ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0700',
   }
 
   if $mcollective::middleware_ssl or $mcollective::securityprovider == 'ssl' {
     file { '/etc/mcollective/ca.pem':
-      source => $mcollective::ssl_ca_cert,
+      owner  => 'root',
+      group  => 'root',
       mode   => '0444',
+      source => $mcollective::ssl_ca_cert,
     }
 
     file { '/etc/mcollective/server_public.pem':
-      source => $mcollective::ssl_server_public,
+      owner  => 'root',
+      group  => 'root',
       mode   => '0444',
+      source => $mcollective::ssl_server_public,
     }
 
     file { '/etc/mcollective/server_private.pem':
-      source => $mcollective::ssl_server_private,
+      owner  => 'root',
+      group  => 'root',
       mode   => '0400',
+      source => $mcollective::ssl_server_private,
     }
   }
 

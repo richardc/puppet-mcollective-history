@@ -10,7 +10,8 @@ class mcollective::server::install {
     }
 
     if $::osfamily == 'Debian' {
-      # XXX you be shitting me
+      # XXX the dependencies my test ubuntu 12.04 system seem to not correctly state
+      # ruby-stomp as a dependency of mcollective, so hand specify
       package { 'ruby-stomp':
         ensure => 'installed',
         before => Package['mcollective'],

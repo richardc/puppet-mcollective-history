@@ -5,6 +5,9 @@ class mcollective::client::config {
   }
 
   datacat { 'mcollective::client':
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0444',
     path     => $mcollective::client_config_file,
     template => 'mcollective/settings.cfg.erb',
   }

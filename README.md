@@ -383,6 +383,12 @@ certificates in a users home directory.
 
 String: defaults to $name. The username of the user to install for.
 
+
+##### `group`
+
+String: defaults to $name. The group of the user to install for.
+
+
 ##### `homedir`
 
 String: defaults to "/home/${name}".  The home directory of the user to

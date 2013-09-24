@@ -6,14 +6,23 @@ class mcollective::middleware::rabbitmq {
 
   if $mcollective::middleware_ssl {
     file { "${mcollective::rabbitmq_confdir}/ca.pem":
+      owner  => 'rabbitmq',
+      group  => 'rabbitmq',
+      mode   => '0444',
       source => $mcollective::ssl_ca_cert,
     }
 
     file { "${mcollective::rabbitmq_confdir}/server_public.pem":
+      owner  => 'rabbitmq',
+      group  => 'rabbitmq',
+      mode   => '0444',
       source => $mcollective::ssl_server_public,
     }
 
     file { "${mcollective::rabbitmq_confdir}/server_private.pem":
+      owner  => 'rabbitmq',
+      group  => 'rabbitmq',
+      mode   => '0400',
       source => $mcollective::ssl_server_private,
     }
   }

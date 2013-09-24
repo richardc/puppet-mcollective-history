@@ -4,8 +4,10 @@ class mcollective::server::config::factsource::facter {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  package { 'mcollective-facter-facts':
-    ensure => installed,
+  mcollective::plugin { 'facter':
+    type       => 'facts',
+    package    => true,
+    has_client => false,
   }
 
   mcollective::server::setting { 'factsource':

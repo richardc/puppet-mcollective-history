@@ -1,7 +1,8 @@
 # Define - mcollective::user
 define mcollective::user(
-  $username = $title,
-  $homedir = "/home/${title}",
+  $username = $name,
+  $group    = $name,
+  $homedir = "/home/${name}",
   $certificate = undef,
   $private_key = undef,
 
@@ -22,32 +23,39 @@ define mcollective::user(
     "${homedir}/.mcollective.d/credentials/private_keys"
   ]:
     ensure => 'directory',
+    owner  => $username,
+    group  => $group,
   }
 
   datacat { "mcollective::user ${username}":
     path     => "${homedir}/.mcollective",
     collects => [ 'mcollective::user', 'mcollective::client' ],
     owner    => $username,
+    group    => $group,
+    mode     => '0400',
     template => 'mcollective/settings.cfg.erb',
   }
 
   if $middleware_ssl or $securityprovider == 'ssl' {
     file { "${homedir}/.mcollective.d/credentials/certs/ca.pem":
       source => $ssl_ca_cert,
-      owner  => $name,
+      owner  => $username,
+      group  => $group,
       mode   => '0444',
     }
 
     file { "${homedir}/.mcollective.d/credentials/certs/server_public.pem":
       source => $ssl_server_public,
-      owner  => $name,
+      owner  => $username,
+      group  => $group,
       mode   => '0444',
     }
 
     $private_path = "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem"
     file { $private_path:
       source => $private_key,
-      owner  => $name,
+      owner  => $username,
+      group  => $group,
       mode   => '0400',
     }
   }
@@ -55,7 +63,8 @@ define mcollective::user(
   if $securityprovider == 'ssl' {
     file { "${homedir}/.mcollective.d/credentials/certs/${username}.pem":
       source => $certificate,
-      owner  => $name,
+      owner  => $username,
+      group  => $group,
       mode   => '0444',
     }
 
@@ -80,7 +89,9 @@ define mcollective::user(
 
   # This is specific to connector, but refers to the user's certs
   if $connector in [ 'activemq', 'rabbitmq' ] {
-    $connectors = prefix(range( '1', size( $middleware_hosts ) ), "${username}_" )
+    $pool_size = size( $middleware_hosts )
+    $hosts = range( '1', $pool_size )
+    $connectors = prefix( $hosts, "${username}_" )
     mcollective::user::connector { $connectors:
       username       => $username,
       homedir        => $homedir,
