@@ -35,7 +35,7 @@ class mcollective (
   $middleware_ssl = false,
   $middleware_port = '61613',
   $middleware_ssl_port = '61614',
-  $middleware_vhost = '/mcollective', # used by rabbitmq
+  $rabbitmq_vhost = '/mcollective', # used by rabbitmq
   $server = true,
   $server_config_file = '/etc/mcollective/server.cfg',
   $client = false,

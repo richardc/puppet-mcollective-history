@@ -34,7 +34,7 @@ class mcollective::middleware::rabbitmq {
     ensure => present,
   } ->
 
-  rabbitmq_vhost { $mcollective::middleware_vhost:
+  rabbitmq_vhost { $mcollective::rabbitmq_vhost:
     ensure => present,
   } ->
 
@@ -46,20 +46,20 @@ class mcollective::middleware::rabbitmq {
     password => $mcollective::middleware_password,
   } ->
 
-  rabbitmq_user_permissions { "${mcollective::middleware_user}@${mcollective::middleware_vhost}":
+  rabbitmq_user_permissions { "${mcollective::middleware_user}@${mcollective::rabbitmq_vhost}":
     configure_permission => '.*',
     read_permission      => '.*',
     write_permission     => '.*',
   } ->
 
-  rabbitmq_exchange { "mcollective_broadcast@${mcollective::middleware_vhost}":
+  rabbitmq_exchange { "mcollective_broadcast@${mcollective::rabbitmq_vhost}":
     ensure   => present,
     type     => 'topic',
     user     => $mcollective::middleware_user,
     password => $mcollective::middleware_password,
   } ->
 
-  rabbitmq_exchange { "mcollective_directed@${mcollective::middleware_vhost}":
+  rabbitmq_exchange { "mcollective_directed@${mcollective::rabbitmq_vhost}":
     ensure   => present,
     type     => 'direct',
     user     => $mcollective::middleware_user,

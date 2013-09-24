@@ -9,7 +9,7 @@ class mcollective::common::config::connector::rabbitmq {
   }
 
   mcollective::common::setting { 'plugin.rabbitmq.vhost':
-    value => $mcollective::middleware_vhost,
+    value => $mcollective::rabbitmq_vhost,
   }
 
   mcollective::common::setting { 'plugin.rabbitmq.randomize':

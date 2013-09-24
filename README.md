@@ -199,6 +199,11 @@ to when configuring activemq middleware with `mcollective::middleware_ssl`.
 String: defaults to '/etc/rabbitmq'. The directory to copy ssl certificates to
 when configuring rabbitmq middleware with `mcollective::middleware_ssl`.
 
+##### `rabbitmq_vhost`
+
+String: defaults to '/mcollective'.  The vhost to connect to/manage when using
+rabbitmq middleware.
+
 ##### `manage_packages`
 
 Boolean: defaults to true.  Whether to install mcollective and mcollective-
