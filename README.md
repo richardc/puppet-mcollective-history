@@ -400,9 +400,34 @@ and by the 'ssl' securityprovider to sign messages as from this user.
 
 ### `mcollective::plugin` defined type
 
-`mcollective::plugin` installs a plugin from a source uri or a package.
+`mcollective::plugin` installs a plugin from a source uri or a package.  When
+installing from a source uri the plugin will be copied to
+`mcollective::site_libdir`
 
 #### Parameters
+
+##### `name`
+
+String: its the resource title.  The base name of the plugin to install.
+
+##### `source`
+
+String: will default to "puppet:///modules/mcollective/plugins/${name}".  The
+source uri that will be copied to `mcollective::site_libdir`
+
+##### `package`
+
+Boolean: defaults to false.  Whether to install the plugin from a file copy or
+a package install.
+
+##### `type`
+
+String: defaults to 'agent'.  The type of the plugin package to install.
+
+##### `has_client`
+
+Boolean: defaults to true.  When installing from a package, whether to attempt
+to install `mcollective-${name}-client` on the client node.
 
 ### `mcollective::agent` defined type
 

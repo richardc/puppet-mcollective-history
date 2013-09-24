@@ -3,8 +3,10 @@ define mcollective::plugin(
   $source = undef,
   $package = false,
   $type = 'agent',
-  $client = $mcollective::client,
   $has_client = true,
+  # $client is to allow for unit testing, and considered a private
+  # parameter
+  $client = $mcollective::client,
 ) {
   if $package {
     # install from a package named "mcollective-${name}-${type}
