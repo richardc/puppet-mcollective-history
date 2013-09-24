@@ -2,7 +2,6 @@
 = Undocumented
 
     $version = 'present',
-    $enterprise = false,
     $manage_packages = true,
     $main_collective = 'mcollective',
     $collectives = 'mcollective',

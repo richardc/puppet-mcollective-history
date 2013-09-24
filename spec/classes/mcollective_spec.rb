@@ -40,17 +40,6 @@ describe 'mcollective' do
       end
     end
 
-    describe '#enterprise' do
-      it 'should default to false' do
-        should contain_service('mcollective').with_name('mcollective')
-      end
-
-      context 'true' do
-        let(:params) { { :enterprise => true } }
-        it { should contain_service('mcollective').with_name('pe-mcollective') }
-      end
-    end
-
     describe '#main_collective' do
       context 'default' do
         it { should contain_mcollective__common__setting('main_collective').with_value('mcollective') }

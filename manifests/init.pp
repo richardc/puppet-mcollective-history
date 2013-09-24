@@ -1,7 +1,6 @@
 # Class - mcollective
 class mcollective (
   $version = 'present',
-  $enterprise = false,
   $manage_packages = true,
   $connector = 'activemq',
   $main_collective = 'mcollective',
