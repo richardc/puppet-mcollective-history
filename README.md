@@ -487,18 +487,81 @@ String: defaults to '*'.  What classes should match this rule.
 `mcollective::common::setting` declares a setting that is common between
 server and client.
 
+#### Parameters
+
+##### `name`
+
+String: the resource title.  The name of the setting to set.
+
+##### `value`
+
+String: no default.  The value to set.
+
+##### `order`
+
+String: default '50'.  The order in which to merge this setting.
+
 ### `mcollective::server::setting` defined type
 
 `mcollective::server::setting` declares a setting that is exclusive to a server.
+
+#### Parameters
+
+##### `name`
+
+String: the resource title.  The name of the setting to set.
+
+##### `value`
+
+String: no default.  The value to set.
+
+##### `order`
+
+String: default '10'.  The order in which to merge this setting.
 
 ### `mcollective::client::setting` defined type
 
 `mcollective::client::setting` declares a setting that is common to clients
 and users.
 
+#### Parameters
+
+##### `name`
+
+String: the resource title.  The name of the setting to set.
+
+##### `value`
+
+String: no default.  The value to set.
+
+##### `order`
+
+String: default '30'.  The order in which to merge this setting.
+
 ### `mcollective::user::setting` defined type
 
 `mcollective::user::setting` declares a setting that is specific to a user.
+
+#### Parameters
+
+##### `name`
+
+String: the resource title.  The name of the user followed by the setting to
+set.  ie.  mcollective::user::setting { 'root foo': } will be setting the foo
+value for the root user.
+
+##### `username`
+
+String: required.  Will be used to strip the username prefix from the `name`
+parameter, and also target the correct users parameters.
+
+##### `value`
+
+String: no default.  The value to set.
+
+##### `order`
+
+String: default '70'.  The order in which to merge this setting.
 
 ## Reference
 

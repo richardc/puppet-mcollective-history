@@ -1,4 +1,4 @@
-# Define - mcollective::setting
+# private define - mcollective::setting
 define mcollective::setting($setting, $value, $target, $order = '50') {
   # The parser chokes on `data => { $setting => $value }` so help it out
   $data = {}
