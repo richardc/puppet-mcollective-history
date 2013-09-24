@@ -371,6 +371,51 @@ String: defaults to 'puppet:///modules/mcollective/empty'.  A file source that
 contains a directory of user certificates which are used by the ssl security
 provider in authenticating user requests.
 
+### `mcollective::user` defined type
+
+`mcollective::user` installs a client configuration and any needed client
+certificates in a users home directory.
+
+#### Parameters
+
+### `mcollective::plugin` defined type
+
+`mcollective::plugin` installs a plugin from a source uri or a package.
+
+#### Parameters
+
+### `mcollective::agent` defined type
+
+`mcollective::agent` configures an agent for use with actionpolicy in
+conjunction with `mcollective::agent::actionpolicy`.ß
+
+#### Parameters
+
+### `mcollective::agent::actionpolicy` defined type
+
+`mcollective::agent::actionpolicy` represents a single actionpolicy policy
+entry.
+
+#### Parameters
+
+### `mcollective::common::setting` defined type
+
+`mcollective::common::setting` declares a setting that is common between
+server and client.
+
+### `mcollective::server::setting` defined type
+
+`mcollective::server::setting` declares a setting that is exclusive to a server.
+
+### `mcollective::client::setting` defined type
+
+`mcollective::client::setting` declares a setting that is common to clients
+and users.
+
+### `mcollective::user::setting` defined type
+
+`mcollective::user::setting` declares a setting that is specific to a user.
+
 ## Reference
 
 
