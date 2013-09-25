@@ -69,18 +69,21 @@ define mcollective::user(
     }
 
     mcollective::user::setting { "${username}:plugin.ssl_client_public":
+      setting  => 'plugin.ssl_client_public',
       username => $username,
       value    => "${homedir}/.mcollective.d/credentials/certs/${username}.pem",
       order    => '60',
     }
 
     mcollective::user::setting { "${username}:plugin.ssl_client_private":
+      setting  => 'plugin.ssl_client_private',
       username => $username,
       value    => "${homedir}/.mcollective.d/credentials/private_keys/${username}.pem",
       order    => '60',
     }
 
     mcollective::user::setting { "${username}:plugin.ssl_server_public":
+      setting  => 'plugin.ssl_server_public',
       username => $username,
       value    => "${homedir}/.mcollective.d/credentials/certs/server_public.pem",
       order    => '60',

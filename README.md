@@ -496,27 +496,9 @@ server and client.
 
 #### Parameters
 
-##### `name`
+##### `setting`
 
-String: the resource title.  The name of the setting to set.
-
-##### `value`
-
-String: no default.  The value to set.
-
-##### `order`
-
-String: default '50'.  The order in which to merge this setting.
-
-### `mcollective::server::setting` defined type
-
-`mcollective::server::setting` declares a setting that is exclusive to a server.
-
-#### Parameters
-
-##### `name`
-
-String: the resource title.  The name of the setting to set.
+String: defaults to the resource title.  The name of the setting to set.
 
 ##### `value`
 
@@ -526,6 +508,24 @@ String: no default.  The value to set.
 
 String: default '10'.  The order in which to merge this setting.
 
+### `mcollective::server::setting` defined type
+
+`mcollective::server::setting` declares a setting that is exclusive to a server.
+
+#### Parameters
+
+##### `setting`
+
+String: defaults to the resource title.  The name of the setting to set.
+
+##### `value`
+
+String: no default.  The value to set.
+
+##### `order`
+
+String: default '30'.  The order in which to merge this setting.
+
 ### `mcollective::client::setting` defined type
 
 `mcollective::client::setting` declares a setting that is common to clients
@@ -533,9 +533,9 @@ and users.
 
 #### Parameters
 
-##### `name`
+##### `setting`
 
-String: the resource title.  The name of the setting to set.
+String: defaults to the resource title.  The name of the setting to set.
 
 ##### `value`
 
@@ -551,16 +551,13 @@ String: default '30'.  The order in which to merge this setting.
 
 #### Parameters
 
-##### `name`
-
-String: the resource title.  The name of the user followed by the setting to
-set.  ie.  mcollective::user::setting { 'root foo': } will be setting the foo
-value for the root user.
-
 ##### `username`
 
-String: required.  Will be used to strip the username prefix from the `name`
-parameter, and also target the correct users parameters.
+String: required, no default.  Which user to set this value for.
+
+##### `setting`
+
+String: required, no default. The name of the setting to set.
 
 ##### `value`
 
@@ -571,6 +568,36 @@ String: no default.  The value to set.
 String: default '70'.  The order in which to merge this setting.
 
 ## Reference
+
+### Configuration merging
+
+The configuration of the server and client are built up from the various calls
+to `mcollective::common::setting`, `mcollective::server::setting`,
+`mcollective::client::setting`, and `mcollective::user::setting`.
+
+Settings for the server will be a merge of `mcollective::common::setting` and
+`mcollective::server::setting`, highest order of the setting wins.
+
+Settings for the client will be a merge of `mcollective::common::setting`,
+and `mcollective::client::setting`, highest order of the setting wins.
+
+Settings for a specific user will be a merge of
+`mcollective::common::setting`, `mcollective::client::setting` and
+`mcollective::user::setting` for that specific user, highest order of setting
+wins.
+
+#### Overriding existing options
+
+You can override an existing server setting from outside of the module by
+simply specifying that setting again with a higher order than the default of
+that type, for example to make a server's loglevel be debug (without simply
+setting mcollective::server_loglevel) you could write:
+
+  mcollective::server::setting { 'override loglevel':
+    setting => 'loglevel',
+    value   => 'debug',
+    order   => '50',
+  }
 
 
 ## Limitations
