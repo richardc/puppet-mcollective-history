@@ -110,11 +110,14 @@ of the standard deploy guide but does save you from having to deal with ssl
 certificates to begin with.
 
 
-### I'd like to secure the transport channel, how do I do that?
+### I'd like to secure the transport channel and authenticate users, how do I do that?
 
-Create some certificates and put them in a site_mcollective module.
+Gather some credentials for the server and users.  You'll need the ca
+certificate, and a keypair for the server to use, and a keypair for each user
+to allow.
 
-XXX flesh this out way more
+See the [standard deploy guide](http://docs.puppetlabs.com/mcollective/deploy/standard.html#step-1-create-and-collect-credentials)
+for more information about how to generate these.
 
 
 ```puppet
@@ -123,6 +126,8 @@ node 'broker1.example.com' {
     middleware         => true,
     middleware_hosts   => [ 'broker1.example.com' ],
     middleware_ssl     => true,
+    securityprovider   => 'ssl',
+    ssl_client_certs   => 'puppet:///modules/site_mcollective/client_certs',
     ssl_ca_cert        => 'puppet:///modules/site_mcollective/certs/ca.pem',
     ssl_server_public  => 'puppet:///modules/site_mcollective/certs/server.pem',
     ssl_server_private => 'puppet:///modules/site_mcollective/private_keys/server.pem',
@@ -131,11 +136,22 @@ node 'broker1.example.com' {
 
 node 'server1.example.com' {
   class { '::mcollective':
-    middleware_hosts => [ 'broker1.example.com' ],
-    middleware_ssl   => true,
+    middleware_hosts   => [ 'broker1.example.com' ],
+    middleware_ssl     => true,
+    securityprovider   => 'ssl',
+    ssl_client_certs   => 'puppet:///modules/site_mcollective/client_certs',
     ssl_ca_cert        => 'puppet:///modules/site_mcollective/certs/ca.pem',
     ssl_server_public  => 'puppet:///modules/site_mcollective/certs/server.pem',
     ssl_server_private => 'puppet:///modules/site_mcollective/private_keys/server.pem',
+  }
+
+  mcollective::actionpolicy { 'nrpe':
+    default => 'deny',
+  }
+
+  mcollective::actionpolicy::rule { 'vagrant user can use nrpe agent':
+    agent    => 'nrpe',
+    callerid => 'cert=vagrant',
   }
 }
 
@@ -144,9 +160,16 @@ node 'control.example.com' {
     client             => true,
     middleware_hosts   => [ 'broker1.example.com' ],
     middleware_ssl     => true,
+    securityprovider   => 'ssl',
+    ssl_client_certs   => 'puppet:///modules/site_mcollective/client_certs',
     ssl_ca_cert        => 'puppet:///modules/site_mcollective/certs/ca.pem',
     ssl_server_public  => 'puppet:///modules/site_mcollective/certs/server.pem',
     ssl_server_private => 'puppet:///modules/site_mcollective/private_keys/server.pem',
+  }
+
+  mcollective::user { 'vagrant':
+    certificate => 'puppet:///modules/site_mcollective/client_certs/vagrant.pem',
+    private_key => 'puppet:///modules/site_mcollective/private_keys/vagrant.pem',
   }
 }
 ```
@@ -383,11 +406,9 @@ certificates in a users home directory.
 
 String: defaults to $name. The username of the user to install for.
 
-
 ##### `group`
 
 String: defaults to $name. The group of the user to install for.
-
 
 ##### `homedir`
 
